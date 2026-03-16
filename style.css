@@ -823,7 +823,7 @@ li code {
   bottom: 70px;
   right: 40px;
   z-index: 10;
-  background-color: var(--bg-tertiary);
+  background-color: #1d1d34;
   height: 35px;
   width: 35px;
   border-radius: 50%;

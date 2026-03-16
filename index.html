@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JavaScript Guide — Data Types</title>
+    <meta name="description" content="A structured JavaScript learning platform covering data types and core language concepts." />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,500;1,400&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="style.css" />
+    <script type="module" src="script.js" defer></script>
+  </head>
+
+  <body>
+    <div class="app">
+
+      <!-- ===== SIDEBAR ===== -->
+      <aside class="sidebar" id="sidebar" role="complementary" aria-label="Course navigation">
+        <div class="sidebar-header">
+          <a href="#" class="sidebar-brand">
+            <span class="brand-icon">JS</span>
+            <span class="brand-name">JavaScript Guide</span>
+          </a>
+        </div>
+
+        <div class="sidebar-section-info">
+          <span class="section-badge">Chapter 5</span>
+          <h2 class="section-heading">Data Types</h2>
+          <p class="section-subtext">Core data structures in JavaScript</p>
+        </div>
+
+        <nav class="sidebar-nav" id="lessonNav" aria-label="Lesson list">
+          <!-- Dynamically populated by script.js -->
+        </nav>
+
+        <div class="sidebar-footer">
+          <div class="progress-wrap">
+            <div class="progress-label">
+              <span>Progress</span>
+              <span id="progressPercent">0%</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- ===== MAIN CONTENT ===== -->
+      <main class="main" id="mainContent">
+        <div class="content-wrap" id="lessonContent" role="region" aria-live="polite">
+          <!-- Dynamically populated by script.js -->
+        </div>
+      </main>
+
+    </div>
+  </body>
+</html>

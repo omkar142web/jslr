@@ -888,6 +888,22 @@ button {
   }
 }
 
+@media (max-width: 395px) {
+   
+  .mark-complete-wrap {
+    order: 1;
+    padding: 0 70px;
+    margin: auto;
+  }
+  .lesson-nav-prev {
+    order: 2;
+  }
+  .lesson-nav-next {
+    order: 3;
+  }
+  
+}
+
 
 .outer {
   position: fixed;

@@ -367,7 +367,7 @@ button {
 
 /* Section switcher: 2-col grid of cards (scrolls with sidebar) */
 .sidebar-section-switcher {
-  padding: var(--sp-3) var(--sp-5);
+  padding: var(--sp-3) var(--sp-4);
   border-bottom: 1px solid var(--surface-border-dim);
   display: grid;
   grid-template-columns: 1fr 1fr;

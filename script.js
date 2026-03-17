@@ -3,14 +3,14 @@
    Consolidated: Course Data + App Logic (sidebar + content)
    ============================================================ */
 
-
 /* ============================================================
    SECTION 1: COURSE DATA
    ============================================================ */
 const javascriptCourse = {
   title: "JavaScript Complete Guide",
   slug: "javascript-complete-guide",
-  description: "A structured learning path covering JavaScript from fundamentals to advanced browser APIs.",
+  description:
+    "A structured learning path covering JavaScript from fundamentals to advanced browser APIs.",
   level: "beginner-to-advanced",
   progress: 0,
 
@@ -20,34 +20,88 @@ const javascriptCourse = {
       title: "An Introduction",
       description: "Basic introduction to JavaScript and development tools.",
       lessons: [
-        { title: "An Introduction to JavaScript", slug: "introduction-to-javascript", difficulty: "beginner", duration: "10 min", completed: false },
-        { title: "Manuals and specifications",     slug: "manuals-and-specifications", difficulty: "beginner", completed: false },
-        { title: "Code editors",                   slug: "code-editors",               difficulty: "beginner", completed: false },
-        { title: "Developer console",              slug: "developer-console",           difficulty: "beginner", completed: false },
+        {
+          title: "An Introduction to JavaScript",
+          slug: "introduction-to-javascript",
+          difficulty: "beginner",
+          duration: "10 min",
+          completed: false,
+        },
+        {
+          title: "Manuals and specifications",
+          slug: "manuals-and-specifications",
+          difficulty: "beginner",
+          completed: false,
+        },
+        {
+          title: "Code editors",
+          slug: "code-editors",
+          difficulty: "beginner",
+          completed: false,
+        },
+        {
+          title: "Developer console",
+          slug: "developer-console",
+          difficulty: "beginner",
+          completed: false,
+        },
       ],
     },
     {
       id: "fundamentals",
       title: "JavaScript Fundamentals",
-      description: "Core language concepts required for every JavaScript developer.",
+      description:
+        "Core language concepts required for every JavaScript developer.",
       lessons: [
-        { title: "Hello, world!",                        slug: "hello-world",          completed: false },
-        { title: "Code structure",                       slug: "code-structure",       completed: false },
-        { title: 'The modern mode, "use strict"',        slug: "use-strict",           completed: false },
-        { title: "Variables",                            slug: "variables",            completed: false },
-        { title: "Data types",                           slug: "data-types",           completed: false },
-        { title: "Interaction: alert, prompt, confirm",  slug: "interaction",          completed: false },
-        { title: "Type Conversions",                     slug: "type-conversion",      completed: false },
-        { title: "Basic operators, maths",               slug: "operators",            completed: false },
-        { title: "Comparisons",                          slug: "comparisons",          completed: false },
-        { title: "Conditional branching: if, '?'",       slug: "if-else",              completed: false },
-        { title: "Logical operators",                    slug: "logical-operators",    completed: false },
-        { title: "Nullish coalescing operator '??'",     slug: "nullish-coalescing",   completed: false },
-        { title: "Loops: while and for",                 slug: "loops",               completed: false },
-        { title: "The switch statement",                 slug: "switch",              completed: false },
-        { title: "Functions",                            slug: "functions",            completed: false },
-        { title: "Function expressions",                 slug: "function-expressions", completed: false },
-        { title: "Arrow functions",                      slug: "arrow-functions",      completed: false },
+        { title: "Hello, world!", slug: "hello-world", completed: false },
+        { title: "Code structure", slug: "code-structure", completed: false },
+        {
+          title: 'The modern mode, "use strict"',
+          slug: "use-strict",
+          completed: false,
+        },
+        { title: "Variables", slug: "variables", completed: false },
+        { title: "Data types", slug: "data-types", completed: false },
+        {
+          title: "Interaction: alert, prompt, confirm",
+          slug: "interaction",
+          completed: false,
+        },
+        {
+          title: "Type Conversions",
+          slug: "type-conversion",
+          completed: false,
+        },
+        {
+          title: "Basic operators, maths",
+          slug: "operators",
+          completed: false,
+        },
+        { title: "Comparisons", slug: "comparisons", completed: false },
+        {
+          title: "Conditional branching: if, '?'",
+          slug: "if-else",
+          completed: false,
+        },
+        {
+          title: "Logical operators",
+          slug: "logical-operators",
+          completed: false,
+        },
+        {
+          title: "Nullish coalescing operator '??'",
+          slug: "nullish-coalescing",
+          completed: false,
+        },
+        { title: "Loops: while and for", slug: "loops", completed: false },
+        { title: "The switch statement", slug: "switch", completed: false },
+        { title: "Functions", slug: "functions", completed: false },
+        {
+          title: "Function expressions",
+          slug: "function-expressions",
+          completed: false,
+        },
+        { title: "Arrow functions", slug: "arrow-functions", completed: false },
       ],
     },
     {
@@ -97,17 +151,29 @@ const javascriptCourse = {
 
 > Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores debitis quo enim dolore recusandae corrupti natus iste aut eligendi saepe et eum illum modi nesciunt ipsum tempore magnam amet.`,
         },
-        { title: "Numbers",                         Text: "Numbers - empty for now!!" },
-        { title: "Strings",                         Text: "Strings - empty for now!!" },
-        { title: "Arrays",                          Text: "Arrays - empty for now!!" },
-        { title: "Array methods",                   Text: "Array methods - empty for now!!" },
-        { title: "Iterables",                       Text: "Iterables - empty for now!!" },
-        { title: "Map and Set",                     Text: "Map and Set - empty for now!!" },
-        { title: "WeakMap and WeakSet",             Text: "WeakMap and WeakSet - empty for now!!" },
-        { title: "Object.keys, values, entries",    Text: "Object.keys, values, entries - empty for now!!" },
-        { title: "Destructuring assignment",        Text: "Destructuring assignment - empty for now!!" },
-        { title: "Date and time",                   Text: "Date and time - empty for now!!" },
-        { title: "JSON methods, toJSON",            Text: "JSON methods, toJSON - empty for now!!" },
+        { title: "Numbers", Text: "Numbers - empty for now!!" },
+        { title: "Strings", Text: "Strings - empty for now!!" },
+        { title: "Arrays", Text: "Arrays - empty for now!!" },
+        { title: "Array methods", Text: "Array methods - empty for now!!" },
+        { title: "Iterables", Text: "Iterables - empty for now!!" },
+        { title: "Map and Set", Text: "Map and Set - empty for now!!" },
+        {
+          title: "WeakMap and WeakSet",
+          Text: "WeakMap and WeakSet - empty for now!!",
+        },
+        {
+          title: "Object.keys, values, entries",
+          Text: "Object.keys, values, entries - empty for now!!",
+        },
+        {
+          title: "Destructuring assignment",
+          Text: "Destructuring assignment - empty for now!!",
+        },
+        { title: "Date and time", Text: "Date and time - empty for now!!" },
+        {
+          title: "JSON methods, toJSON",
+          Text: "JSON methods, toJSON - empty for now!!",
+        },
       ],
     },
     {
@@ -222,14 +288,12 @@ const javascriptCourse = {
   ],
 };
 
-
 /* ============================================================
    SECTION 2: INJECT RICH HTML CONTENT
    Lesson Text is assigned here to keep the initial data compact.
    For maximum robustness, consider inlining each Text into the
    sections[4].lessons[x] object above to avoid post-declaration mutation.
    ============================================================ */
-
 
 javascriptCourse.sections[4].lessons[0].Text = `
 <main class="doc">
@@ -584,10 +648,6 @@ Accessing properties on null or undefined results in an error.
 
 </main>
 `;
-
-
-
-
 
 javascriptCourse.sections[4].lessons[1].Text = `
 <main class="doc">
@@ -2852,8 +2912,6 @@ alert(arraysEqual([1,2],[1,2]));
 
 `;
 
-
-
 javascriptCourse.sections[4].lessons[5].Text = `
 <main class="doc">
 
@@ -3685,7 +3743,6 @@ set.forEach((value,valueAgain,set)=>{
 </main>
 `;
 
-
 javascriptCourse.sections[4].lessons[7].Text = `
 <main class="doc">
 
@@ -4316,8 +4373,6 @@ allows powerful object transformations.</li>
 </main>
 `;
 
-
-
 javascriptCourse.sections[4].lessons[9].Text = `
 <main class="doc">
 
@@ -4817,7 +4872,6 @@ alert(\`\${title} \${width} \${height}\`);
 
 </main>
 `;
-
 
 javascriptCourse.sections[4].lessons[10].Text = `
 <main class="doc">
@@ -5811,44 +5865,58 @@ alert(meetup.date.getDate());
 </main>
 `;
 
-
 /* ============================================================
    SECTION 3: APP INITIALIZATION
    Section switcher, hash routing, completion, search, prev/next
    ============================================================ */
 (function initApp() {
-let _tocObserver = null;
-  const COMPLETION_STORAGE_KEY = 'jslr-completed';
+  // Tracks the last visited lesson index for each section
+  const lastVisitedLesson = {};
+  let _tocObserver = null;
+  const COMPLETION_STORAGE_KEY = "jslr-completed";
 
   function getLessonSlug(lesson) {
     if (lesson.slug) return lesson.slug;
-    return String(lesson.title).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'lesson';
+    return (
+      String(lesson.title)
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-|-$/g, "") || "lesson"
+    );
   }
 
   function applyHighlighting() {
-  contentEl.querySelectorAll('.code-block code').forEach(function (codeEl) {
-    // Mark as JavaScript so Prism knows what grammar to use
-    if (!codeEl.className.includes('language-')) {
-      codeEl.classList.add('language-javascript');
-    }
-    // Prism needs the parent pre to have the class too
-    var pre = codeEl.parentElement;
-    if (pre && !pre.className.includes('language-')) {
-      pre.classList.add('language-javascript');
-    }
-    Prism.highlightElement(codeEl);
-  });
-}
+    contentEl.querySelectorAll(".code-block code").forEach(function (codeEl) {
+      // Mark as JavaScript so Prism knows what grammar to use
+      if (!codeEl.className.includes("language-")) {
+        codeEl.classList.add("language-javascript");
+      }
+      // Prism needs the parent pre to have the class too
+      var pre = codeEl.parentElement;
+      if (pre && !pre.className.includes("language-")) {
+        pre.classList.add("language-javascript");
+      }
+      Prism.highlightElement(codeEl);
+    });
+  }
 
   function getLessons(section) {
     if (section.lessons) return section.lessons;
     if (section.subsections) {
       return section.subsections.flatMap(function (sub) {
         return (sub.lessons || []).map(function (lesson) {
-          var prefix = String(sub.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'sub';
+          var prefix =
+            String(sub.title || "")
+              .toLowerCase()
+              .replace(/[^a-z0-9]+/g, "-")
+              .replace(/^-|-$/g, "") || "sub";
           if (!lesson.slug) {
-            var base = String(lesson.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'lesson';
-            lesson.slug = prefix + '-' + base;
+            var base =
+              String(lesson.title || "")
+                .toLowerCase()
+                .replace(/[^a-z0-9]+/g, "-")
+                .replace(/^-|-$/g, "") || "lesson";
+            lesson.slug = prefix + "-" + base;
           }
           return lesson;
         });
@@ -5858,7 +5926,7 @@ let _tocObserver = null;
   }
 
   function getCompletionKey(sectionId, lessonIndex) {
-    return sectionId + '/' + lessonIndex;
+    return sectionId + "/" + lessonIndex;
   }
 
   function loadCompletion() {
@@ -5890,7 +5958,7 @@ let _tocObserver = null;
 
   // Sync in-memory lesson.completed from persisted state
   javascriptCourse.sections.forEach(function (section) {
-    var sectionId = section.id || '';
+    var sectionId = section.id || "";
     getLessons(section).forEach(function (lesson, i) {
       if (lesson.completed !== undefined) {
         lesson.completed = !!completionState[getCompletionKey(sectionId, i)];
@@ -5899,26 +5967,27 @@ let _tocObserver = null;
   });
 
   // ── DOM references ──
-  const navEl = document.getElementById('lessonNav');
-  const contentEl = document.getElementById('lessonContent');
-  const progressFill = document.getElementById('progressFill');
-  const progressPercent = document.getElementById('progressPercent');
-  const sectionSwitcherEl = document.getElementById('sectionSwitcher');
-  const sectionBadge = document.getElementById('sectionBadge');
-  const sectionHeading = document.getElementById('sectionHeading');
-  const sectionSubtext = document.getElementById('sectionSubtext');
-  const lessonSearchEl = document.getElementById('lessonSearch');
-  const lessonNavFooter = document.getElementById('lessonNavFooter');
-  const mainEl = document.getElementById('mainContent');
-  const sidebarEl = document.getElementById('sidebar');
-  const sidebarToggle = document.getElementById('sidebarToggle');
-  const sidebarBackdrop = document.getElementById('sidebarBackdrop');
-  const scrollBtn = document.querySelector('.outer');
-  const contentWrapEl = document.getElementById('contentWrap') || contentEl.parentElement;
-  const contentMainEl = document.getElementById('contentMain');
+  const navEl = document.getElementById("lessonNav");
+  const contentEl = document.getElementById("lessonContent");
+  const progressFill = document.getElementById("progressFill");
+  const progressPercent = document.getElementById("progressPercent");
+  const sectionSwitcherEl = document.getElementById("sectionSwitcher");
+  const sectionBadge = document.getElementById("sectionBadge");
+  const sectionHeading = document.getElementById("sectionHeading");
+  const sectionSubtext = document.getElementById("sectionSubtext");
+  const lessonSearchEl = document.getElementById("lessonSearch");
+  const lessonNavFooter = document.getElementById("lessonNavFooter");
+  const mainEl = document.getElementById("mainContent");
+  const sidebarEl = document.getElementById("sidebar");
+  const sidebarToggle = document.getElementById("sidebarToggle");
+  const sidebarBackdrop = document.getElementById("sidebarBackdrop");
+  const scrollBtn = document.querySelector(".outer");
+  const contentWrapEl =
+    document.getElementById("contentWrap") || contentEl.parentElement;
+  const contentMainEl = document.getElementById("contentMain");
 
   if (!navEl || !contentEl) {
-    console.error('App: Required DOM elements not found.');
+    console.error("App: Required DOM elements not found.");
     return;
   }
 
@@ -5936,27 +6005,34 @@ let _tocObserver = null;
 
   let _isInternalHashChange = false;
   function setHash(sectionId, lessonSlug) {
-    var hash = (sectionId || getSectionId()) + '/' + (lessonSlug || getLessonSlug(lessons[currentLessonIndex]));
-    if (window.location.hash !== '#' + hash) {
+    var hash =
+      (sectionId || getSectionId()) +
+      "/" +
+      (lessonSlug || getLessonSlug(lessons[currentLessonIndex]));
+    if (window.location.hash !== "#" + hash) {
       _isInternalHashChange = true;
       window.location.hash = hash;
     }
   }
 
   function parseHash() {
-    const hash = (window.location.hash || '').replace(/^#/, '');
-    const [sectionId, lessonSlug] = hash.split('/');
+    const hash = (window.location.hash || "").replace(/^#/, "");
+    const [sectionId, lessonSlug] = hash.split("/");
     return { sectionId: sectionId || null, lessonSlug: lessonSlug || null };
   }
 
   function applyHash() {
     const { sectionId, lessonSlug } = parseHash();
     if (!sectionId) return false;
-    const sectionIndex = javascriptCourse.sections.findIndex(function (s) { return (s.id || '') === sectionId; });
+    const sectionIndex = javascriptCourse.sections.findIndex(function (s) {
+      return (s.id || "") === sectionId;
+    });
     if (sectionIndex === -1) return false;
     const section = javascriptCourse.sections[sectionIndex];
     const sectionLessons = getLessons(section);
-    const lessonIndex = sectionLessons.findIndex(function (l) { return getLessonSlug(l) === lessonSlug; });
+    const lessonIndex = sectionLessons.findIndex(function (l) {
+      return getLessonSlug(l) === lessonSlug;
+    });
     if (lessonIndex === -1) return false;
     currentSectionIndex = sectionIndex;
     currentLessonIndex = lessonIndex;
@@ -5980,31 +6056,42 @@ let _tocObserver = null;
   // ── Section switcher (2-col cards with progress) ──
   function buildSectionSwitcher() {
     if (!sectionSwitcherEl) return;
-    sectionSwitcherEl.innerHTML = '';
+    sectionSwitcherEl.innerHTML = "";
     javascriptCourse.sections.forEach(function (section, idx) {
       var isActive = idx === currentSectionIndex;
       var progress = getSectionProgress(idx);
-      var card = document.createElement('button');
-      card.type = 'button';
-      card.setAttribute('role', 'tab');
-      card.className = 'section-card' + (isActive ? ' active' : '');
-      card.setAttribute('aria-selected', isActive);
-      card.setAttribute('data-section-index', idx);
-      var pct = progress.total ? Math.round((progress.completed / progress.total) * 100) : 0;
-      card.setAttribute('title', section.title || '');
+      var card = document.createElement("button");
+      card.type = "button";
+      card.setAttribute("role", "tab");
+      card.className = "section-card" + (isActive ? " active" : "");
+      card.setAttribute("aria-selected", isActive);
+      card.setAttribute("data-section-index", idx);
+      var pct = progress.total
+        ? Math.round((progress.completed / progress.total) * 100)
+        : 0;
+      card.setAttribute("title", section.title || "");
       card.innerHTML =
-        '<span class="section-card-title">' + escapeHtml(section.title) + '</span>' +
-        '<span class="section-card-meta">' + progress.completed + '/' + progress.total + ' lessons</span>' +
-        '<div class="section-card-progress-track"><div class="section-card-progress-fill" style="width:' + pct + '%"></div></div>';
-      card.addEventListener('click', function () {
+        '<span class="section-card-title">' +
+        escapeHtml(section.title) +
+        "</span>" +
+        '<span class="section-card-meta">' +
+        progress.completed +
+        "/" +
+        progress.total +
+        " lessons</span>" +
+        '<div class="section-card-progress-track"><div class="section-card-progress-fill" style="width:' +
+        pct +
+        '%"></div></div>';
+      card.addEventListener("click", function () {
         currentSectionIndex = idx;
         lessons = getLessons(section);
-        currentLessonIndex = 0;
-        setHash(section.id || idx, getLessonSlug(lessons[0]));
+        var resumeIndex =
+          lastVisitedLesson[idx] !== undefined ? lastVisitedLesson[idx] : 0;
+        setHash(section.id || idx, getLessonSlug(lessons[resumeIndex]));
         updateSectionInfo();
-        if (lessonSearchEl) lessonSearchEl.value = '';
+        if (lessonSearchEl) lessonSearchEl.value = "";
         buildLessonList();
-        selectLesson(0);
+        selectLesson(resumeIndex);
       });
       sectionSwitcherEl.appendChild(card);
     });
@@ -6013,22 +6100,27 @@ let _tocObserver = null;
   function updateSectionInfo() {
     const section = getSection();
     if (!section) return;
-    if (sectionBadge) sectionBadge.textContent = 'Chapter ' + (currentSectionIndex + 1);
+    if (sectionBadge)
+      sectionBadge.textContent = "Chapter " + (currentSectionIndex + 1);
     if (sectionHeading) sectionHeading.textContent = section.title;
-    if (sectionSubtext) sectionSubtext.textContent = section.description || '';
+    if (sectionSubtext) sectionSubtext.textContent = section.description || "";
   }
 
   function buildLessonList() {
-    navEl.innerHTML = '';
-    const query = (lessonSearchEl && lessonSearchEl.value || '').trim().toLowerCase();
+    navEl.innerHTML = "";
+    const query = ((lessonSearchEl && lessonSearchEl.value) || "")
+      .trim()
+      .toLowerCase();
     const filtered = query
-      ? lessons.filter(function (l) { return (l.title || '').toLowerCase().includes(query); })
+      ? lessons.filter(function (l) {
+          return (l.title || "").toLowerCase().includes(query);
+        })
       : lessons;
 
     if (filtered.length === 0) {
-      const msg = document.createElement('p');
-      msg.className = 'sidebar-no-results';
-      msg.textContent = query ? 'No lessons match your search.' : 'No lessons.';
+      const msg = document.createElement("p");
+      msg.className = "sidebar-no-results";
+      msg.textContent = query ? "No lessons match your search." : "No lessons.";
       navEl.appendChild(msg);
       return;
     }
@@ -6037,33 +6129,44 @@ let _tocObserver = null;
       const lessonIndex = lessons.indexOf(filtered[listIndex]);
       const lesson = lessons[lessonIndex];
       var hasContent = !!lesson.Text;
-      const btn = document.createElement('button');
-      btn.className = 'lesson-item' + (lessonIndex === currentLessonIndex ? ' active' : '') + (isCompleted(getSectionId(), lessonIndex) ? ' completed' : '') + (hasContent ? '' : ' no-content');
-      btn.setAttribute('data-lesson-index', lessonIndex);
-      btn.setAttribute('tabindex', '0');
-      btn.setAttribute('aria-label', 'Lesson ' + (lessonIndex + 1) + ': ' + lesson.title + (hasContent ? '' : ' (coming soon)'));
+      const btn = document.createElement("button");
+      btn.className =
+        "lesson-item" +
+        (lessonIndex === currentLessonIndex ? " active" : "") +
+        (isCompleted(getSectionId(), lessonIndex) ? " completed" : "") +
+        (hasContent ? "" : " no-content");
+      btn.setAttribute("data-lesson-index", lessonIndex);
+      btn.setAttribute("tabindex", "0");
+      btn.setAttribute(
+        "aria-label",
+        "Lesson " +
+          (lessonIndex + 1) +
+          ": " +
+          lesson.title +
+          (hasContent ? "" : " (coming soon)"),
+      );
 
-      const numSpan = document.createElement('span');
-      numSpan.className = 'lesson-num';
-      numSpan.textContent = String(lessonIndex + 1).padStart(2, '0');
-      numSpan.setAttribute('aria-hidden', 'true');
+      const numSpan = document.createElement("span");
+      numSpan.className = "lesson-num";
+      numSpan.textContent = String(lessonIndex + 1).padStart(2, "0");
+      numSpan.setAttribute("aria-hidden", "true");
 
-      const titleSpan = document.createElement('span');
-      titleSpan.className = 'lesson-title-text';
+      const titleSpan = document.createElement("span");
+      titleSpan.className = "lesson-title-text";
       titleSpan.textContent = lesson.title;
 
       if (!hasContent) {
-        var soonSpan = document.createElement('span');
-        soonSpan.className = 'lesson-soon';
-        soonSpan.textContent = 'soon';
-        soonSpan.setAttribute('aria-hidden', 'true');
+        var soonSpan = document.createElement("span");
+        soonSpan.className = "lesson-soon";
+        soonSpan.textContent = "soon";
+        soonSpan.setAttribute("aria-hidden", "true");
         btn.appendChild(numSpan);
         btn.appendChild(titleSpan);
         btn.appendChild(soonSpan);
       } else {
-        var iconSpan = document.createElement('span');
-        iconSpan.className = 'lesson-completed-icon';
-        iconSpan.setAttribute('aria-hidden', 'true');
+        var iconSpan = document.createElement("span");
+        iconSpan.className = "lesson-completed-icon";
+        iconSpan.setAttribute("aria-hidden", "true");
         iconSpan.innerHTML = '<i class="fa-solid fa-circle-check"></i>';
         btn.appendChild(numSpan);
         btn.appendChild(titleSpan);
@@ -6071,30 +6174,33 @@ let _tocObserver = null;
       }
       navEl.appendChild(btn);
 
-      btn.addEventListener('click', function () {
+      btn.addEventListener("click", function () {
         if (!hasContent) return;
         selectLesson(lessonIndex);
         if (window.innerWidth <= 768 && sidebarEl) {
-          sidebarEl.classList.remove('is-open');
-          if (sidebarBackdrop) sidebarBackdrop.classList.remove('is-visible');
-          if (sidebarToggle) sidebarToggle.setAttribute('aria-expanded', 'false');
+          sidebarEl.classList.remove("is-open");
+          if (sidebarBackdrop) sidebarBackdrop.classList.remove("is-visible");
+          if (sidebarToggle)
+            sidebarToggle.setAttribute("aria-expanded", "false");
         }
       });
-      btn.addEventListener('keydown', function (e) {
-        if (!hasContent && (e.key === 'Enter' || e.key === ' ')) {
+      btn.addEventListener("keydown", function (e) {
+        if (!hasContent && (e.key === "Enter" || e.key === " ")) {
           e.preventDefault();
           return;
         }
-        var items = navEl.querySelectorAll('.lesson-item:not([style*="display: none"])');
-        if (!items.length) items = navEl.querySelectorAll('.lesson-item');
+        var items = navEl.querySelectorAll(
+          '.lesson-item:not([style*="display: none"])',
+        );
+        if (!items.length) items = navEl.querySelectorAll(".lesson-item");
         var idx = Array.prototype.indexOf.call(items, btn);
-        if (e.key === 'ArrowDown' && idx < items.length - 1) {
+        if (e.key === "ArrowDown" && idx < items.length - 1) {
           e.preventDefault();
           items[idx + 1].focus();
-        } else if (e.key === 'ArrowUp' && idx > 0) {
+        } else if (e.key === "ArrowUp" && idx > 0) {
           e.preventDefault();
           items[idx - 1].focus();
-        } else if (e.key === 'Enter' || e.key === ' ') {
+        } else if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
           btn.click();
         }
@@ -6108,28 +6214,36 @@ let _tocObserver = null;
       return (
         '<div class="placeholder-content">' +
         '<div class="placeholder-icon">🚧</div>' +
-        '<h2 class="placeholder-title">' + escapeHtml(lesson.title) + '</h2>' +
+        '<h2 class="placeholder-title">' +
+        escapeHtml(lesson.title) +
+        "</h2>" +
         '<p class="placeholder-text">This lesson is currently being written. Check back soon for the full content.</p>' +
         '<span class="placeholder-tag">Coming Soon</span>' +
-        '</div>'
+        "</div>"
       );
     }
     const text = lesson.Text.trim();
-    if (text.startsWith('<')) return text;
+    if (text.startsWith("<")) return text;
     return renderPlainText(text);
   }
 
   function renderPlainText(text) {
-    const lines = text.split('\n');
+    const lines = text.split("\n");
     const blocks = [];
     const bullets = [];
 
     function flushBullets() {
       if (bullets.length > 0) {
-        const items = bullets.map(function (b) {
-          return '<li class="bullet-item"><span class="bullet-dot" aria-hidden="true"></span><span>' + escapeHtml(b) + '</span></li>';
-        }).join('\n');
-        blocks.push('<ul class="bullet-list">' + items + '</ul>');
+        const items = bullets
+          .map(function (b) {
+            return (
+              '<li class="bullet-item"><span class="bullet-dot" aria-hidden="true"></span><span>' +
+              escapeHtml(b) +
+              "</span></li>"
+            );
+          })
+          .join("\n");
+        blocks.push('<ul class="bullet-list">' + items + "</ul>");
         bullets.length = 0;
       }
     }
@@ -6137,33 +6251,39 @@ let _tocObserver = null;
     for (var i = 0; i < lines.length; i++) {
       var trimmed = lines[i].trim();
       if (!trimmed) continue;
-      if (trimmed.indexOf('• ') === 0) {
+      if (trimmed.indexOf("• ") === 0) {
         bullets.push(trimmed.slice(2));
-      } else if (trimmed.indexOf('> ') === 0) {
+      } else if (trimmed.indexOf("> ") === 0) {
         flushBullets();
-        blocks.push('<blockquote>' + escapeHtml(trimmed.slice(2)) + '</blockquote>');
+        blocks.push(
+          "<blockquote>" + escapeHtml(trimmed.slice(2)) + "</blockquote>",
+        );
       } else {
         flushBullets();
-        blocks.push('<p>' + escapeHtml(trimmed) + '</p>');
+        blocks.push("<p>" + escapeHtml(trimmed) + "</p>");
       }
     }
     flushBullets();
-    return '<div class="rendered-text">' + blocks.join('\n') + '</div>';
+    return '<div class="rendered-text">' + blocks.join("\n") + "</div>";
   }
 
   function escapeHtml(str) {
     return String(str)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;');
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
   }
 
   function updateProgress() {
-    var completedCount = lessons.filter(function (_, i) { return isCompleted(getSectionId(), i); }).length;
-    const pct = lessons.length ? Math.round((completedCount / lessons.length) * 100) : 0;
-    if (progressFill) progressFill.style.width = pct + '%';
-    if (progressPercent) progressPercent.textContent = pct + '%';
+    var completedCount = lessons.filter(function (_, i) {
+      return isCompleted(getSectionId(), i);
+    }).length;
+    const pct = lessons.length
+      ? Math.round((completedCount / lessons.length) * 100)
+      : 0;
+    if (progressFill) progressFill.style.width = pct + "%";
+    if (progressPercent) progressPercent.textContent = pct + "%";
   }
 
   function updatePrevNext() {
@@ -6178,34 +6298,52 @@ let _tocObserver = null;
       '<div class="lesson-nav-prev">' +
       (prevLesson
         ? '<button type="button" class="btn-prev" aria-label="Previous lesson">' +
-          '<i class="fa-solid fa-arrow-left"></i> ' + escapeHtml(prevLesson.title) + '</button>'
+          '<i class="fa-solid fa-arrow-left"></i> ' +
+          escapeHtml(prevLesson.title) +
+          "</button>"
         : '<button type="button" class="btn-prev" disabled>Previous</button>') +
-      '</div>' +
+      "</div>" +
       '<div class="mark-complete-wrap">' +
-      '<button type="button" class="mark-complete-btn' + (completed ? ' completed' : '') + '" id="markCompleteBtn" aria-pressed="' + completed + '">' +
-      (completed ? '<i class="fa-solid fa-check-circle"></i> Completed' : '<i class="fa-regular fa-circle"></i> Mark as complete') +
-      '</button>' +
-      '</div>' +
+      '<button type="button" class="mark-complete-btn' +
+      (completed ? " completed" : "") +
+      '" id="markCompleteBtn" aria-pressed="' +
+      completed +
+      '">' +
+      (completed
+        ? '<i class="fa-solid fa-check-circle"></i> Completed'
+        : '<i class="fa-regular fa-circle"></i> Mark as complete') +
+      "</button>" +
+      "</div>" +
       '<div class="lesson-nav-next">' +
       (nextLesson
         ? '<button type="button" class="btn-next" aria-label="Next lesson">' +
-          escapeHtml(nextLesson.title) + ' <i class="fa-solid fa-arrow-right"></i></button>'
+          escapeHtml(nextLesson.title) +
+          ' <i class="fa-solid fa-arrow-right"></i></button>'
         : '<button type="button" class="btn-next" disabled>Next</button>') +
-      '</div>';
+      "</div>";
 
-    var prevBtn = lessonNavFooter.querySelector('.btn-prev');
-    var nextBtn = lessonNavFooter.querySelector('.btn-next');
-    var markBtn = document.getElementById('markCompleteBtn');
-    if (prevBtn && prevLesson) prevBtn.addEventListener('click', function () { selectLesson(prevIndex); });
-    if (nextBtn && nextLesson) nextBtn.addEventListener('click', function () { selectLesson(nextIndex); });
+    var prevBtn = lessonNavFooter.querySelector(".btn-prev");
+    var nextBtn = lessonNavFooter.querySelector(".btn-next");
+    var markBtn = document.getElementById("markCompleteBtn");
+    if (prevBtn && prevLesson)
+      prevBtn.addEventListener("click", function () {
+        selectLesson(prevIndex);
+      });
+    if (nextBtn && nextLesson)
+      nextBtn.addEventListener("click", function () {
+        selectLesson(nextIndex);
+      });
     if (markBtn) {
-      markBtn.addEventListener('click', function () {
+      markBtn.addEventListener("click", function () {
         var completedNew = !isCompleted(getSectionId(), currentLessonIndex);
         setCompleted(getSectionId(), currentLessonIndex, completedNew);
-        if (lessons[currentLessonIndex].completed !== undefined) lessons[currentLessonIndex].completed = completedNew;
-        markBtn.classList.toggle('completed', completedNew);
-        markBtn.setAttribute('aria-pressed', completedNew);
-        markBtn.innerHTML = completedNew ? '<i class="fa-solid fa-check-circle"></i> Completed' : '<i class="fa-regular fa-circle"></i> Mark as complete';
+        if (lessons[currentLessonIndex].completed !== undefined)
+          lessons[currentLessonIndex].completed = completedNew;
+        markBtn.classList.toggle("completed", completedNew);
+        markBtn.setAttribute("aria-pressed", completedNew);
+        markBtn.innerHTML = completedNew
+          ? '<i class="fa-solid fa-check-circle"></i> Completed'
+          : '<i class="fa-regular fa-circle"></i> Mark as complete';
         updateProgress();
         buildLessonList();
         buildSectionSwitcher();
@@ -6216,6 +6354,7 @@ let _tocObserver = null;
   function selectLesson(index) {
     if (index < 0 || index >= lessons.length) return;
     currentLessonIndex = index;
+    lastVisitedLesson[currentSectionIndex] = index;
     var lesson = lessons[currentLessonIndex];
 
     setHash(getSectionId(), getLessonSlug(lesson));
@@ -6223,9 +6362,9 @@ let _tocObserver = null;
     // Avoid full rebuild on every click (preserves keyboard focus)
     var nextActive = navEl.querySelector('[data-lesson-index="' + index + '"]');
     if (nextActive) {
-      var prevActive = navEl.querySelector('.lesson-item.active');
-      if (prevActive) prevActive.classList.remove('active');
-      nextActive.classList.add('active');
+      var prevActive = navEl.querySelector(".lesson-item.active");
+      if (prevActive) prevActive.classList.remove("active");
+      nextActive.classList.add("active");
     } else {
       buildLessonList();
     }
@@ -6233,51 +6372,57 @@ let _tocObserver = null;
     try {
       contentEl.innerHTML = renderContent(lesson);
     } catch (err) {
-      contentEl.innerHTML = '<div class="placeholder-content"><p class="placeholder-text">Failed to load this lesson. Please try again.</p></div>';
-      console.error('renderContent error:', err);
+      contentEl.innerHTML =
+        '<div class="placeholder-content"><p class="placeholder-text">Failed to load this lesson. Please try again.</p></div>';
+      console.error("renderContent error:", err);
     }
     if (contentMainEl) {
-      contentMainEl.classList.remove('animating');
+      contentMainEl.classList.remove("animating");
       requestAnimationFrame(function () {
         requestAnimationFrame(function () {
-          contentMainEl.classList.add('animating');
+          contentMainEl.classList.add("animating");
         });
       });
     }
 
-    (contentWrapEl || mainEl).scrollTo({ top: 0, behavior: 'smooth' });
+    (contentWrapEl || mainEl).scrollTo({ top: 0, behavior: "smooth" });
 
     updatePrevNext();
     updateProgress();
 
-    document.title = (lesson.title || 'Lesson') + ' — JavaScript Guide';
+    document.title = (lesson.title || "Lesson") + " — JavaScript Guide";
 
     injectCopyButtons();
-    applyHighlighting(); 
+    applyHighlighting();
     buildLessonToc();
   }
 
   function injectCopyButtons() {
-    var blocks = contentEl.querySelectorAll('.code-block');
+    var blocks = contentEl.querySelectorAll(".code-block");
     blocks.forEach(function (block) {
-      var existing = block.querySelector('.code-copy-btn');
+      var existing = block.querySelector(".code-copy-btn");
       if (existing) return;
-      var codeEl = block.querySelector('code') || block;
-      var btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'code-copy-btn';
-      btn.setAttribute('aria-label', 'Copy code');
+      var codeEl = block.querySelector("code") || block;
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "code-copy-btn";
+      btn.setAttribute("aria-label", "Copy code");
       btn.innerHTML = '<i class="fa-regular fa-copy" aria-hidden="true"></i>';
-      block.style.position = 'relative';
-      btn.addEventListener('click', function () {
-        var text = (codeEl.textContent || '').trim();
+      block.style.position = "relative";
+      btn.addEventListener("click", function () {
+        var text = (codeEl.textContent || "").trim();
         copyText(text).then(function (ok) {
           if (ok) {
-            btn.innerHTML = '<i class="fa-solid fa-check" aria-hidden="true"></i>';
+            btn.innerHTML =
+              '<i class="fa-solid fa-check" aria-hidden="true"></i>';
           } else {
-            btn.innerHTML = '<i class="fa-solid fa-xmark" aria-hidden="true"></i>';
+            btn.innerHTML =
+              '<i class="fa-solid fa-xmark" aria-hidden="true"></i>';
           }
-          setTimeout(function () { btn.innerHTML = '<i class="fa-regular fa-copy" aria-hidden="true"></i>'; }, 2000);
+          setTimeout(function () {
+            btn.innerHTML =
+              '<i class="fa-regular fa-copy" aria-hidden="true"></i>';
+          }, 2000);
         });
       });
       block.appendChild(btn);
@@ -6287,7 +6432,14 @@ let _tocObserver = null;
   function copyText(text) {
     try {
       if (navigator.clipboard && navigator.clipboard.writeText) {
-        return navigator.clipboard.writeText(text).then(function () { return true; }).catch(function () { return legacyCopy(text); });
+        return navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            return true;
+          })
+          .catch(function () {
+            return legacyCopy(text);
+          });
       }
       return Promise.resolve(legacyCopy(text));
     } catch (_) {
@@ -6297,14 +6449,14 @@ let _tocObserver = null;
 
   function legacyCopy(text) {
     try {
-      var ta = document.createElement('textarea');
+      var ta = document.createElement("textarea");
       ta.value = text;
-      ta.setAttribute('readonly', '');
-      ta.style.position = 'fixed';
-      ta.style.left = '-9999px';
+      ta.setAttribute("readonly", "");
+      ta.style.position = "fixed";
+      ta.style.left = "-9999px";
       document.body.appendChild(ta);
       ta.select();
-      var ok = document.execCommand('copy');
+      var ok = document.execCommand("copy");
       document.body.removeChild(ta);
       return !!ok;
     } catch (_) {
@@ -6312,77 +6464,80 @@ let _tocObserver = null;
     }
   }
 
-  
+  function buildLessonToc() {
+    var tocEl = document.getElementById("lessonToc");
+    if (!tocEl) return;
 
-function buildLessonToc() {
-  var tocEl = document.getElementById('lessonToc');
-  if (!tocEl) return;
+    // Disconnect any previous observer before rebuilding
+    if (_tocObserver) {
+      _tocObserver.disconnect();
+      _tocObserver = null;
+    }
 
-  // Disconnect any previous observer before rebuilding
-  if (_tocObserver) {
-    _tocObserver.disconnect();
-    _tocObserver = null;
-  }
+    var titles = contentEl.querySelectorAll("h2.section-title");
+    tocEl.innerHTML = "";
 
-  var titles = contentEl.querySelectorAll('h2.section-title');
-  tocEl.innerHTML = '';
+    if (titles.length === 0) {
+      tocEl.classList.remove("is-visible");
+      return;
+    }
 
-  if (titles.length === 0) {
-    tocEl.classList.remove('is-visible');
-    return;
-  }
+    var tocButtons = [];
 
-  var tocButtons = [];
+    titles.forEach(function (h2, i) {
+      var id = "doc-toc-h2-" + i;
+      h2.id = id;
 
-  titles.forEach(function (h2, i) {
-    var id = 'doc-toc-h2-' + i;
-    h2.id = id;
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "toc-link";
+      btn.textContent = h2.textContent.replace(/^\s*/, "").trim(); // strip leading whitespace from ::before pseudo
+      btn.setAttribute("data-toc-target", id);
 
-    var btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'toc-link';
-    btn.textContent = h2.textContent.replace(/^\s*/, '').trim(); // strip leading whitespace from ::before pseudo
-    btn.setAttribute('data-toc-target', id);
+      btn.addEventListener("click", function () {
+        h2.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
 
-    btn.addEventListener('click', function () {
-      h2.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      tocEl.appendChild(btn);
+      tocButtons.push(btn);
     });
 
-    tocEl.appendChild(btn);
-    tocButtons.push(btn);
-  });
+    tocEl.classList.add("is-visible");
 
-  tocEl.classList.add('is-visible');
+    // Intersection Observer: highlight the TOC entry for the visible heading
+    var scrollRoot = contentWrapEl || mainEl;
 
-  // Intersection Observer: highlight the TOC entry for the visible heading
-  var scrollRoot = contentWrapEl || mainEl;
+    _tocObserver = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          var id = entry.target.id;
+          var btn = tocEl.querySelector('[data-toc-target="' + id + '"]');
+          if (!btn) return;
+          if (entry.isIntersecting) {
+            // Remove active from all, set on this one
+            tocButtons.forEach(function (b) {
+              b.classList.remove("toc-active");
+            });
+            btn.classList.add("toc-active");
+          }
+        });
+      },
+      {
+        root: scrollRoot,
+        // Fire when heading enters the top 30% of the scroll container
+        rootMargin: "0px 0px -70% 0px",
+        threshold: 0,
+      },
+    );
 
-  _tocObserver = new IntersectionObserver(function (entries) {
-    entries.forEach(function (entry) {
-      var id = entry.target.id;
-      var btn = tocEl.querySelector('[data-toc-target="' + id + '"]');
-      if (!btn) return;
-      if (entry.isIntersecting) {
-        // Remove active from all, set on this one
-        tocButtons.forEach(function (b) { b.classList.remove('toc-active'); });
-        btn.classList.add('toc-active');
-      }
+    titles.forEach(function (h2) {
+      _tocObserver.observe(h2);
     });
-  }, {
-    root: scrollRoot,
-    // Fire when heading enters the top 30% of the scroll container
-    rootMargin: '0px 0px -70% 0px',
-    threshold: 0
-  });
-
-  titles.forEach(function (h2) {
-    _tocObserver.observe(h2);
-  });
-}
+  }
 
   // ── Search ──
   if (lessonSearchEl) {
-    lessonSearchEl.addEventListener('input', function () {
+    lessonSearchEl.addEventListener("input", function () {
       buildLessonList();
     });
   }
@@ -6390,30 +6545,31 @@ function buildLessonToc() {
   // ── Scroll-to-top button (content-wrap is the scroll container) ──
   var scrollContainer = contentWrapEl || mainEl;
   if (scrollBtn && scrollContainer) {
-    scrollContainer.addEventListener('scroll', function () {
-      scrollBtn.classList.toggle('is-visible', scrollContainer.scrollTop > 300);
+    scrollContainer.addEventListener("scroll", function () {
+      scrollBtn.classList.toggle("is-visible", scrollContainer.scrollTop > 300);
     });
-    scrollBtn.addEventListener('click', function () {
-      scrollContainer.scrollTo({ top: 0, behavior: 'smooth' });
+    scrollBtn.addEventListener("click", function () {
+      scrollContainer.scrollTo({ top: 0, behavior: "smooth" });
     });
   }
 
   // ── Mobile sidebar ──
   if (sidebarToggle && sidebarEl && sidebarBackdrop) {
     function openSidebar() {
-      sidebarEl.classList.add('is-open');
-      sidebarBackdrop.classList.add('is-visible');
-      sidebarToggle.setAttribute('aria-expanded', 'true');
+      sidebarEl.classList.add("is-open");
+      sidebarBackdrop.classList.add("is-visible");
+      sidebarToggle.setAttribute("aria-expanded", "true");
     }
     function closeSidebar() {
-      sidebarEl.classList.remove('is-open');
-      sidebarBackdrop.classList.remove('is-visible');
-      sidebarToggle.setAttribute('aria-expanded', 'false');
+      sidebarEl.classList.remove("is-open");
+      sidebarBackdrop.classList.remove("is-visible");
+      sidebarToggle.setAttribute("aria-expanded", "false");
     }
-    sidebarToggle.addEventListener('click', function () {
-      if (sidebarEl.classList.contains('is-open')) closeSidebar(); else openSidebar();
+    sidebarToggle.addEventListener("click", function () {
+      if (sidebarEl.classList.contains("is-open")) closeSidebar();
+      else openSidebar();
     });
-    sidebarBackdrop.addEventListener('click', closeSidebar);
+    sidebarBackdrop.addEventListener("click", closeSidebar);
   }
 
   // ── Init: apply hash or defaults ──
@@ -6425,7 +6581,7 @@ function buildLessonToc() {
   buildLessonList();
   selectLesson(currentLessonIndex);
 
-  window.addEventListener('hashchange', function () {
+  window.addEventListener("hashchange", function () {
     if (_isInternalHashChange) {
       _isInternalHashChange = false;
       return;

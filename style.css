@@ -4,11 +4,12 @@
                → Doc Components → Utilities → Responsive
    ============================================================ */
 
-
 /* ============================================================
    1. RESET & BASE
    ============================================================ */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -21,7 +22,7 @@ html {
 }
 
 body {
-  font-family: 'Outfit', sans-serif;
+  font-family: "Outfit", sans-serif;
   background-color: var(--surface-base);
   color: var(--text-primary);
   line-height: 1.7;
@@ -35,11 +36,13 @@ a {
   text-decoration: none;
 }
 
-ul, ol {
+ul,
+ol {
   list-style: none;
 }
 
-img, svg {
+img,
+svg {
   display: block;
   max-width: 100%;
 }
@@ -51,67 +54,66 @@ button {
   background: none;
 }
 
-
 /* ============================================================
    2. DESIGN TOKENS (CSS Variables)
    ============================================================ */
 :root {
   /* ── Surfaces ── */
-  --surface-base:     #0c0e14;
-  --surface-raised:   #111319;
-  --surface-overlay:  #181c26;
-  --surface-hover:    #1c2030;
-  --surface-active:   #1e2235;
-  --surface-border:   #222638;
+  --surface-base: #0c0e14;
+  --surface-raised: #111319;
+  --surface-overlay: #181c26;
+  --surface-hover: #1c2030;
+  --surface-active: #1e2235;
+  --surface-border: #222638;
   --surface-border-dim: #1a1e2e;
 
   /* ── Text ── */
-  --text-primary:   #dde1ed;
+  --text-primary: #dde1ed;
   --text-secondary: #8990ab;
-  --text-muted:     #4f566b;
-  --text-code:      #9eceff;
+  --text-muted: #4f566b;
+  --text-code: #9eceff;
 
   /* ── Brand Accent ── */
-  --accent:         #7c6eff;
-  --accent-soft:    rgba(124, 110, 255, 0.12);
-  --accent-glow:    rgba(124, 110, 255, 0.25);
-  --accent-text:    #a393ff;
-  --accent-dim:     rgba(124, 110, 255, 0.65);
+  --accent: #7c6eff;
+  --accent-soft: rgba(124, 110, 255, 0.12);
+  --accent-glow: rgba(124, 110, 255, 0.25);
+  --accent-text: #a393ff;
+  --accent-dim: rgba(124, 110, 255, 0.65);
 
   /* ── Semantic ── */
-  --color-note-bg:  rgba(59, 130, 246, 0.08);
-  --color-note-bd:  rgba(59, 130, 246, 0.25);
-  --color-note:     #60a5fa;
-  --color-warn:     #f59e0b;
-  --color-warn-bg:  rgba(245, 158, 11, 0.08);
-  --color-error:    #f87171;
-  --color-success:  #4ade80;
+  --color-note-bg: rgba(59, 130, 246, 0.08);
+  --color-note-bd: rgba(59, 130, 246, 0.25);
+  --color-note: #60a5fa;
+  --color-warn: #f59e0b;
+  --color-warn-bg: rgba(245, 158, 11, 0.08);
+  --color-error: #f87171;
+  --color-success: #4ade80;
 
   /* ── Typography ── */
-  --font-ui:   'Outfit', sans-serif;
-  --font-code: 'JetBrains Mono', 'Fira Code', monospace;
+  --font-ui: "Outfit", sans-serif;
+  --font-code: "JetBrains Mono", "Fira Code", monospace;
 
   /* ── Spacing Scale ── */
-  --sp-1:  4px;
-  --sp-2:  8px;
-  --sp-3:  12px;
-  --sp-4:  16px;
-  --sp-5:  20px;
-  --sp-6:  24px;
-  --sp-8:  32px;
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-8: 32px;
   --sp-10: 40px;
   --sp-12: 48px;
   --sp-16: 64px;
 
   /* ── Layout ── */
-  --sidebar-w:     270px;
-  --content-max:   780px;
+  --sidebar-w: 270px;
+  --content-max: 780px;
 
   /* ── Radii ── */
-  --r-sm:  4px;
-  --r-md:  8px;
-  --r-lg:  12px;
-  --r-xl:  16px;
+  --r-sm: 4px;
+  --r-md: 8px;
+  --r-lg: 12px;
+  --r-xl: 16px;
 
   /* ── Transitions ── */
   --t-fast: 0.14s ease;
@@ -119,10 +121,9 @@ button {
   --t-slow: 0.35s ease;
 
   /* ── Shadows ── */
-  --shadow-sm: 0 1px 4px rgba(0,0,0,0.4);
-  --shadow-md: 0 4px 16px rgba(0,0,0,0.5);
+  --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.5);
 }
-
 
 /* ============================================================
    3. APP LAYOUT
@@ -131,7 +132,6 @@ button {
   display: flex;
   min-height: 100vh;
 }
-
 
 /* ============================================================
    4. SIDEBAR
@@ -256,7 +256,10 @@ button {
   color: var(--text-secondary);
   text-align: left;
   cursor: pointer;
-  transition: color var(--t-fast), background var(--t-fast), border-color var(--t-fast);
+  transition:
+    color var(--t-fast),
+    background var(--t-fast),
+    border-color var(--t-fast);
   border-left: 2px solid transparent;
   user-select: none;
   line-height: 1.45;
@@ -374,7 +377,10 @@ button {
   border-radius: var(--r-md);
   cursor: pointer;
   text-align: left;
-  transition: color var(--t-fast), background var(--t-fast), border-color var(--t-fast);
+  transition:
+    color var(--t-fast),
+    background var(--t-fast),
+    border-color var(--t-fast);
 }
 
 .sidebar-section-switcher .section-card:hover {
@@ -481,7 +487,6 @@ button {
   border-radius: 100px;
   transition: width var(--t-slow);
 }
-
 
 /* ============================================================
    5. MAIN CONTENT AREA
@@ -595,7 +600,9 @@ button {
   border: 1px solid var(--accent-glow);
   border-radius: var(--r-md);
   cursor: pointer;
-  transition: background var(--t-fast), border-color var(--t-fast);
+  transition:
+    background var(--t-fast),
+    border-color var(--t-fast);
 }
 
 .lesson-nav-footer .btn-prev:hover:not(:disabled),
@@ -637,7 +644,10 @@ button {
   border: 1px solid var(--surface-border);
   border-radius: var(--r-md);
   cursor: pointer;
-  transition: color var(--t-fast), background var(--t-fast), border-color var(--t-fast);
+  transition:
+    color var(--t-fast),
+    background var(--t-fast),
+    border-color var(--t-fast);
 }
 
 .mark-complete-btn:hover {
@@ -653,7 +663,6 @@ button {
 .mark-complete-btn .fa-check-circle {
   color: var(--color-success);
 }
-
 
 /* ============================================================
    6. PLACEHOLDER (for lessons without content)
@@ -711,7 +720,6 @@ button {
   margin-top: var(--sp-2);
 }
 
-
 /* ============================================================
    7. PLAIN TEXT RENDERER
    (for lessons with raw text content)
@@ -766,7 +774,6 @@ button {
   line-height: 1.75;
 }
 
-
 /* ============================================================
    8. RESPONSIVE
    ============================================================ */
@@ -774,7 +781,7 @@ button {
   :root {
     --sidebar-w: 240px;
   }
-  
+
   .content-wrap {
     padding: var(--sp-8) var(--sp-8) var(--sp-12);
   }
@@ -894,15 +901,13 @@ button {
 }
 
 @media (max-width: 665px),
-       (min-width: 765px) and (max-width: 975px) ,
-       (min-width: 1090px) and (max-width: 1215px)  {
-   .lesson-nav-footer {
+  (min-width: 765px) and (max-width: 975px),
+  (min-width: 1090px) and (max-width: 1215px) {
+  .lesson-nav-footer {
     flex-direction: column !important;
-    justify-content: center ;
-   }
- 
+    justify-content: center;
+  }
 }
-
 
 .outer {
   position: fixed;
@@ -919,7 +924,10 @@ button {
   opacity: 0;
   visibility: hidden;
   transform: translateY(8px);
-  transition: opacity var(--t-base), visibility var(--t-base), transform var(--t-base);
+  transition:
+    opacity var(--t-base),
+    visibility var(--t-base),
+    transform var(--t-base);
 }
 
 .outer.is-visible {

@@ -4,7 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>JavaScript Guide — Data Types</title>
-    <meta name="description" content="A structured JavaScript learning platform covering data types and core language concepts." />
+    <meta
+      name="description"
+      content="A structured JavaScript learning platform covering data types and core language concepts."
+    />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -13,25 +16,41 @@
       href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,500;1,400&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
 
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="styleContent.css" />
     <script src="script.js" defer></script>
     <!-- Prism syntax highlighting (VS Code Tomorrow Dark theme) -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+    />
   </head>
 
   <body>
-    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle menu" aria-expanded="false">
+    <button
+      type="button"
+      class="sidebar-toggle"
+      id="sidebarToggle"
+      aria-label="Toggle menu"
+      aria-expanded="false"
+    >
       <i class="fa-solid fa-bars"></i>
     </button>
     <div class="sidebar-backdrop" id="sidebarBackdrop" aria-hidden="true"></div>
 
     <div class="app">
-
       <!-- ===== SIDEBAR ===== -->
-      <aside class="sidebar" id="sidebar" role="complementary" aria-label="Course navigation">
+      <aside
+        class="sidebar"
+        id="sidebar"
+        role="complementary"
+        aria-label="Course navigation"
+      >
         <div class="sidebar-header">
           <a href="#" class="sidebar-brand">
             <span class="brand-icon">JS</span>
@@ -40,19 +59,36 @@
         </div>
 
         <div class="sidebar-search-wrap">
-          <i class="fa-solid fa-search sidebar-search-icon" aria-hidden="true"></i>
-          <input type="search" class="sidebar-search" id="lessonSearch" placeholder="Search lessons…" aria-label="Search lessons" autocomplete="off" />
+          <i
+            class="fa-solid fa-search sidebar-search-icon"
+            aria-hidden="true"
+          ></i>
+          <input
+            type="search"
+            class="sidebar-search"
+            id="lessonSearch"
+            placeholder="Search lessons…"
+            aria-label="Search lessons"
+            autocomplete="off"
+          />
         </div>
 
         <div class="sidebar-scroll-area">
-          <div class="sidebar-section-switcher" id="sectionSwitcher" role="tablist" aria-label="Sections">
+          <div
+            class="sidebar-section-switcher"
+            id="sectionSwitcher"
+            role="tablist"
+            aria-label="Sections"
+          >
             <!-- Dynamically populated by script.js -->
           </div>
 
           <div class="sidebar-section-info" id="sidebarSectionInfo">
             <span class="section-badge" id="sectionBadge">Chapter 5</span>
             <h2 class="section-heading" id="sectionHeading">Data Types</h2>
-            <p class="section-subtext" id="sectionSubtext">Core data structures in JavaScript</p>
+            <p class="section-subtext" id="sectionSubtext">
+              Core data structures in JavaScript
+            </p>
           </div>
 
           <nav class="sidebar-nav" id="lessonNav" aria-label="Lesson list">
@@ -67,7 +103,11 @@
               <span id="progressPercent">0%</span>
             </div>
             <div class="progress-track">
-              <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+              <div
+                class="progress-fill"
+                id="progressFill"
+                style="width: 0%"
+              ></div>
             </div>
           </div>
         </div>
@@ -77,21 +117,35 @@
       <main class="main" id="mainContent">
         <div class="content-wrap" id="contentWrap">
           <div class="content-main" id="contentMain">
-            <div id="lessonContent" role="region" aria-live="polite" aria-label="Lesson content">
+            <div
+              id="lessonContent"
+              role="region"
+              aria-live="polite"
+              aria-label="Lesson content"
+            >
               <!-- Dynamically populated by script.js -->
             </div>
-            <footer class="lesson-nav-footer" id="lessonNavFooter" aria-label="Lesson navigation">
+            <footer
+              class="lesson-nav-footer"
+              id="lessonNavFooter"
+              aria-label="Lesson navigation"
+            >
               <!-- Prev/next buttons populated by script.js -->
             </footer>
           </div>
-          <aside id="lessonToc" class="lesson-toc" aria-label="On this page"></aside>
+          <aside
+            id="lessonToc"
+            class="lesson-toc"
+            aria-label="On this page"
+          ></aside>
         </div>
       </main>
-
     </div>
-    <div class="outer"><div class="inner"><i class="fa-solid fa-angles-up"></i></div></div>
+    <div class="outer">
+      <div class="inner"><i class="fa-solid fa-angles-up"></i></div>
+    </div>
     <!-- Prism core + JavaScript language component -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
   </body>
 </html>

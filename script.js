@@ -5825,6 +5825,21 @@ let _tocObserver = null;
     return String(lesson.title).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'lesson';
   }
 
+  function applyHighlighting() {
+  contentEl.querySelectorAll('.code-block code').forEach(function (codeEl) {
+    // Mark as JavaScript so Prism knows what grammar to use
+    if (!codeEl.className.includes('language-')) {
+      codeEl.classList.add('language-javascript');
+    }
+    // Prism needs the parent pre to have the class too
+    var pre = codeEl.parentElement;
+    if (pre && !pre.className.includes('language-')) {
+      pre.classList.add('language-javascript');
+    }
+    Prism.highlightElement(codeEl);
+  });
+}
+
   function getLessons(section) {
     if (section.lessons) return section.lessons;
     if (section.subsections) {
@@ -6238,6 +6253,7 @@ let _tocObserver = null;
     document.title = (lesson.title || 'Lesson') + ' — JavaScript Guide';
 
     injectCopyButtons();
+    applyHighlighting(); 
     buildLessonToc();
   }
 

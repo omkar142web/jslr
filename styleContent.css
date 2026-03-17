@@ -290,3 +290,101 @@
   vertical-align: middle;
   box-shadow: 0 0 6px var(--accent-glow);
 }
+
+
+
+
+/* ============================================================
+   PRISM.JS — VS Code Dark+ color overrides
+   ============================================================ */
+
+/* Kill Prism's own background so our .code-block styles win */
+code[class*="language-"],
+pre[class*="language-"] {
+  background: none !important;
+  text-shadow: none !important;
+  font-family: var(--font-code) !important;
+  font-size: 13px !important;
+}
+
+/* Keywords: let, const, var, function, return, if, for… */
+.token.keyword {
+  color: #569CD6;
+}
+
+/* Strings: "hello", 'world', `template` */
+.token.string,
+.token.template-string {
+  color: #CE9178;
+}
+
+/* Template literal punctuation `...` and ${} */
+.token.template-punctuation {
+  color: #CE9178;
+}
+.token.interpolation-punctuation {
+  color: #569CD6;
+}
+
+/* Numbers: 1, 2.5, 0xff */
+.token.number {
+  color: #B5CEA8;
+}
+
+/* Comments: // and /* */
+.token.comment {
+  color: #6A9955;
+  font-style: italic;
+}
+
+/* Booleans: true, false */
+.token.boolean {
+  color: #569CD6;
+}
+
+/* null, undefined */
+.token.null.keyword,
+.token.undefined {
+  color: #569CD6;
+}
+
+/* Function names */
+.token.function {
+  color: #DCDCAA;
+}
+
+/* Class names and constructors */
+.token.class-name {
+  color: #4EC9B0;
+}
+
+/* Operators: =, +, -, ===, => */
+.token.operator {
+  color: #D4D4D4;
+  background: none;
+}
+
+/* Punctuation: { } ( ) [ ] ; , . */
+.token.punctuation {
+  color: #D4D4D4;
+}
+
+/* Properties: obj.property */
+.token.property {
+  color: #9CDCFE;
+}
+
+/* Parameters and variables */
+.token.parameter {
+  color: #9CDCFE;
+}
+
+/* Built-ins: Math, Array, Object, console */
+.token.builtin {
+  color: #4EC9B0;
+}
+
+/* Regular expressions */
+.token.regex {
+  color: #D16969;
+}

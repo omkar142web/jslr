@@ -13549,6 +13549,10 @@ function defer(f, ms) {
     return STORAGE_NS + "-notes-" + sectionId + "/" + lessonIndex;
   }
 
+  function getNotesOpenKey(sectionId, lessonIndex) {
+    return STORAGE_NS + "-notes-open-" + sectionId + "/" + lessonIndex;
+  }
+
   function safeGetLocal(key) {
     try {
       return localStorage.getItem(key);
@@ -13569,6 +13573,7 @@ function defer(f, ms) {
   var _notesBody = null;
   var _notesSaveT = null;
   var _notesCurrentKey = null;
+  var _notesCurrentOpenKey = null;
 
   function ensureNotesPanel() {
     if (_notesEl) return _notesEl;
@@ -13598,6 +13603,9 @@ function defer(f, ms) {
       _notesToggle.setAttribute("aria-expanded", expanded ? "false" : "true");
       if (_notesBody) _notesBody.hidden = expanded;
       wrap.classList.toggle("is-open", !expanded);
+      if (_notesCurrentOpenKey) {
+        safeSetLocal(_notesCurrentOpenKey, expanded ? "0" : "1");
+      }
     });
 
     function scheduleSave() {
@@ -13620,8 +13628,14 @@ function defer(f, ms) {
   function mountNotesPanel(sectionId, lessonIndex) {
     ensureNotesPanel();
     _notesCurrentKey = getNotesKey(sectionId, lessonIndex);
+    _notesCurrentOpenKey = getNotesOpenKey(sectionId, lessonIndex);
     var saved = safeGetLocal(_notesCurrentKey);
     if (_notesTextarea) _notesTextarea.value = saved || "";
+
+    var open = safeGetLocal(_notesCurrentOpenKey) === "1";
+    if (_notesToggle) _notesToggle.setAttribute("aria-expanded", open ? "true" : "false");
+    if (_notesBody) _notesBody.hidden = !open;
+    if (_notesEl) _notesEl.classList.toggle("is-open", open);
 
     // Ensure it's placed right below lesson content
     if (_notesEl && _notesEl.parentElement !== contentEl) {

@@ -8,7 +8,7 @@
 }
 
 .doc-header {
-  margin-bottom: var(--sp-5);
+  margin-bottom: var(--sp-3);
   padding-bottom: var(--sp-8);
   border-bottom: 1px solid var(--surface-border);
 }

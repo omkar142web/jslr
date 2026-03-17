@@ -9654,7 +9654,7 @@ alert(obj + 2);
     const section = getSection();
     if (!section) return;
     if (sectionBadge)
-      sectionBadge.textContent = "Chapter " + (currentSectionIndex + 1);
+      sectionBadge.textContent = "Chapter No. " + (currentSectionIndex + 1);
     if (sectionHeading) sectionHeading.textContent = section.title;
     if (sectionSubtext) sectionSubtext.textContent = section.description || "";
   }

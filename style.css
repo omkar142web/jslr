@@ -89,6 +89,20 @@ button {
   --color-error: #f87171;
   --color-success: #4ade80;
 
+  /* Secondary Accent */
+  --secondary: hwb(188 13% 7%);
+  --secondary-soft: #22d3ee1f;
+  --secondary-glow: #22d3ee40;
+  --secondary-text: #67e8f9;
+  --secondary-dim: #22d3eea6;
+
+  /* Tertiary Accent */
+  --tertiary: #ec4899;
+  --tertiary-soft: #ec48991f;
+  --tertiary-glow: #ec489940;
+  --tertiary-text: #f472b6;
+  --tertiary-dim: #ec4899a6;
+
   /* ── Typography ── */
   --font-ui: "Outfit", sans-serif;
   --font-code: "JetBrains Mono", "Fira Code", monospace;
@@ -367,12 +381,13 @@ button {
   justify-content: center;
   /* align-items: flex-start; */
   align-items: center;
-  gap: var(--sp-1);
+  /* gap: var(--sp-1); */
+  gap: 7px;
   padding: var(--sp-3);
   font-size: 11px;
   font-weight: 500;
   color: var(--text-secondary);
-  background: var(--surface-overlay);
+  background: radial-gradient(140px 60px at 20% 15%, rgba(124, 110, 255, 0.12), transparent 60%), linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0.02)), var(--surface-overlay);;
   border: 1px solid var(--surface-border);
   border-radius: var(--r-md);
   cursor: pointer;

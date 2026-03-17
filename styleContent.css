@@ -502,3 +502,105 @@ pre[class*="language-"] {
   background: var(--accent-soft);
   border-color: var(--accent-glow);
 }
+
+/* ============================================================
+   Lesson Tags
+   ============================================================ */
+.lesson-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  margin-top: var(--sp-6);
+  margin-bottom: var(--sp-6);
+  padding-top: var(--sp-4);
+  border-top: 1px solid var(--surface-border-dim);
+}
+
+.lesson-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  background: var(--surface-raised);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--r-full, 9999px);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+  transition: all var(--t-fast);
+  white-space: nowrap;
+}
+
+.lesson-tag:hover {
+  background: var(--surface-hover);
+  color: var(--text-primary);
+  border-color: var(--surface-hover);
+}
+
+/* ============================================================
+   Related Lessons
+   ============================================================ */
+.related-lessons {
+  margin-top: var(--sp-6);
+  margin-bottom: var(--sp-8);
+  padding-top: var(--sp-6);
+  border-top: 1px solid var(--surface-border);
+}
+
+.related-lessons h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--sp-5);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+.related-lessons h3::before {
+  content: "";
+  display: inline-block;
+  width: 4px;
+  height: 18px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+
+.related-lessons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--sp-4);
+}
+
+.related-lesson-card {
+  display: flex;
+  flex-direction: column;
+  padding: var(--sp-4);
+  background: var(--surface-overlay);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--r-md);
+  text-decoration: none;
+  transition: all var(--t-fast);
+}
+
+.related-lesson-card:hover {
+  background: var(--surface-hover);
+  border-color: var(--accent-glow);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.related-lesson-section {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent);
+  margin-bottom: var(--sp-2);
+  font-weight: 600;
+}
+
+.related-lesson-title {
+  font-size: 14.5px;
+  font-weight: 500;
+  color: var(--text-primary);
+  line-height: 1.4;
+}

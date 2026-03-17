@@ -373,7 +373,8 @@ export const javascriptCourse = {
           "title": "Array methods",
           "contentUrl": "content/javascript/data-types/lesson-4.html",
           "tags": [
-            "data-types"
+            "data-types",
+            "Important"
           ]
         },
         {

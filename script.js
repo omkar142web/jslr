@@ -13738,7 +13738,14 @@ function defer(f, ms) {
       );
     }
     const text = lesson.Text.trim();
-    if (text.startsWith("<")) return text;
+    if (text.startsWith("<")) {
+      // Normalize whitespace inside code blocks (removes the blank line/indent
+      // right after the <code> tag in template literals).
+      return text.replace(
+        /<pre class="code-block"><code>\s+/g,
+        '<pre class="code-block"><code>',
+      );
+    }
     return renderPlainText(text);
   }
 

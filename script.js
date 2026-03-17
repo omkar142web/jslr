@@ -13382,6 +13382,22 @@ function defer(f, ms) {
   let _tocObserver = null;
   const COMPLETION_STORAGE_KEY = "jslr-completed";
 
+  function getResumeIndex(sectionIdx, sectionLessons) {
+  var sectionId = (javascriptCourse.sections[sectionIdx] || {}).id || String(sectionIdx);
+
+  // Find the first lesson that has content and is not completed
+  for (var i = 0; i < sectionLessons.length; i++) {
+    if (sectionLessons[i].Text && !isCompleted(sectionId, i)) {
+      return i;
+    }
+  }
+
+  // All content lessons completed — fall back to last visited, then first
+  return lastVisitedLesson[sectionIdx] !== undefined
+    ? lastVisitedLesson[sectionIdx]
+    : 0;
+}
+
   function getLessonSlug(lesson) {
     if (lesson.slug) return lesson.slug;
     return (
@@ -13592,8 +13608,9 @@ function defer(f, ms) {
       card.addEventListener("click", function () {
         currentSectionIndex = idx;
         lessons = getLessons(section);
-        var resumeIndex =
-          lastVisitedLesson[idx] !== undefined ? lastVisitedLesson[idx] : 0;
+        // var resumeIndex =
+          // lastVisitedLesson[idx] !== undefined ? lastVisitedLesson[idx] : 0;
+          var resumeIndex = getResumeIndex(idx, getLessons(section));
         setHash(section.id || idx, getLessonSlug(lessons[resumeIndex]));
         updateSectionInfo();
         if (lessonSearchEl) lessonSearchEl.value = "";

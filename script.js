@@ -225,7 +225,9 @@ const javascriptCourse = {
 
 /* ============================================================
    SECTION 2: INJECT RICH HTML CONTENT
-   Replace the "Numbers" lesson (index 1) with full doc HTML.
+   Lesson Text is assigned here to keep the initial data compact.
+   For maximum robustness, consider inlining each Text into the
+   sections[4].lessons[x] object above to avoid post-declaration mutation.
    ============================================================ */
 
 
@@ -5825,7 +5827,18 @@ alert(meetup.date.getDate());
 
   function getLessons(section) {
     if (section.lessons) return section.lessons;
-    if (section.subsections) return section.subsections.flatMap(function (sub) { return sub.lessons || []; });
+    if (section.subsections) {
+      return section.subsections.flatMap(function (sub) {
+        return (sub.lessons || []).map(function (lesson) {
+          var prefix = String(sub.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'sub';
+          if (!lesson.slug) {
+            var base = String(lesson.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'lesson';
+            lesson.slug = prefix + '-' + base;
+          }
+          return lesson;
+        });
+      });
+    }
     return [];
   }
 
@@ -5886,6 +5899,7 @@ alert(meetup.date.getDate());
   const sidebarToggle = document.getElementById('sidebarToggle');
   const sidebarBackdrop = document.getElementById('sidebarBackdrop');
   const scrollBtn = document.querySelector('.outer');
+  const contentWrapEl = document.getElementById('contentWrap') || contentEl.parentElement;
 
   if (!navEl || !contentEl) {
     console.error('App: Required DOM elements not found.');
@@ -5912,9 +5926,11 @@ alert(meetup.date.getDate());
     return (section.id || currentSectionIndex) + '/' + getLessonSlug(lesson);
   }
 
+  var _isInternalHashChange = false;
   function setHash(sectionId, lessonSlug) {
-    const hash = (sectionId || getSectionId()) + '/' + (lessonSlug || getLessonSlug(lessons[currentLessonIndex]));
+    var hash = (sectionId || getSectionId()) + '/' + (lessonSlug || getLessonSlug(lessons[currentLessonIndex]));
     if (window.location.hash !== '#' + hash) {
+      _isInternalHashChange = true;
       window.location.hash = hash;
     }
   }
@@ -5940,24 +5956,38 @@ alert(meetup.date.getDate());
     return true;
   }
 
-  // ── Section switcher ──
+  function getSectionProgress(sectionIndex) {
+    var section = javascriptCourse.sections[sectionIndex];
+    if (!section) return { completed: 0, total: 0 };
+    var sectionId = section.id || String(sectionIndex);
+    var list = getLessons(section);
+    var total = list.length;
+    var completed = 0;
+    for (var i = 0; i < total; i++) {
+      if (completionState[getCompletionKey(sectionId, i)]) completed++;
+    }
+    return { completed: completed, total: total };
+  }
+
+  // ── Section switcher (2-col cards with progress) ──
   function buildSectionSwitcher() {
     if (!sectionSwitcherEl) return;
     sectionSwitcherEl.innerHTML = '';
     javascriptCourse.sections.forEach(function (section, idx) {
       var isActive = idx === currentSectionIndex;
-      const tab = document.createElement('button');
-      tab.type = 'button';
-      tab.role = 'tab';
-      tab.className = 'section-tab' + (isActive ? ' active' : '');
-      tab.setAttribute('aria-selected', isActive);
-      tab.setAttribute('data-section-index', idx);
-      const num = document.createElement('span');
-      num.className = 'section-tab-num';
-      num.textContent = String(idx + 1);
-      tab.appendChild(num);
-      tab.appendChild(document.createTextNode(section.title));
-      tab.addEventListener('click', function () {
+      var progress = getSectionProgress(idx);
+      var card = document.createElement('button');
+      card.type = 'button';
+      card.role = 'tab';
+      card.className = 'section-card' + (isActive ? ' active' : '');
+      card.setAttribute('aria-selected', isActive);
+      card.setAttribute('data-section-index', idx);
+      var pct = progress.total ? Math.round((progress.completed / progress.total) * 100) : 0;
+      card.innerHTML =
+        '<span class="section-card-title">' + escapeHtml(section.title) + '</span>' +
+        '<span class="section-card-meta">' + progress.completed + '/' + progress.total + ' lessons</span>' +
+        '<div class="section-card-progress-track"><div class="section-card-progress-fill" style="width:' + pct + '%"></div></div>';
+      card.addEventListener('click', function () {
         currentSectionIndex = idx;
         lessons = getLessons(section);
         currentLessonIndex = 0;
@@ -5966,7 +5996,7 @@ alert(meetup.date.getDate());
         buildLessonList();
         selectLesson(0);
       });
-      sectionSwitcherEl.appendChild(tab);
+      sectionSwitcherEl.appendChild(card);
     });
   }
 
@@ -5996,10 +6026,12 @@ alert(meetup.date.getDate());
     filtered.forEach(function (_, listIndex) {
       const lessonIndex = lessons.indexOf(filtered[listIndex]);
       const lesson = lessons[lessonIndex];
+      var hasContent = !!lesson.Text;
       const btn = document.createElement('button');
-      btn.className = 'lesson-item' + (lessonIndex === currentLessonIndex ? ' active' : '') + (isCompleted(getSectionId(), lessonIndex) ? ' completed' : '');
+      btn.className = 'lesson-item' + (lessonIndex === currentLessonIndex ? ' active' : '') + (isCompleted(getSectionId(), lessonIndex) ? ' completed' : '') + (hasContent ? '' : ' no-content');
       btn.setAttribute('data-lesson-index', lessonIndex);
-      btn.setAttribute('aria-label', 'Lesson ' + (lessonIndex + 1) + ': ' + lesson.title);
+      btn.setAttribute('tabindex', '0');
+      btn.setAttribute('aria-label', 'Lesson ' + (lessonIndex + 1) + ': ' + lesson.title + (hasContent ? '' : ' (coming soon)'));
 
       const numSpan = document.createElement('span');
       numSpan.className = 'lesson-num';
@@ -6014,10 +6046,20 @@ alert(meetup.date.getDate());
       iconSpan.className = 'lesson-completed-icon';
       iconSpan.setAttribute('aria-hidden', 'true');
       iconSpan.innerHTML = '<i class="fa-solid fa-circle-check"></i>';
-
-      btn.appendChild(numSpan);
-      btn.appendChild(titleSpan);
-      btn.appendChild(iconSpan);
+      if (!hasContent) {
+        var soonSpan = document.createElement('span');
+        soonSpan.className = 'lesson-soon';
+        soonSpan.textContent = 'soon';
+        soonSpan.setAttribute('aria-hidden', 'true');
+        btn.appendChild(numSpan);
+        btn.appendChild(titleSpan);
+        btn.appendChild(soonSpan);
+        btn.appendChild(iconSpan);
+      } else {
+        btn.appendChild(numSpan);
+        btn.appendChild(titleSpan);
+        btn.appendChild(iconSpan);
+      }
       navEl.appendChild(btn);
 
       btn.addEventListener('click', function () {
@@ -6026,6 +6068,21 @@ alert(meetup.date.getDate());
           sidebarEl.classList.remove('is-open');
           if (sidebarBackdrop) sidebarBackdrop.classList.remove('is-visible');
           if (sidebarToggle) sidebarToggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+      btn.addEventListener('keydown', function (e) {
+        var items = navEl.querySelectorAll('.lesson-item:not([style*="display: none"])');
+        if (!items.length) items = navEl.querySelectorAll('.lesson-item');
+        var idx = Array.prototype.indexOf.call(items, btn);
+        if (e.key === 'ArrowDown' && idx < items.length - 1) {
+          e.preventDefault();
+          items[idx + 1].focus();
+        } else if (e.key === 'ArrowUp' && idx > 0) {
+          e.preventDefault();
+          items[idx - 1].focus();
+        } else if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          btn.click();
         }
       });
     });
@@ -6150,18 +6207,80 @@ alert(meetup.date.getDate());
 
     buildLessonList();
 
-    contentEl.innerHTML = renderContent(lesson);
-    contentEl.classList.remove('animating');
-    requestAnimationFrame(function () {
+    try {
+      contentEl.innerHTML = renderContent(lesson);
+    } catch (err) {
+      contentEl.innerHTML = '<div class="placeholder-content"><p class="placeholder-text">Failed to load this lesson. Please try again.</p></div>';
+      console.error('renderContent error:', err);
+    }
+    if (contentWrapEl) {
+      contentWrapEl.classList.remove('animating');
       requestAnimationFrame(function () {
-        contentEl.classList.add('animating');
+        requestAnimationFrame(function () {
+          contentWrapEl.classList.add('animating');
+        });
       });
-    });
+    }
 
-    if (mainEl) mainEl.scrollTo({ top: 0, behavior: 'smooth' });
+    (contentWrapEl || mainEl).scrollTo({ top: 0, behavior: 'smooth' });
 
-    updateProgress();
     updatePrevNext();
+    updateProgress();
+
+    document.title = (lesson.title || 'Lesson') + ' — JavaScript Guide';
+
+    injectCopyButtons();
+    buildLessonToc();
+  }
+
+  function injectCopyButtons() {
+    var blocks = contentEl.querySelectorAll('.code-block');
+    blocks.forEach(function (block) {
+      var existing = block.querySelector('.code-copy-btn');
+      if (existing) return;
+      var codeEl = block.querySelector('code') || block;
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'code-copy-btn';
+      btn.setAttribute('aria-label', 'Copy code');
+      btn.innerHTML = '<i class="fa-regular fa-copy" aria-hidden="true"></i>';
+      block.style.position = 'relative';
+      btn.addEventListener('click', function () {
+        var text = (codeEl.textContent || '').trim();
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(function () {
+            btn.innerHTML = '<i class="fa-solid fa-check" aria-hidden="true"></i>';
+            setTimeout(function () { btn.innerHTML = '<i class="fa-regular fa-copy" aria-hidden="true"></i>'; }, 2000);
+          });
+        }
+      });
+      block.appendChild(btn);
+    });
+  }
+
+  function buildLessonToc() {
+    var tocEl = document.getElementById('lessonToc');
+    if (!tocEl) return;
+    var titles = contentEl.querySelectorAll('h2.section-title');
+    tocEl.innerHTML = '';
+    if (titles.length === 0) {
+      tocEl.classList.remove('is-visible');
+      return;
+    }
+    titles.forEach(function (h2, i) {
+      var id = 'section-' + i;
+      if (!h2.id) h2.id = id;
+      var a = document.createElement('a');
+      a.href = '#' + id;
+      a.className = 'toc-link';
+      a.textContent = h2.textContent;
+      a.addEventListener('click', function (e) {
+        e.preventDefault();
+        h2.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+      tocEl.appendChild(a);
+    });
+    tocEl.classList.add('is-visible');
   }
 
   // ── Search ──
@@ -6171,13 +6290,14 @@ alert(meetup.date.getDate());
     });
   }
 
-  // ── Scroll-to-top button ──
-  if (scrollBtn && mainEl) {
-    mainEl.addEventListener('scroll', function () {
-      scrollBtn.classList.toggle('is-visible', mainEl.scrollTop > 300);
+  // ── Scroll-to-top button (content-wrap is the scroll container) ──
+  var scrollContainer = contentWrapEl || mainEl;
+  if (scrollBtn && scrollContainer) {
+    scrollContainer.addEventListener('scroll', function () {
+      scrollBtn.classList.toggle('is-visible', scrollContainer.scrollTop > 300);
     });
     scrollBtn.addEventListener('click', function () {
-      mainEl.scrollTo({ top: 0, behavior: 'smooth' });
+      scrollContainer.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
 
@@ -6209,6 +6329,10 @@ alert(meetup.date.getDate());
   selectLesson(currentLessonIndex);
 
   window.addEventListener('hashchange', function () {
+    if (_isInternalHashChange) {
+      _isInternalHashChange = false;
+      return;
+    }
     if (applyHash()) {
       updateSectionInfo();
       buildSectionSwitcher();

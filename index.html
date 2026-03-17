@@ -71,14 +71,15 @@
 
       <!-- ===== MAIN CONTENT ===== -->
       <main class="main" id="mainContent">
-        <div class="content-wrap">
-          <div id="lessonContent" role="region" aria-live="polite">
+        <div class="content-wrap" id="contentWrap">
+          <div id="lessonContent" role="region" aria-live="polite" aria-label="Lesson content">
             <!-- Dynamically populated by script.js -->
           </div>
           <footer class="lesson-nav-footer" id="lessonNavFooter" aria-label="Lesson navigation">
             <!-- Prev/next buttons populated by script.js -->
           </footer>
         </div>
+        <aside id="lessonToc" class="lesson-toc" aria-label="On this page"></aside>
       </main>
 
     </div>

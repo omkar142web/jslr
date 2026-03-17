@@ -149,24 +149,28 @@ button {
   overflow: hidden;
 }
 
-/* Custom scrollbar */
-.sidebar-nav {
+/* Unified scroll area (section switcher + section info + lessons) */
+.sidebar-scroll-area {
   flex: 1;
   overflow-y: auto;
-  padding: var(--sp-3) 0 var(--sp-4);
+  min-height: 0;
   scrollbar-width: thin;
   scrollbar-color: var(--surface-border) transparent;
 }
 
-.sidebar-nav::-webkit-scrollbar {
+.sidebar-scroll-area::-webkit-scrollbar {
   width: 3px;
 }
-.sidebar-nav::-webkit-scrollbar-track {
+.sidebar-scroll-area::-webkit-scrollbar-track {
   background: transparent;
 }
-.sidebar-nav::-webkit-scrollbar-thumb {
+.sidebar-scroll-area::-webkit-scrollbar-thumb {
   background: var(--surface-border);
   border-radius: 2px;
+}
+
+.sidebar-nav {
+  padding: var(--sp-3) 0 var(--sp-4);
 }
 
 /* Brand */
@@ -388,6 +392,7 @@ button {
   line-height: 1.3;
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -492,13 +497,14 @@ button {
   gap: var(--sp-8);
   padding: var(--sp-12) var(--sp-10) var(--sp-16);
   overflow-y: auto;
+  max-width: calc(var(--content-max) + 200px + var(--sp-8));
+  margin: 0 auto;
 }
 
 .content-main {
   flex: 1;
   min-width: 0;
   max-width: var(--content-max);
-  margin: 0 auto;
 }
 
 .lesson-toc {
@@ -555,7 +561,7 @@ button {
   }
 }
 
-.content-wrap.animating {
+.content-main.animating {
   animation: contentFadeIn var(--t-slow) ease forwards;
 }
 

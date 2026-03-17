@@ -42,19 +42,21 @@
           <input type="search" class="sidebar-search" id="lessonSearch" placeholder="Search lessons…" aria-label="Search lessons" autocomplete="off" />
         </div>
 
-        <div class="sidebar-section-switcher" id="sectionSwitcher" role="tablist" aria-label="Sections">
-          <!-- Dynamically populated by script.js -->
-        </div>
+        <div class="sidebar-scroll-area">
+          <div class="sidebar-section-switcher" id="sectionSwitcher" role="tablist" aria-label="Sections">
+            <!-- Dynamically populated by script.js -->
+          </div>
 
-        <div class="sidebar-section-info" id="sidebarSectionInfo">
-          <span class="section-badge" id="sectionBadge">Chapter 5</span>
-          <h2 class="section-heading" id="sectionHeading">Data Types</h2>
-          <p class="section-subtext" id="sectionSubtext">Core data structures in JavaScript</p>
-        </div>
+          <div class="sidebar-section-info" id="sidebarSectionInfo">
+            <span class="section-badge" id="sectionBadge">Chapter 5</span>
+            <h2 class="section-heading" id="sectionHeading">Data Types</h2>
+            <p class="section-subtext" id="sectionSubtext">Core data structures in JavaScript</p>
+          </div>
 
-        <nav class="sidebar-nav" id="lessonNav" aria-label="Lesson list">
-          <!-- Dynamically populated by script.js -->
-        </nav>
+          <nav class="sidebar-nav" id="lessonNav" aria-label="Lesson list">
+            <!-- Dynamically populated by script.js -->
+          </nav>
+        </div>
 
         <div class="sidebar-footer">
           <div class="progress-wrap">
@@ -72,7 +74,7 @@
       <!-- ===== MAIN CONTENT ===== -->
       <main class="main" id="mainContent">
         <div class="content-wrap" id="contentWrap">
-          <div class="content-main">
+          <div class="content-main" id="contentMain">
             <div id="lessonContent" role="region" aria-live="polite" aria-label="Lesson content">
               <!-- Dynamically populated by script.js -->
             </div>

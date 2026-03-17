@@ -5900,6 +5900,7 @@ alert(meetup.date.getDate());
   const sidebarBackdrop = document.getElementById('sidebarBackdrop');
   const scrollBtn = document.querySelector('.outer');
   const contentWrapEl = document.getElementById('contentWrap') || contentEl.parentElement;
+  const contentMainEl = document.getElementById('contentMain');
 
   if (!navEl || !contentEl) {
     console.error('App: Required DOM elements not found.');
@@ -5916,14 +5917,6 @@ alert(meetup.date.getDate());
 
   function getSectionId() {
     return getSection().id || String(currentSectionIndex);
-  }
-
-  // ── Hash routing ──
-  function getHash() {
-    const section = getSection();
-    const lesson = lessons[currentLessonIndex];
-    if (!section || !lesson) return '';
-    return (section.id || currentSectionIndex) + '/' + getLessonSlug(lesson);
   }
 
   let _isInternalHashChange = false;
@@ -5983,6 +5976,7 @@ alert(meetup.date.getDate());
       card.setAttribute('aria-selected', isActive);
       card.setAttribute('data-section-index', idx);
       var pct = progress.total ? Math.round((progress.completed / progress.total) * 100) : 0;
+      card.setAttribute('title', section.title || '');
       card.innerHTML =
         '<span class="section-card-title">' + escapeHtml(section.title) + '</span>' +
         '<span class="section-card-meta">' + progress.completed + '/' + progress.total + ' lessons</span>' +
@@ -6063,6 +6057,7 @@ alert(meetup.date.getDate());
       navEl.appendChild(btn);
 
       btn.addEventListener('click', function () {
+        if (!hasContent) return;
         selectLesson(lessonIndex);
         if (window.innerWidth <= 768 && sidebarEl) {
           sidebarEl.classList.remove('is-open');
@@ -6071,6 +6066,10 @@ alert(meetup.date.getDate());
         }
       });
       btn.addEventListener('keydown', function (e) {
+        if (!hasContent && (e.key === 'Enter' || e.key === ' ')) {
+          e.preventDefault();
+          return;
+        }
         var items = navEl.querySelectorAll('.lesson-item:not([style*="display: none"])');
         if (!items.length) items = navEl.querySelectorAll('.lesson-item');
         var idx = Array.prototype.indexOf.call(items, btn);
@@ -6206,7 +6205,15 @@ alert(meetup.date.getDate());
 
     setHash(getSectionId(), getLessonSlug(lesson));
 
-    buildLessonList();
+    // Avoid full rebuild on every click (preserves keyboard focus)
+    var nextActive = navEl.querySelector('[data-lesson-index="' + index + '"]');
+    if (nextActive) {
+      var prevActive = navEl.querySelector('.lesson-item.active');
+      if (prevActive) prevActive.classList.remove('active');
+      nextActive.classList.add('active');
+    } else {
+      buildLessonList();
+    }
 
     try {
       contentEl.innerHTML = renderContent(lesson);
@@ -6214,11 +6221,11 @@ alert(meetup.date.getDate());
       contentEl.innerHTML = '<div class="placeholder-content"><p class="placeholder-text">Failed to load this lesson. Please try again.</p></div>';
       console.error('renderContent error:', err);
     }
-    if (contentWrapEl) {
-      contentWrapEl.classList.remove('animating');
+    if (contentMainEl) {
+      contentMainEl.classList.remove('animating');
       requestAnimationFrame(function () {
         requestAnimationFrame(function () {
-          contentWrapEl.classList.add('animating');
+          contentMainEl.classList.add('animating');
         });
       });
     }
@@ -6248,15 +6255,45 @@ alert(meetup.date.getDate());
       block.style.position = 'relative';
       btn.addEventListener('click', function () {
         var text = (codeEl.textContent || '').trim();
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(text).then(function () {
+        copyText(text).then(function (ok) {
+          if (ok) {
             btn.innerHTML = '<i class="fa-solid fa-check" aria-hidden="true"></i>';
-            setTimeout(function () { btn.innerHTML = '<i class="fa-regular fa-copy" aria-hidden="true"></i>'; }, 2000);
-          });
-        }
+          } else {
+            btn.innerHTML = '<i class="fa-solid fa-xmark" aria-hidden="true"></i>';
+          }
+          setTimeout(function () { btn.innerHTML = '<i class="fa-regular fa-copy" aria-hidden="true"></i>'; }, 2000);
+        });
       });
       block.appendChild(btn);
     });
+  }
+
+  function copyText(text) {
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        return navigator.clipboard.writeText(text).then(function () { return true; }).catch(function () { return legacyCopy(text); });
+      }
+      return Promise.resolve(legacyCopy(text));
+    } catch (_) {
+      return Promise.resolve(false);
+    }
+  }
+
+  function legacyCopy(text) {
+    try {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly', '');
+      ta.style.position = 'fixed';
+      ta.style.left = '-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      var ok = document.execCommand('copy');
+      document.body.removeChild(ta);
+      return !!ok;
+    } catch (_) {
+      return false;
+    }
   }
 
   function buildLessonToc() {

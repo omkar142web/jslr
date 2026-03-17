@@ -5817,7 +5817,7 @@ alert(meetup.date.getDate());
    Section switcher, hash routing, completion, search, prev/next
    ============================================================ */
 (function initApp() {
-
+let _tocObserver = null;
   const COMPLETION_STORAGE_KEY = 'jslr-completed';
 
   function getLessonSlug(lesson) {
@@ -6296,29 +6296,73 @@ alert(meetup.date.getDate());
     }
   }
 
-  function buildLessonToc() {
-    var tocEl = document.getElementById('lessonToc');
-    if (!tocEl) return;
-    var titles = contentEl.querySelectorAll('h2.section-title');
-    tocEl.innerHTML = '';
-    if (titles.length === 0) {
-      tocEl.classList.remove('is-visible');
-      return;
-    }
-    titles.forEach(function (h2, i) {
-      var id = 'doc-toc-h2-' + i;
-      h2.id = id;
-      var btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'toc-link';
-      btn.textContent = h2.textContent;
-      btn.addEventListener('click', function () {
-        h2.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      });
-      tocEl.appendChild(btn);
-    });
-    tocEl.classList.add('is-visible');
+  
+
+function buildLessonToc() {
+  var tocEl = document.getElementById('lessonToc');
+  if (!tocEl) return;
+
+  // Disconnect any previous observer before rebuilding
+  if (_tocObserver) {
+    _tocObserver.disconnect();
+    _tocObserver = null;
   }
+
+  var titles = contentEl.querySelectorAll('h2.section-title');
+  tocEl.innerHTML = '';
+
+  if (titles.length === 0) {
+    tocEl.classList.remove('is-visible');
+    return;
+  }
+
+  var tocButtons = [];
+
+  titles.forEach(function (h2, i) {
+    var id = 'doc-toc-h2-' + i;
+    h2.id = id;
+
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'toc-link';
+    btn.textContent = h2.textContent.replace(/^\s*/, '').trim(); // strip leading whitespace from ::before pseudo
+    btn.setAttribute('data-toc-target', id);
+
+    btn.addEventListener('click', function () {
+      h2.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    tocEl.appendChild(btn);
+    tocButtons.push(btn);
+  });
+
+  tocEl.classList.add('is-visible');
+
+  // Intersection Observer: highlight the TOC entry for the visible heading
+  var scrollRoot = contentWrapEl || mainEl;
+
+  _tocObserver = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      var id = entry.target.id;
+      var btn = tocEl.querySelector('[data-toc-target="' + id + '"]');
+      if (!btn) return;
+      if (entry.isIntersecting) {
+        // Remove active from all, set on this one
+        tocButtons.forEach(function (b) { b.classList.remove('toc-active'); });
+        btn.classList.add('toc-active');
+      }
+    });
+  }, {
+    root: scrollRoot,
+    // Fire when heading enters the top 30% of the scroll container
+    rootMargin: '0px 0px -70% 0px',
+    threshold: 0
+  });
+
+  titles.forEach(function (h2) {
+    _tocObserver.observe(h2);
+  });
+}
 
   // ── Search ──
   if (lessonSearchEl) {

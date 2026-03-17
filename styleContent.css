@@ -270,3 +270,23 @@
   color: var(--text-primary);
   font-weight: 600;
 }
+
+
+/* Add these after the existing .lesson-toc .toc-link:hover rule */
+
+.lesson-toc .toc-link.toc-active {
+  color: var(--accent-text);
+  font-weight: 500;
+}
+
+.lesson-toc .toc-link.toc-active::before {
+  content: '';
+  display: inline-block;
+  width: 2px;
+  height: 12px;
+  background: var(--accent);
+  border-radius: 2px;
+  margin-right: 6px;
+  vertical-align: middle;
+  box-shadow: 0 0 6px var(--accent-glow);
+}

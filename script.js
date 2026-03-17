@@ -5865,7 +5865,6 @@ alert(meetup.date.getDate());
 </main>
 `;
 
-
 // object starts --------------------------------
 
 javascriptCourse.sections[3].lessons[0].Text = `
@@ -9408,6 +9407,3969 @@ alert(obj + 2);
 <li>All conversion methods must return primitive values.</li>
 
 <li>Often implementing only <code>toString()</code> is enough for debugging and logging purposes.</li>
+
+</ul>
+
+</section>
+
+</main>
+`;
+
+javascriptCourse.sections[5].lessons[0].Text = `
+<main class="doc">
+
+<header class="doc-header">
+<h1 class="doc-title">Recursion and Stack</h1>
+
+<p class="doc-description">
+Let’s return to functions and study them more in-depth. Our first topic will be recursion.
+</p>
+
+<p class="doc-description">
+Recursion is a programming pattern useful when a task can be split into several smaller tasks of the same type.
+</p>
+
+</header>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">What is Recursion?</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+When a function solves a task, it may call other functions during execution.
+</p>
+
+<p class="concept-text">
+A special case occurs when a function calls itself. That is called recursion.
+</p>
+
+<p class="concept-text">
+Recursion is useful when a task can be simplified into:
+</p>
+
+<ul class="summary-list">
+<li>A simple action.</li>
+<li>A smaller version of the same task.</li>
+</ul>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Example: Power Function</h2>
+
+<article class="concept-block">
+<p class="concept-text">
+Let’s write a function <code>pow(x, n)</code> that raises a number to a power.
+</p>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+pow(2,2) = 4
+pow(2,3) = 8
+pow(2,4) = 16
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Iterative Solution</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function pow(x, n) {
+  let result = 1;
+
+  for (let i = 0; i < n; i++) {
+    result *= x;
+  }
+
+  return result;
+}
+
+alert(pow(2,3));
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Recursive Solution</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function pow(x, n) {
+  if (n == 1) {
+    return x;
+  } else {
+    return x * pow(x, n - 1);
+  }
+}
+
+alert(pow(2,3));
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Recursive functions have two important parts:
+</p>
+
+<ul class="summary-list">
+<li><strong>Base case</strong> – the simplest case that stops recursion.</li>
+<li><strong>Recursive step</strong> – where the function calls itself with simpler input.</li>
+</ul>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Example Execution</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+pow(2,4) = 2 * pow(2,3)
+pow(2,3) = 2 * pow(2,2)
+pow(2,2) = 2 * pow(2,1)
+pow(2,1) = 2
+</code></pre>
+</article>
+
+<article class="concept-block">
+<p class="concept-text">
+The recursion reduces the problem step by step until reaching the base case.
+</p>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Short Recursive Syntax</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function pow(x, n) {
+  return (n == 1) ? x : x * pow(x, n - 1);
+}
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Recursion Depth</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+The maximum number of nested calls is called recursion depth.
+</p>
+
+<p class="concept-text">
+JavaScript engines limit recursion depth to prevent stack overflow.
+</p>
+
+</article>
+
+<div class="note-block">
+Typical recursion depth limit is around 10000 calls depending on the engine.
+</div>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Execution Context and Stack</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Each function call has an execution context which stores:
+</p>
+
+<ul class="summary-list">
+<li>Current variables</li>
+<li>Current execution line</li>
+<li>The value of <code>this</code></li>
+</ul>
+
+<p class="concept-text">
+Execution contexts are stored in a structure called the call stack.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Recursive Traversal</h2>
+
+<article class="concept-block">
+<p class="concept-text">
+Recursion is useful for processing recursive data structures such as company departments.
+</p>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let company = {
+  sales: [
+    {name: "John", salary: 1000},
+    {name: "Alice", salary: 1600}
+  ],
+
+  development: {
+    sites: [
+      {name: "Peter", salary: 2000},
+      {name: "Alex", salary: 1800}
+    ],
+
+    internals: [
+      {name: "Jack", salary: 1300}
+    ]
+  }
+};
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Recursive Salary Calculation</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function sumSalaries(department) {
+
+  if (Array.isArray(department)) {
+    return department.reduce(
+      (prev, current) => prev + current.salary,
+      0
+    );
+
+  } else {
+    let sum = 0;
+
+    for (let subdep of Object.values(department)) {
+      sum += sumSalaries(subdep);
+    }
+
+    return sum;
+  }
+
+}
+
+alert(sumSalaries(company));
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Recursive Data Structures</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+A recursive data structure is a structure that references itself.
+</p>
+
+<p class="concept-text">
+Examples include:
+</p>
+
+<ul class="summary-list">
+<li>HTML DOM tree</li>
+<li>Company department structures</li>
+<li>Linked lists</li>
+</ul>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Linked List</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let list = {
+  value: 1,
+  next: {
+    value: 2,
+    next: {
+      value: 3,
+      next: {
+        value: 4,
+        next: null
+      }
+    }
+  }
+};
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Each element contains:
+</p>
+
+<ul class="summary-list">
+<li>value</li>
+<li>next reference to another list element</li>
+</ul>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Linked List Creation</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let list = { value: 1 };
+
+list.next = { value: 2 };
+list.next.next = { value: 3 };
+list.next.next.next = { value: 4 };
+list.next.next.next.next = null;
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Prepending a Value</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+list = { value: "new item", next: list };
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Removing an Element</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+list.next = list.next.next;
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section" id="summary">
+
+<h2 class="section-title">Summary</h2>
+
+<ul class="summary-list">
+
+<li>Recursion means a function calling itself.</li>
+
+<li>Recursive functions must have a base case.</li>
+
+<li>The recursion step breaks the problem into smaller parts.</li>
+
+<li>Each recursive call creates an execution context stored in the stack.</li>
+
+<li>Recursive data structures reference themselves.</li>
+
+<li>Examples include trees, company structures and linked lists.</li>
+
+<li>Recursive functions can usually be rewritten using loops.</li>
+
+<li>Recursion often produces simpler and cleaner code.</li>
+
+</ul>
+
+</section>
+
+</main>
+`;
+
+javascriptCourse.sections[5].lessons[1].Text = `
+<main class="doc">
+
+<header class="doc-header">
+<h1 class="doc-title">Rest Parameters and Spread Syntax</h1>
+
+<p class="doc-description">
+Many JavaScript built-in functions support an arbitrary number of arguments.
+</p>
+
+</header>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Functions with Many Arguments</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Some built-in functions accept any number of arguments.
+</p>
+
+<ul class="summary-list">
+<li><code>Math.max(arg1, arg2, ..., argN)</code> – returns the largest value.</li>
+<li><code>Object.assign(dest, src1, ..., srcN)</code> – copies properties.</li>
+</ul>
+
+<p class="concept-text">
+In this chapter we will learn how to create functions like these and how to pass arrays to them.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Rest Parameters ...</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+A function can be called with any number of arguments regardless of how many parameters it defines.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function sum(a, b) {
+  return a + b;
+}
+
+alert(sum(1, 2, 3, 4, 5));
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Extra arguments are ignored unless we capture them using rest parameters.
+</p>
+
+<p class="concept-text">
+Rest parameters use three dots <code>...</code> followed by a variable name.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Collecting Arguments into an Array</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function sumAll(...args) {
+  let sum = 0;
+
+  for (let arg of args) {
+    sum += arg;
+  }
+
+  return sum;
+}
+
+alert(sumAll(1));
+alert(sumAll(1, 2));
+alert(sumAll(1, 2, 3));
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Mixing Regular and Rest Parameters</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function showName(firstName, lastName, ...titles) {
+
+  alert(firstName + " " + lastName);
+
+  alert(titles[0]);
+  alert(titles[1]);
+  alert(titles.length);
+
+}
+
+showName("Julius", "Caesar", "Consul", "Imperator");
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Rest Parameters Must Be Last</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function f(arg1, ...rest, arg2) {
+  // Error
+}
+</code></pre>
+</article>
+
+<div class="note-block">
+Rest parameters must always appear at the end of the parameter list.
+</div>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">The arguments Object</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+JavaScript also provides a special array-like object called <code>arguments</code>.
+</p>
+
+<p class="concept-text">
+It contains all arguments passed to the function.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function showName() {
+
+  alert(arguments.length);
+  alert(arguments[0]);
+  alert(arguments[1]);
+
+}
+
+showName("Julius", "Caesar");
+showName("Ilya");
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+However, <code>arguments</code> is not a real array and does not support array methods like <code>map()</code>.
+</p>
+
+<p class="concept-text">
+Rest parameters are usually preferred in modern JavaScript.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Arrow Functions and arguments</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Arrow functions do not have their own <code>arguments</code> object.
+</p>
+
+<p class="concept-text">
+Instead, they use the arguments from the outer function.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function f() {
+  let showArg = () => alert(arguments[0]);
+  showArg();
+}
+
+f(1);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Spread Syntax</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Spread syntax also uses three dots <code>...</code>, but it performs the opposite operation.
+</p>
+
+<p class="concept-text">
+It expands an iterable into a list of arguments.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Example with Math.max</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let arr = [3, 5, 1];
+
+alert(Math.max(...arr));
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Using Multiple Arrays</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let arr1 = [1, -2, 3, 4];
+let arr2 = [8, 3, -8, 1];
+
+alert(Math.max(...arr1, ...arr2));
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Combining Values</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let arr1 = [1, -2, 3, 4];
+let arr2 = [8, 3, -8, 1];
+
+alert(Math.max(1, ...arr1, 2, ...arr2, 25));
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Merging Arrays</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let arr = [3, 5, 1];
+let arr2 = [8, 9, 15];
+
+let merged = [0, ...arr, 2, ...arr2];
+
+alert(merged);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Spread with Strings</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let str = "Hello";
+
+alert([...str]);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Array.from Alternative</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let str = "Hello";
+
+alert(Array.from(str));
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+<code>Array.from()</code> works with both array-like objects and iterables, while spread works only with iterables.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Copying Arrays</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let arr = [1, 2, 3];
+
+let arrCopy = [...arr];
+
+alert(arr === arrCopy);
+
+arr.push(4);
+
+alert(arr);
+alert(arrCopy);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Copying Objects</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let obj = { a: 1, b: 2, c: 3 };
+
+let objCopy = { ...obj };
+
+alert(obj === objCopy);
+
+obj.d = 4;
+
+alert(JSON.stringify(obj));
+alert(JSON.stringify(objCopy));
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section" id="summary">
+
+<h2 class="section-title">Summary</h2>
+
+<ul class="summary-list">
+
+<li><code>...</code> can represent rest parameters or spread syntax.</li>
+
+<li>Rest parameters gather arguments into an array.</li>
+
+<li>Spread syntax expands arrays or iterables into arguments.</li>
+
+<li>Rest parameters must appear at the end of parameters.</li>
+
+<li>The old <code>arguments</code> object is array-like but not a real array.</li>
+
+<li>Spread syntax is often used to merge arrays or copy arrays/objects.</li>
+
+</ul>
+
+</section>
+
+</main>
+`;
+
+javascriptCourse.sections[5].lessons[2].Text = `
+<main class="doc">
+
+<header class="doc-header">
+<h1 class="doc-title">Variable Scope and Closure</h1>
+
+<p class="doc-description">
+JavaScript is a very function-oriented language. Functions can be created anywhere, passed as arguments, and executed later in completely different parts of the code.
+</p>
+
+<p class="doc-description">
+Functions can also access variables outside their own scope. In this chapter we will learn how this works using scope, lexical environments, and closures.
+</p>
+
+</header>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Variable Declarations</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+JavaScript provides three ways to declare variables:
+</p>
+
+<ul class="summary-list">
+<li><code>let</code></li>
+<li><code>const</code></li>
+<li><code>var</code> (older method)</li>
+</ul>
+
+<p class="concept-text">
+In modern JavaScript we usually use <code>let</code> and <code>const</code>. The behavior discussed here applies to both.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Block Scope</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Variables declared inside a code block <code>{ }</code> are only visible inside that block.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+{
+  let message = "Hello";
+  alert(message);
+}
+
+alert(message); // Error
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Blocks allow us to isolate variables so they do not conflict with variables outside the block.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Example with Multiple Blocks</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+{
+  let message = "Hello";
+  alert(message);
+}
+
+{
+  let message = "Goodbye";
+  alert(message);
+}
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Scope in if Statements</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+if (true) {
+  let phrase = "Hello!";
+  alert(phrase);
+}
+
+alert(phrase); // Error
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Scope in Loops</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+for (let i = 0; i < 3; i++) {
+  alert(i);
+}
+
+alert(i); // Error
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Nested Functions</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+A function defined inside another function is called a nested function.
+</p>
+
+<p class="concept-text">
+Nested functions can access variables from their outer function.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function sayHiBye(firstName, lastName) {
+
+  function getFullName() {
+    return firstName + " " + lastName;
+  }
+
+  alert("Hello, " + getFullName());
+  alert("Bye, " + getFullName());
+
+}
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Returning Nested Functions</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function makeCounter() {
+  let count = 0;
+
+  return function() {
+    return count++;
+  };
+}
+
+let counter = makeCounter();
+
+alert(counter());
+alert(counter());
+alert(counter());
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Even after <code>makeCounter()</code> finishes executing, the returned function still has access to the variable <code>count</code>.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Lexical Environment</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Every function, code block, and script has an internal object called a Lexical Environment.
+</p>
+
+<p class="concept-text">
+This object stores variables and references to outer environments.
+</p>
+
+</article>
+
+<ul class="summary-list">
+<li>Environment Record – stores local variables.</li>
+<li>Reference to the outer environment.</li>
+</ul>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Function Declarations</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Function declarations are fully initialized when the lexical environment is created.
+</p>
+
+<p class="concept-text">
+This means functions declared using <code>function</code> can be used before their declaration.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Inner and Outer Environments</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+When a function runs, a new lexical environment is created for that call.
+</p>
+
+<p class="concept-text">
+If a variable is not found locally, JavaScript searches the outer environments until it reaches the global environment.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Closures</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+A closure is a function that remembers its outer variables and can access them later.
+</p>
+
+<p class="concept-text">
+In JavaScript, all functions automatically behave as closures.
+</p>
+
+</article>
+
+<ul class="summary-list">
+<li>Functions remember the environment where they were created.</li>
+<li>They access variables from that environment even after execution ends.</li>
+</ul>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Garbage Collection</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Normally, lexical environments are removed from memory after a function finishes executing.
+</p>
+
+<p class="concept-text">
+However, if a nested function still references that environment, it stays in memory.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function f() {
+  let value = 123;
+
+  return function() {
+    alert(value);
+  }
+}
+
+let g = f();
+
+g = null;
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Engine Optimizations</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+JavaScript engines often optimize memory usage by removing unused variables.
+</p>
+
+<p class="concept-text">
+Sometimes this optimization can affect debugging, especially in Chrome's V8 engine.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section" id="summary">
+
+<h2 class="section-title">Summary</h2>
+
+<ul class="summary-list">
+
+<li>Variables declared with <code>let</code> and <code>const</code> are block-scoped.</li>
+
+<li>Nested functions can access variables from their outer scope.</li>
+
+<li>Each function execution creates a new lexical environment.</li>
+
+<li>Variables are stored inside environment records.</li>
+
+<li>A closure is a function that remembers outer variables.</li>
+
+<li>Closures keep lexical environments alive while they are still referenced.</li>
+
+<li>JavaScript engines may optimize unused variables internally.</li>
+
+</ul>
+
+</section>
+
+</main>
+`;
+
+javascriptCourse.sections[5].lessons[3].Text = `
+<main class="doc">
+
+<header class="doc-header">
+<h1 class="doc-title">The Old "var"</h1>
+
+<p class="doc-description">
+This chapter explains the old <code>var</code> keyword. It is mainly useful for understanding older JavaScript code.
+</p>
+
+<p class="doc-description">
+Modern JavaScript uses <code>let</code> and <code>const</code> instead.
+</p>
+
+</header>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Variable Declarations</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+JavaScript provides three ways to declare variables:
+</p>
+
+<ul class="summary-list">
+<li><code>let</code></li>
+<li><code>const</code></li>
+<li><code>var</code></li>
+</ul>
+
+<p class="concept-text">
+The <code>var</code> keyword is the oldest method. It behaves differently from modern declarations.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Basic Example</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+var message = "Hi";
+alert(message);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">No Block Scope</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Variables declared with <code>var</code> do not respect block scope.
+</p>
+
+<p class="concept-text">
+They are either function-scoped or global-scoped.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+if (true) {
+  var test = true;
+}
+
+alert(test); // true
+</code></pre>
+</article>
+
+<div class="note-block">
+If <code>let</code> were used instead, the variable would only exist inside the block.
+</div>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Example with let</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+if (true) {
+  let test = true;
+}
+
+alert(test); // Error
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Behavior in Loops</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+for (var i = 0; i < 10; i++) {
+  var one = 1;
+}
+
+alert(i);   // 10
+alert(one); // 1
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Function Scope</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+When declared inside a function, <code>var</code> becomes scoped to the function.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function sayHi() {
+
+  if (true) {
+    var phrase = "Hello";
+  }
+
+  alert(phrase);
+
+}
+
+sayHi();
+alert(phrase); // Error
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Redeclarations</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Variables declared with <code>var</code> can be redeclared without error.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+var user = "Pete";
+
+var user = "John";
+
+alert(user); // John
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Hoisting</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+<code>var</code> declarations are processed when the function begins executing.
+</p>
+
+<p class="concept-text">
+This behavior is called <strong>hoisting</strong>.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function sayHi() {
+
+  phrase = "Hello";
+
+  alert(phrase);
+
+  var phrase;
+
+}
+
+sayHi();
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">How Hoisting Works</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function sayHi() {
+
+  var phrase;
+
+  phrase = "Hello";
+
+  alert(phrase);
+
+}
+
+sayHi();
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Assignment is Not Hoisted</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function sayHi() {
+
+  alert(phrase);
+
+  var phrase = "Hello";
+
+}
+
+sayHi();
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+The declaration is hoisted, but the assignment happens where it appears in the code.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Immediately Invoked Function Expressions (IIFE)</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Before block scope existed, developers used a pattern called IIFE to create private variables.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+(function() {
+
+  var message = "Hello";
+
+  alert(message);
+
+})();
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Other IIFE Variations</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+(function() {
+  alert("Parentheses around function");
+})();
+
+(function() {
+  alert("Parentheses around whole expression");
+}());
+
+!function() {
+  alert("Bitwise NOT operator");
+}();
+
++function() {
+  alert("Unary plus operator");
+}();
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section" id="summary">
+
+<h2 class="section-title">Summary</h2>
+
+<ul class="summary-list">
+
+<li><code>var</code> is an older way to declare variables.</li>
+
+<li>It does not respect block scope.</li>
+
+<li>It is scoped to the current function or global scope.</li>
+
+<li>Variables declared with <code>var</code> can be redeclared.</li>
+
+<li><code>var</code> declarations are hoisted to the top of the function.</li>
+
+<li>IIFE was historically used to emulate block scope.</li>
+
+<li>Modern JavaScript prefers <code>let</code> and <code>const</code>.</li>
+
+</ul>
+
+</section>
+
+</main>
+`;
+
+javascriptCourse.sections[5].lessons[4].Text = `
+<main class="doc">
+
+<header class="doc-header">
+<h1 class="doc-title">Global Object</h1>
+
+<p class="doc-description">
+The global object provides variables and functions that are available everywhere in the program.
+</p>
+
+<p class="doc-description">
+These include built-in language features and environment-specific APIs.
+</p>
+
+</header>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">What is the Global Object?</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+The global object stores values that can be accessed anywhere in the program.
+</p>
+
+<ul class="summary-list">
+<li>In browsers it is called <code>window</code>.</li>
+<li>In Node.js it is called <code>global</code>.</li>
+<li>The standardized universal name is <code>globalThis</code>.</li>
+</ul>
+
+<p class="concept-text">
+The <code>globalThis</code> variable works across all environments and is recommended for universal code.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Accessing Global Properties</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+All properties of the global object can be accessed directly.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+alert("Hello");
+
+// same as
+
+window.alert("Hello");
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Global Variables with var</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+In browsers, variables declared with <code>var</code> automatically become properties of the global object.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+var gVar = 5;
+
+alert(window.gVar); // 5
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Function declarations behave the same way when written in the global scope.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Variables Declared with let</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Variables declared with <code>let</code> or <code>const</code> do not become properties of the global object.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let gLet = 5;
+
+alert(window.gLet); // undefined
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Creating Global Variables Explicitly</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+If a value should truly be global, we can explicitly assign it to the global object.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+// create global variable
+
+window.currentUser = {
+  name: "John"
+};
+
+// access it anywhere
+
+alert(currentUser.name);
+</code></pre>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+// safer access
+
+alert(window.currentUser.name);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Avoid Too Many Global Variables</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Using many global variables is generally discouraged.
+</p>
+
+<p class="concept-text">
+Programs are easier to understand when functions receive inputs and return results instead of relying on global variables.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Using the Global Object for Polyfills</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+The global object can be used to check if modern language features exist.
+</p>
+
+<p class="concept-text">
+If they are missing, we can provide a polyfill implementation.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+if (!window.Promise) {
+  alert("Your browser is really old!");
+}
+</code></pre>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+if (!window.Promise) {
+
+  window.Promise = ... // custom implementation
+
+}
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section" id="summary">
+
+<h2 class="section-title">Summary</h2>
+
+<ul class="summary-list">
+
+<li>The global object stores variables accessible everywhere.</li>
+
+<li>Built-in objects like <code>Array</code> and browser APIs like <code>window.innerHeight</code> belong to it.</li>
+
+<li>The universal name for the global object is <code>globalThis</code>.</li>
+
+<li>Environment-specific names include <code>window</code> (browser) and <code>global</code> (Node.js).</li>
+
+<li>Variables declared with <code>var</code> in global scope become properties of the global object.</li>
+
+<li>Variables declared with <code>let</code> and <code>const</code> do not.</li>
+
+<li>Global variables should be minimized for better code design.</li>
+
+</ul>
+
+</section>
+
+</main>
+`;
+
+javascriptCourse.sections[5].lessons[5].Text = `
+<main class="doc">
+
+<header class="doc-header">
+<h1 class="doc-title">Function Object, NFE</h1>
+
+<p class="doc-description">
+In JavaScript, functions are values. Every value has a type, and functions are actually objects.
+</p>
+
+<p class="doc-description">
+That means functions can be called, but also treated like objects with properties.
+</p>
+
+</header>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Functions Are Objects</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Functions in JavaScript are special objects that can be executed.
+</p>
+
+<p class="concept-text">
+They can also store properties, be passed as values, or modified like any other object.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">The name Property</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Every function has a <code>name</code> property that stores the function’s name.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function sayHi() {
+  alert("Hi");
+}
+
+alert(sayHi.name); // sayHi
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Automatic Function Names</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+JavaScript automatically assigns names to functions based on their context.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let sayHi = function() {
+  alert("Hi");
+};
+
+alert(sayHi.name); // sayHi
+</code></pre>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function f(sayHi = function(){}) {
+  alert(sayHi.name); // sayHi
+}
+
+f();
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Method Names</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = {
+
+  sayHi() {
+    // ...
+  },
+
+  sayBye: function() {
+    // ...
+  }
+
+};
+
+alert(user.sayHi.name);  // sayHi
+alert(user.sayBye.name); // sayBye
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Functions Without Names</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let arr = [function() {}];
+
+alert(arr[0].name); // empty string
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Sometimes JavaScript cannot determine the correct name, so the <code>name</code> property is empty.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">The length Property</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Functions also have a <code>length</code> property that shows the number of parameters in the function definition.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function f1(a) {}
+function f2(a, b) {}
+function many(a, b, ...more) {}
+
+alert(f1.length); // 1
+alert(f2.length); // 2
+alert(many.length); // 2
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Using length for Polymorphism</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function ask(question, ...handlers) {
+
+  let isYes = confirm(question);
+
+  for (let handler of handlers) {
+
+    if (handler.length == 0) {
+
+      if (isYes) handler();
+
+    } else {
+
+      handler(isYes);
+
+    }
+
+  }
+
+}
+
+ask("Question?",
+  () => alert("You said yes"),
+  result => alert(result)
+);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Custom Function Properties</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Functions can have custom properties just like objects.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function sayHi() {
+
+  alert("Hi");
+
+  sayHi.counter++;
+
+}
+
+sayHi.counter = 0;
+
+sayHi();
+sayHi();
+
+alert(\`Called \${sayHi.counter} times\`);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Properties vs Variables</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Function properties are not the same as local variables.
+</p>
+
+<p class="concept-text">
+They exist independently from variables declared inside the function.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Using Properties Instead of Closures</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function makeCounter() {
+
+  function counter() {
+    return counter.count++;
+  }
+
+  counter.count = 0;
+
+  return counter;
+
+}
+
+let counter = makeCounter();
+
+alert(counter());
+alert(counter());
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Named Function Expression (NFE)</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+A Named Function Expression is a function expression that includes a name.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let sayHi = function func(who) {
+  alert(\`Hello, \${who}\`);
+};
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Why Use NFE?</h2>
+
+<ul class="summary-list">
+
+<li>Allows the function to reference itself internally.</li>
+
+<li>The internal name is not visible outside the function.</li>
+
+</ul>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Recursive Call with NFE</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let sayHi = function func(who) {
+
+  if (who) {
+    alert(\`Hello, \${who}\`);
+  } else {
+    func("Guest");
+  }
+
+};
+
+sayHi();
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Problem Without NFE</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let sayHi = function(who) {
+
+  if (who) {
+    alert(\`Hello, \${who}\`);
+  } else {
+    sayHi("Guest");
+  }
+
+};
+
+let welcome = sayHi;
+
+sayHi = null;
+
+welcome(); // Error
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Fixed with NFE</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let sayHi = function func(who) {
+
+  if (who) {
+    alert(\`Hello, \${who}\`);
+  } else {
+    func("Guest");
+  }
+
+};
+
+let welcome = sayHi;
+sayHi = null;
+
+welcome(); // Works
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section" id="summary">
+
+<h2 class="section-title">Summary</h2>
+
+<ul class="summary-list">
+
+<li>Functions in JavaScript are objects.</li>
+
+<li>They have built-in properties like <code>name</code> and <code>length</code>.</li>
+
+<li>Functions can also store custom properties.</li>
+
+<li>A Named Function Expression (NFE) is a function expression with a name.</li>
+
+<li>The internal name allows the function to call itself reliably.</li>
+
+<li>This technique is useful for recursion and safer function references.</li>
+
+</ul>
+
+</section>
+
+</main>
+`;
+
+javascriptCourse.sections[5].lessons[6].Text = `
+<main class="doc">
+
+<header class="doc-header">
+<h1 class="doc-title">The "new Function" Syntax</h1>
+
+<p class="doc-description">
+JavaScript provides another way to create functions using the <code>new Function</code> constructor.
+</p>
+
+<p class="doc-description">
+It is rarely used in normal development, but sometimes there is no alternative.
+</p>
+
+</header>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Syntax</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+The syntax for creating a function dynamically is:
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let func = new Function([arg1, arg2, ...argN], functionBody);
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+The function is created with parameters <code>arg1...argN</code> and the body defined by <code>functionBody</code>.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Example with Parameters</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let sum = new Function('a', 'b', 'return a + b');
+
+alert(sum(1, 2)); // 3
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Example Without Parameters</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let sayHi = new Function('alert("Hello")');
+
+sayHi(); // Hello
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Functions Created from Strings</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+The main difference from other function creation methods is that the function code is provided as a string and evaluated at runtime.
+</p>
+
+<p class="concept-text">
+Other methods require writing the function code directly inside the script.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Dynamic Code Execution</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+The <code>new Function</code> syntax allows converting strings into executable functions.
+</p>
+
+<p class="concept-text">
+This can be useful when code is received dynamically, for example from a server.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let str = "...code received from server...";
+
+let func = new Function(str);
+
+func();
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Closures and new Function</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Normally, functions remember the environment in which they were created using the internal property <code>[[Environment]]</code>.
+</p>
+
+<p class="concept-text">
+However, functions created with <code>new Function</code> always reference the global environment instead.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Example: No Access to Outer Variables</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function getFunc() {
+
+  let value = "test";
+
+  let func = new Function('alert(value)');
+
+  return func;
+
+}
+
+getFunc()(); // Error: value is not defined
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Regular Function Behavior</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function getFunc() {
+
+  let value = "test";
+
+  let func = function() {
+    alert(value);
+  };
+
+  return func;
+
+}
+
+getFunc()(); // "test"
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Why It Works This Way</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Before code is deployed, it is often compressed using minifiers.
+</p>
+
+<p class="concept-text">
+Minifiers rename local variables to shorter names to reduce file size.
+</p>
+
+<p class="concept-text">
+If functions created with <code>new Function</code> could access outer variables, those renamed variables might break the code.
+</p>
+
+<p class="concept-text">
+Therefore, <code>new Function</code> only accesses global variables.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Passing Data to new Function</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+To provide data to functions created with <code>new Function</code>, we should use parameters instead of relying on outer variables.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Alternative Syntax Forms</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+new Function('a', 'b', 'return a + b');
+
+new Function('a,b', 'return a + b');
+
+new Function('a , b', 'return a + b');
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+All of these forms create the same function.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section" id="summary">
+
+<h2 class="section-title">Summary</h2>
+
+<ul class="summary-list">
+
+<li><code>new Function</code> allows creating functions dynamically from strings.</li>
+
+<li>The syntax is <code>new Function(arg1, arg2, ..., functionBody)</code>.</li>
+
+<li>Functions created this way use the global environment.</li>
+
+<li>They cannot access outer variables from where they were created.</li>
+
+<li>This design prevents problems with minified code.</li>
+
+<li>Parameters should be used to pass values to these functions.</li>
+
+</ul>
+
+</section>
+
+</main>
+`;
+
+javascriptCourse.sections[5].lessons[7].Text = `
+<main class="doc">
+
+<header class="doc-header">
+<h1 class="doc-title">Scheduling: setTimeout and setInterval</h1>
+
+<p class="doc-description">
+Sometimes we want a function to run later instead of immediately. This is called <b>scheduling a call</b>.
+</p>
+
+<p class="doc-description">
+JavaScript environments such as browsers and Node.js provide two methods for scheduling:
+</p>
+
+<ul class="summary-list">
+<li><code>setTimeout</code> – run a function once after a delay.</li>
+<li><code>setInterval</code> – run a function repeatedly at fixed intervals.</li>
+</ul>
+
+</header>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">setTimeout</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+The <code>setTimeout</code> function schedules a function to run once after a specified delay.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let timerId = setTimeout(func|code, delay, arg1, arg2, ...);
+</code></pre>
+</article>
+
+<ul class="summary-list">
+
+<li><b>func|code</b> – function (or code string) to execute.</li>
+<li><b>delay</b> – delay in milliseconds (1000ms = 1 second).</li>
+<li><b>arg1, arg2...</b> – arguments passed to the function.</li>
+
+</ul>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Basic Example</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function sayHi() {
+  alert("Hello");
+}
+
+setTimeout(sayHi, 1000);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Passing Arguments</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function sayHi(phrase, who) {
+  alert(phrase + ", " + who);
+}
+
+setTimeout(sayHi, 1000, "Hello", "John");
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Using Arrow Functions</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Instead of passing code as a string (which is not recommended), use arrow functions.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+setTimeout(() => alert("Hello"), 1000);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Common Mistake</h2>
+
+<article class="note-block">
+
+<p class="note-text">
+Do not call the function when passing it to <code>setTimeout</code>.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+// ❌ wrong
+setTimeout(sayHi(), 1000);
+
+// ✔ correct
+setTimeout(sayHi, 1000);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Canceling a Timeout</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+The function returns a timer identifier that can be used to cancel the scheduled execution.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let timerId = setTimeout(() => alert("never happens"), 1000);
+
+clearTimeout(timerId);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">setInterval</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+The <code>setInterval</code> function repeatedly executes a function after a fixed delay.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let timerId = setInterval(func, delay);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">setInterval Example</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let timerId = setInterval(() => alert("tick"), 2000);
+
+setTimeout(() => {
+  clearInterval(timerId);
+  alert("stop");
+}, 5000);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Nested setTimeout</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Another way to repeat actions is using nested <code>setTimeout</code>.
+</p>
+
+<p class="concept-text">
+It allows better control over scheduling compared to <code>setInterval</code>.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let timerId = setTimeout(function tick() {
+
+  alert("tick");
+
+  timerId = setTimeout(tick, 2000);
+
+}, 2000);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Example: Dynamic Delay</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Nested timeouts allow dynamic delays depending on the result of previous executions.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let delay = 5000;
+
+let timerId = setTimeout(function request() {
+
+  // send request
+
+  if (serverOverloaded) {
+    delay *= 2;
+  }
+
+  timerId = setTimeout(request, delay);
+
+}, delay);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Zero Delay Timeout</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Calling <code>setTimeout(func, 0)</code> schedules a function to run after the current script finishes.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+setTimeout(() => alert("World"));
+
+alert("Hello");
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Important Notes</h2>
+
+<ul class="summary-list">
+
+<li>Timers may not run exactly on time.</li>
+
+<li>Heavy CPU usage can delay timers.</li>
+
+<li>Inactive browser tabs may slow timers.</li>
+
+<li>Battery saving modes can increase timer delays.</li>
+
+</ul>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Garbage Collection</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Functions passed to timers remain in memory until they run or are canceled.
+</p>
+
+<p class="concept-text">
+This also keeps their outer variables alive in memory.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section" id="summary">
+
+<h2 class="section-title">Summary</h2>
+
+<ul class="summary-list">
+
+<li><code>setTimeout</code> runs a function once after a delay.</li>
+
+<li><code>setInterval</code> runs a function repeatedly at fixed intervals.</li>
+
+<li>Use <code>clearTimeout</code> and <code>clearInterval</code> to cancel timers.</li>
+
+<li>Nested <code>setTimeout</code> can replace <code>setInterval</code> for more control.</li>
+
+<li><code>setTimeout(func, 0)</code> runs a function after the current script finishes.</li>
+
+<li>Timer delays are not always exact.</li>
+
+</ul>
+
+</section>
+
+</main>
+`;
+
+javascriptCourse.sections[5].lessons[8].Text = `
+<main class="doc">
+
+<header class="doc-header">
+
+<h1 class="doc-title">Decorators and Forwarding, call/apply</h1>
+
+<p class="doc-description">
+JavaScript provides powerful flexibility when working with functions.
+</p>
+
+<p class="doc-description">
+Functions can be passed around, wrapped, modified, and extended without changing the original function. This concept is called a <b>decorator</b>.
+</p>
+
+</header>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Transparent Caching</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Imagine we have a CPU-heavy function whose result always stays the same for the same input.
+</p>
+
+<p class="concept-text">
+Instead of recalculating the result every time, we can cache it using a decorator.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function slow(x) {
+  alert("Called with " + x);
+  return x;
+}
+
+function cachingDecorator(func) {
+
+  let cache = new Map();
+
+  return function(x) {
+
+    if (cache.has(x)) {
+      return cache.get(x);
+    }
+
+    let result = func(x);
+
+    cache.set(x, result);
+
+    return result;
+
+  };
+
+}
+
+slow = cachingDecorator(slow);
+
+alert(slow(1));
+alert("Again: " + slow(1));
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">What is a Decorator?</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+A decorator is a function that takes another function and modifies its behavior.
+</p>
+
+<p class="concept-text">
+It wraps the original function with additional functionality like caching, logging, validation, or timing.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Problem with Object Methods</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Decorators may break methods that rely on <code>this</code>.
+</p>
+
+<p class="concept-text">
+This happens because the wrapper calls the function without the original context.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let worker = {
+
+  someMethod() {
+    return 1;
+  },
+
+  slow(x) {
+    return x * this.someMethod();
+  }
+
+};
+
+let func = worker.slow;
+
+func(2); // this becomes undefined
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Using func.call</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+The <code>call</code> method allows us to explicitly set the value of <code>this</code>.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+func.call(context, arg1, arg2, ...);
+</code></pre>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function sayHi() {
+  alert(this.name);
+}
+
+let user = { name: "John" };
+let admin = { name: "Admin" };
+
+sayHi.call(user);
+sayHi.call(admin);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Fixing the Decorator</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function cachingDecorator(func) {
+
+  let cache = new Map();
+
+  return function(x) {
+
+    if (cache.has(x)) {
+      return cache.get(x);
+    }
+
+    let result = func.call(this, x);
+
+    cache.set(x, result);
+
+    return result;
+
+  };
+
+}
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Handling Multiple Arguments</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+If a function has multiple parameters, we need to create a unique cache key for the combination of arguments.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function cachingDecorator(func, hash) {
+
+  let cache = new Map();
+
+  return function() {
+
+    let key = hash(arguments);
+
+    if (cache.has(key)) {
+      return cache.get(key);
+    }
+
+    let result = func.call(this, ...arguments);
+
+    cache.set(key, result);
+
+    return result;
+
+  };
+
+}
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">func.apply</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+The <code>apply</code> method works similarly to <code>call</code>, but accepts arguments as an array-like object.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+func.apply(context, args);
+</code></pre>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+func.call(context, ...args);
+func.apply(context, args);
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Both perform the same task, but <code>apply</code> receives arguments as an array-like structure.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Call Forwarding</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Passing all arguments and context to another function is called <b>call forwarding</b>.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let wrapper = function() {
+  return func.apply(this, arguments);
+};
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Method Borrowing</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Sometimes we borrow a method from one object and use it on another object.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function hash() {
+  return [].join.call(arguments);
+}
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Here we borrow the <code>join</code> method from arrays and use it with the <code>arguments</code> object.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Decorators and Function Properties</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+When we decorate a function, the wrapper replaces the original function.
+</p>
+
+<p class="concept-text">
+This means properties on the original function are not automatically preserved.
+</p>
+
+<p class="concept-text">
+More advanced decorators can preserve properties using <code>Proxy</code>.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section" id="summary">
+
+<h2 class="section-title">Summary</h2>
+
+<ul class="summary-list">
+
+<li>A decorator wraps a function to modify its behavior.</li>
+
+<li>Decorators allow adding features without changing original code.</li>
+
+<li><code>func.call(context, ...args)</code> calls a function with a specified <code>this</code>.</li>
+
+<li><code>func.apply(context, args)</code> works similarly but uses an array-like argument list.</li>
+
+<li>Call forwarding passes arguments and context to another function.</li>
+
+<li>Method borrowing allows using methods from one object on another.</li>
+
+</ul>
+
+</section>
+
+</main>
+`;
+
+javascriptCourse.sections[5].lessons[9].Text = `
+<main class="doc">
+
+<header class="doc-header">
+
+<h1 class="doc-title">Function Binding</h1>
+
+<p class="doc-description">
+When object methods are passed as callbacks (for example to <code>setTimeout</code>), the value of <code>this</code> can be lost.
+</p>
+
+<p class="doc-description">
+JavaScript provides ways to preserve the correct <code>this</code> context using wrappers and the <code>bind</code> method.
+</p>
+
+</header>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Losing "this"</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+When a method is separated from its object, the reference to <code>this</code> is lost.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = {
+  firstName: "John",
+  sayHi() {
+    alert(\`Hello, \${this.firstName}!\`);
+  }
+};
+
+setTimeout(user.sayHi, 1000);
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Here <code>setTimeout</code> receives the function without its object, so <code>this</code> becomes <code>undefined</code> (or <code>window</code> in browsers).
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Solution 1: Wrapper Function</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+We can wrap the method call inside another function.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+setTimeout(function() {
+  user.sayHi();
+}, 1000);
+</code></pre>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+setTimeout(() => user.sayHi(), 1000);
+</code></pre>
+</article>
+
+<article class="note-block">
+
+<p class="note-text">
+However, if the variable <code>user</code> changes before the timeout executes, it may call the wrong object.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Solution 2: bind</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+The <code>bind</code> method creates a new function with a fixed <code>this</code> context.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let boundFunc = func.bind(context);
+</code></pre>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = {
+  firstName: "John"
+};
+
+function func() {
+  alert(this.firstName);
+}
+
+let funcUser = func.bind(user);
+
+funcUser();
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Binding Object Methods</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = {
+  firstName: "John",
+  sayHi() {
+    alert(\`Hello, \${this.firstName}!\`);
+  }
+};
+
+let sayHi = user.sayHi.bind(user);
+
+sayHi();
+
+setTimeout(sayHi, 1000);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Binding Arguments</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+The <code>bind</code> method can also fix arguments along with <code>this</code>.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let bound = func.bind(context, arg1, arg2);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Partial Functions</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+When some arguments of a function are fixed, the new function is called a <b>partially applied function</b>.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function mul(a, b) {
+  return a * b;
+}
+
+let double = mul.bind(null, 2);
+
+alert(double(3));
+alert(double(4));
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Another Example</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let triple = mul.bind(null, 3);
+
+alert(triple(3));
+alert(triple(4));
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Binding Multiple Methods</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+If an object has many methods that will be passed around, we can bind them all.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+for (let key in user) {
+
+  if (typeof user[key] == "function") {
+
+    user[key] = user[key].bind(user);
+
+  }
+
+}
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Partial Without Changing Context</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Sometimes we want to fix arguments but keep the original <code>this</code> context.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function partial(func, ...argsBound) {
+
+  return function(...args) {
+
+    return func.call(this, ...argsBound, ...args);
+
+  }
+
+}
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Example of Partial Function</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = {
+
+  firstName: "John",
+
+  say(time, phrase) {
+
+    alert(\`[\${time}] \${this.firstName}: \${phrase}\`);
+
+  }
+
+};
+
+user.sayNow = partial(user.say, "10:00");
+
+user.sayNow("Hello");
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section" id="summary">
+
+<h2 class="section-title">Summary</h2>
+
+<ul class="summary-list">
+
+<li><code>bind</code> creates a new function with fixed <code>this</code>.</li>
+
+<li>It allows passing object methods safely as callbacks.</li>
+
+<li>It can also fix arguments for partial function application.</li>
+
+<li>Partials are useful when the same argument is used repeatedly.</li>
+
+<li>Custom partial helpers can preserve the original <code>this</code> context.</li>
+
+</ul>
+
+</section>
+
+</main>
+`;
+
+javascriptCourse.sections[5].lessons[10].Text = `
+<main class="doc">
+
+<header class="doc-header">
+
+<h1 class="doc-title">Arrow Functions Revisited</h1>
+
+<p class="doc-description">
+Arrow functions are not just a shorter syntax for writing functions. They have several special behaviors that make them very useful in many JavaScript situations.
+</p>
+
+<p class="doc-description">
+They are especially helpful when we want to create small functions that run in another place but keep the current context.
+</p>
+
+</header>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Where Arrow Functions Are Commonly Used</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+JavaScript often requires small functions that are passed somewhere else to be executed later.
+</p>
+
+</article>
+
+<ul class="summary-list">
+
+<li><code>arr.forEach(func)</code> – executes the function for every array item.</li>
+
+<li><code>setTimeout(func)</code> – executes the function later using the scheduler.</li>
+
+<li>Many JavaScript APIs use callback functions.</li>
+
+</ul>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Arrow Functions Have No "this"</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Arrow functions do not have their own <code>this</code>.
+</p>
+
+<p class="concept-text">
+Instead, they use the <code>this</code> value from the surrounding (outer) scope.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let group = {
+
+  title: "Our Group",
+
+  students: ["John", "Pete", "Alice"],
+
+  showList() {
+
+    this.students.forEach(
+
+      student => alert(this.title + ": " + student)
+
+    );
+
+  }
+
+};
+
+group.showList();
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Regular Function Problem</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+If we used a regular function instead of an arrow function, the context would be lost.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let group = {
+
+  title: "Our Group",
+
+  students: ["John", "Pete", "Alice"],
+
+  showList() {
+
+    this.students.forEach(function(student) {
+
+      alert(this.title + ": " + student);
+
+    });
+
+  }
+
+};
+</code></pre>
+</article>
+
+<article class="note-block">
+
+<p class="note-text">
+The error occurs because <code>forEach</code> calls the function with <code>this = undefined</code>.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Arrow Functions Cannot Be Constructors</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Arrow functions do not have their own <code>this</code>, so they cannot be used with <code>new</code>.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let func = () => {};
+
+new func(); // Error
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Arrow Functions vs bind</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+There is an important difference between arrow functions and using <code>.bind(this)</code>.
+</p>
+
+</article>
+
+<ul class="summary-list">
+
+<li><code>.bind(this)</code> creates a new function with fixed context.</li>
+
+<li>Arrow functions do not bind anything; they simply inherit <code>this</code> from the outer scope.</li>
+
+</ul>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Arrow Functions Have No arguments</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Arrow functions also do not have their own <code>arguments</code> object.
+</p>
+
+<p class="concept-text">
+They inherit it from the outer function if needed.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Example: Delaying Function Calls</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Arrow functions are very useful when forwarding calls and preserving the current context.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function defer(f, ms) {
+
+  return function() {
+
+    setTimeout(() => f.apply(this, arguments), ms);
+
+  };
+
+}
+
+function sayHi(who) {
+
+  alert("Hello, " + who);
+
+}
+
+let sayHiDeferred = defer(sayHi, 2000);
+
+sayHiDeferred("John");
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Without Arrow Functions</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Without arrow functions, we would need extra variables to store <code>this</code> and arguments.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function defer(f, ms) {
+
+  return function(...args) {
+
+    let ctx = this;
+
+    setTimeout(function() {
+
+      return f.apply(ctx, args);
+
+    }, ms);
+
+  };
+
+}
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section" id="summary">
+
+<h2 class="section-title">Summary</h2>
+
+<ul class="summary-list">
+
+<li>Arrow functions do not have their own <code>this</code>.</li>
+
+<li>They inherit <code>this</code> from the outer scope.</li>
+
+<li>Arrow functions do not have an <code>arguments</code> object.</li>
+
+<li>They cannot be used as constructors with <code>new</code>.</li>
+
+<li>They are best used for small functions that should use the surrounding context.</li>
 
 </ul>
 

@@ -95,7 +95,7 @@
 }
 
 .code-block {
-  background: var(--surface-overlay);
+  background: var(--surface-overlay) !important;
   border: 1px solid var(--surface-border);
   border-radius: var(--r-lg);
   padding: var(--sp-5) var(--sp-6);
@@ -301,7 +301,7 @@
 /* Kill Prism's own background so our .code-block styles win */
 code[class*="language-"],
 pre[class*="language-"] {
-  background: none !important;
+  /* background: none !important; */
   text-shadow: none !important;
   font-family: var(--font-code) !important;
   font-size: 13px !important;

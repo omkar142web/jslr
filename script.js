@@ -281,6 +281,19 @@ const javascriptCourse = {
 };
 
 /* ============================================================
+   SECTION 1.5: COURSE REGISTRY (multi-subject ready)
+   ============================================================ */
+const courseRegistry = [
+  {
+    id: "javascript",
+    title: "JavaScript",
+    iconText: "JS",
+    description: "Learn JavaScript from fundamentals to advanced topics.",
+    course: javascriptCourse,
+  },
+];
+
+/* ============================================================
    SECTION 2: INJECT RICH HTML CONTENT
    Lesson Text is assigned here to keep the initial data compact.
    For maximum robustness, consider inlining each Text into the
@@ -13380,14 +13393,23 @@ function defer(f, ms) {
   // Tracks the last visited lesson index for each section
   const lastVisitedLesson = {};
   let _tocObserver = null;
-  const COMPLETION_STORAGE_KEY = "jslr-completed";
+  const STORAGE_NS = "jslr-v2";
+  const COMPLETION_STORAGE_KEY = STORAGE_NS + "-completed";
+  const NOTES_STORAGE_KEY = STORAGE_NS + "-notes";
+  const BOOKMARKS_STORAGE_KEY = STORAGE_NS + "-bookmarks";
+  const HIGHLIGHTS_STORAGE_KEY = STORAGE_NS + "-highlights";
+  const CONFUSED_STORAGE_KEY = STORAGE_NS + "-confused";
+
+  // Course selection
+  let currentCourseEntry = courseRegistry[0] || null;
+  let currentCourse = currentCourseEntry ? currentCourseEntry.course : javascriptCourse;
 
   function getResumeIndex(sectionIdx, sectionLessons) {
-  var sectionId = (javascriptCourse.sections[sectionIdx] || {}).id || String(sectionIdx);
+  var sectionId = (currentCourse.sections[sectionIdx] || {}).id || String(sectionIdx);
 
   // Find the first lesson that has content and is not completed
   for (var i = 0; i < sectionLessons.length; i++) {
-    if (sectionLessons[i].Text && !isCompleted(sectionId, i)) {
+    if (hasLessonContent(sectionLessons[i]) && !isCompleted(sectionId, i)) {
       return i;
     }
   }
@@ -13449,7 +13471,13 @@ function defer(f, ms) {
   }
 
   function getCompletionKey(sectionId, lessonIndex) {
-    return sectionId + "/" + lessonIndex;
+    return (
+      (currentCourseEntry ? currentCourseEntry.id : "course") +
+      "/" +
+      sectionId +
+      "/" +
+      lessonIndex
+    );
   }
 
   function loadCompletion() {
@@ -13468,19 +13496,143 @@ function defer(f, ms) {
   }
 
   function isCompleted(sectionId, lessonIndex) {
-    return !!completionState[getCompletionKey(sectionId, lessonIndex)];
+    var v = completionState[getCompletionKey(sectionId, lessonIndex)];
+    if (!v) return false;
+    if (v === true) return true;
+    return !!v.done;
   }
 
   function setCompleted(sectionId, lessonIndex, completed) {
     var key = getCompletionKey(sectionId, lessonIndex);
-    completionState[key] = !!completed;
+    completionState[key] = completed
+      ? { done: true, at: Date.now() }
+      : { done: false, at: null };
     saveCompletion(completionState);
   }
 
   let completionState = loadCompletion();
 
+  function migrateCompletionShape(state) {
+    // v1 stored booleans, v2 stores {done, at}
+    var out = {};
+    try {
+      Object.keys(state || {}).forEach(function (k) {
+        var v = state[k];
+        if (v === true) out[k] = { done: true, at: null };
+        else if (v === false) out[k] = { done: false, at: null };
+        else if (v && typeof v === "object" && "done" in v) out[k] = v;
+      });
+    } catch (_) {}
+    return out;
+  }
+
+  completionState = migrateCompletionShape(completionState);
+
+  function setCourse(entry) {
+    currentCourseEntry = entry;
+    currentCourse = entry ? entry.course : javascriptCourse;
+  }
+
+  function escapeHtmlAttr(str) {
+    return escapeHtml(str).replace(/"/g, "&quot;");
+  }
+
+  function hasLessonContent(lesson) {
+    return !!(lesson && (lesson.contentUrl || lesson.Text));
+  }
+
+  /* ============================================================
+     Per-lesson Notes (minimal, self-contained)
+     Storage key format: jslr-v2-notes-{sectionId}/{lessonIndex}
+     ============================================================ */
+  function getNotesKey(sectionId, lessonIndex) {
+    return STORAGE_NS + "-notes-" + sectionId + "/" + lessonIndex;
+  }
+
+  function safeGetLocal(key) {
+    try {
+      return localStorage.getItem(key);
+    } catch (_) {
+      return null;
+    }
+  }
+
+  function safeSetLocal(key, value) {
+    try {
+      localStorage.setItem(key, value);
+    } catch (_) {}
+  }
+
+  var _notesEl = null;
+  var _notesTextarea = null;
+  var _notesToggle = null;
+  var _notesBody = null;
+  var _notesSaveT = null;
+  var _notesCurrentKey = null;
+
+  function ensureNotesPanel() {
+    if (_notesEl) return _notesEl;
+    var wrap = document.createElement("section");
+    wrap.className = "lesson-notes";
+    wrap.setAttribute("aria-label", "Lesson notes");
+
+    wrap.innerHTML =
+      '<div class="lesson-notes-head">' +
+      '<button type="button" class="lesson-notes-toggle" aria-expanded="false">' +
+      '<span class="lesson-notes-title">Notes</span>' +
+      '<span class="lesson-notes-hint">Saved locally</span>' +
+      '<span class="lesson-notes-chevron" aria-hidden="true"><i class="fa-solid fa-chevron-down"></i></span>' +
+      "</button>" +
+      "</div>" +
+      '<div class="lesson-notes-body" hidden>' +
+      '<textarea class="lesson-notes-textarea" rows="6" placeholder="Write your notes for this lesson…"></textarea>' +
+      "</div>";
+
+    _notesEl = wrap;
+    _notesToggle = wrap.querySelector(".lesson-notes-toggle");
+    _notesBody = wrap.querySelector(".lesson-notes-body");
+    _notesTextarea = wrap.querySelector(".lesson-notes-textarea");
+
+    _notesToggle.addEventListener("click", function () {
+      var expanded = _notesToggle.getAttribute("aria-expanded") === "true";
+      _notesToggle.setAttribute("aria-expanded", expanded ? "false" : "true");
+      if (_notesBody) _notesBody.hidden = expanded;
+      wrap.classList.toggle("is-open", !expanded);
+    });
+
+    function scheduleSave() {
+      if (!_notesCurrentKey || !_notesTextarea) return;
+      if (_notesSaveT) clearTimeout(_notesSaveT);
+      _notesSaveT = setTimeout(function () {
+        safeSetLocal(_notesCurrentKey, _notesTextarea.value || "");
+      }, 150);
+    }
+
+    _notesTextarea.addEventListener("input", scheduleSave);
+    _notesTextarea.addEventListener("blur", function () {
+      if (!_notesCurrentKey || !_notesTextarea) return;
+      safeSetLocal(_notesCurrentKey, _notesTextarea.value || "");
+    });
+
+    return wrap;
+  }
+
+  function mountNotesPanel(sectionId, lessonIndex) {
+    ensureNotesPanel();
+    _notesCurrentKey = getNotesKey(sectionId, lessonIndex);
+    var saved = safeGetLocal(_notesCurrentKey);
+    if (_notesTextarea) _notesTextarea.value = saved || "";
+
+    // Ensure it's placed right below lesson content
+    if (_notesEl && _notesEl.parentElement !== contentEl) {
+      contentEl.appendChild(_notesEl);
+    } else if (_notesEl && _notesEl.parentElement === contentEl) {
+      contentEl.appendChild(_notesEl); // move to end
+    }
+  }
+
   // Sync in-memory lesson.completed from persisted state
-  javascriptCourse.sections.forEach(function (section) {
+  currentCourse.sections.forEach(function (section) {
     var sectionId = section.id || "";
     getLessons(section).forEach(function (lesson, i) {
       if (lesson.completed !== undefined) {
@@ -13504,6 +13656,10 @@ function defer(f, ms) {
   const sidebarEl = document.getElementById("sidebar");
   const sidebarToggle = document.getElementById("sidebarToggle");
   const sidebarBackdrop = document.getElementById("sidebarBackdrop");
+  const tocEl = document.getElementById("lessonToc");
+  const tocToggle = document.getElementById("tocToggle");
+  const tocBackdrop = document.getElementById("tocBackdrop");
+  const bookmarksWrap = document.getElementById("sidebarBookmarks");
   const scrollBtn = document.querySelector(".outer");
   const contentWrapEl =
     document.getElementById("contentWrap") || contentEl.parentElement;
@@ -13516,10 +13672,10 @@ function defer(f, ms) {
 
   let currentSectionIndex = 4;
   let currentLessonIndex = 0;
-  let lessons = getLessons(javascriptCourse.sections[currentSectionIndex]);
+  let lessons = getLessons(currentCourse.sections[currentSectionIndex]);
 
   function getSection() {
-    return javascriptCourse.sections[currentSectionIndex];
+    return currentCourse.sections[currentSectionIndex];
   }
 
   function getSectionId() {
@@ -13547,11 +13703,11 @@ function defer(f, ms) {
   function applyHash() {
     const { sectionId, lessonSlug } = parseHash();
     if (!sectionId) return false;
-    const sectionIndex = javascriptCourse.sections.findIndex(function (s) {
+    const sectionIndex = currentCourse.sections.findIndex(function (s) {
       return (s.id || "") === sectionId;
     });
     if (sectionIndex === -1) return false;
-    const section = javascriptCourse.sections[sectionIndex];
+    const section = currentCourse.sections[sectionIndex];
     const sectionLessons = getLessons(section);
     const lessonIndex = sectionLessons.findIndex(function (l) {
       return getLessonSlug(l) === lessonSlug;
@@ -13906,6 +14062,9 @@ function defer(f, ms) {
         '<div class="placeholder-content"><p class="placeholder-text">Failed to load this lesson. Please try again.</p></div>';
       console.error("renderContent error:", err);
     }
+
+    // Per-lesson notes panel (always available, saved per section/lesson)
+    mountNotesPanel(getSectionId(), currentLessonIndex);
     if (contentMainEl) {
       contentMainEl.classList.remove("animating");
       requestAnimationFrame(function () {
@@ -14037,20 +14196,29 @@ function defer(f, ms) {
     // Intersection Observer: highlight the TOC entry for the visible heading
     var scrollRoot = contentWrapEl || mainEl;
 
+    var _tocDebounceT = null;
+    var _lastActiveId = null;
     _tocObserver = new IntersectionObserver(
       function (entries) {
-        entries.forEach(function (entry) {
-          var id = entry.target.id;
-          var btn = tocEl.querySelector('[data-toc-target="' + id + '"]');
-          if (!btn) return;
-          if (entry.isIntersecting) {
-            // Remove active from all, set on this one
-            tocButtons.forEach(function (b) {
-              b.classList.remove("toc-active");
-            });
-            btn.classList.add("toc-active");
+        if (_tocDebounceT) clearTimeout(_tocDebounceT);
+        _tocDebounceT = setTimeout(function () {
+          var nextId = null;
+          for (var i = 0; i < entries.length; i++) {
+            if (entries[i].isIntersecting) {
+              nextId = entries[i].target.id;
+              break;
+            }
           }
-        });
+          if (!nextId || nextId === _lastActiveId) return;
+          _lastActiveId = nextId;
+          tocButtons.forEach(function (b) {
+            b.classList.remove("toc-active");
+          });
+          var btn = tocEl.querySelector(
+            '[data-toc-target="' + nextId + '"]',
+          );
+          if (btn) btn.classList.add("toc-active");
+        }, 80);
       },
       {
         root: scrollRoot,
@@ -14100,6 +14268,25 @@ function defer(f, ms) {
       else openSidebar();
     });
     sidebarBackdrop.addEventListener("click", closeSidebar);
+  }
+
+  // ── Mobile TOC drawer ──
+  if (tocToggle && tocEl && tocBackdrop) {
+    function openToc() {
+      tocEl.classList.add("is-open");
+      tocBackdrop.classList.add("is-visible");
+      tocToggle.setAttribute("aria-expanded", "true");
+    }
+    function closeToc() {
+      tocEl.classList.remove("is-open");
+      tocBackdrop.classList.remove("is-visible");
+      tocToggle.setAttribute("aria-expanded", "false");
+    }
+    tocToggle.addEventListener("click", function () {
+      if (tocEl.classList.contains("is-open")) closeToc();
+      else openToc();
+    });
+    tocBackdrop.addEventListener("click", closeToc);
   }
 
   // ── Init: apply hash or defaults ──

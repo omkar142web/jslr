@@ -841,9 +841,111 @@ button {
   opacity: 1;
 }
 
+/* Bookmarks panel (sidebar) */
+.sidebar-bookmarks {
+  padding: var(--sp-3) var(--sp-5);
+  border-bottom: 1px solid var(--surface-border-dim);
+  display: none;
+}
+
+.sidebar-bookmarks.is-visible {
+  display: block;
+}
+
+.bookmarks-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: var(--sp-2);
+}
+
+.bookmark-item {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  width: 100%;
+  padding: var(--sp-2) var(--sp-2);
+  border-radius: var(--r-md);
+  color: var(--text-secondary);
+  background: transparent;
+  border: 1px solid transparent;
+  transition: background var(--t-fast), border-color var(--t-fast), color var(--t-fast);
+  cursor: pointer;
+  text-align: left;
+}
+
+.bookmark-item:hover {
+  background: var(--surface-hover);
+  border-color: rgba(16, 185, 129, 0.25);
+  color: var(--text-primary);
+}
+
+.bookmark-item .star {
+  color: var(--accent-secondary-text);
+}
+
+/* Mobile TOC drawer toggle + backdrop */
+.toc-toggle {
+  display: none;
+  position: fixed;
+  bottom: 18px;
+  left: 18px;
+  z-index: 100;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: var(--text-primary);
+  background: linear-gradient(180deg, #141827, var(--surface-raised));
+  border: 1px solid var(--surface-border);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background var(--t-fast), border-color var(--t-fast), box-shadow var(--t-fast);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.45);
+}
+
+.toc-toggle:hover {
+  background: var(--surface-hover);
+  border-color: rgba(16, 185, 129, 0.45);
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.10), 0 16px 34px rgba(0, 0, 0, 0.55);
+}
+
+.toc-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 97;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transition: opacity var(--t-base);
+}
+
+.toc-backdrop.is-visible {
+  opacity: 1;
+}
+
 @media (max-width: 768px) {
   .sidebar-toggle {
     display: flex;
+  }
+
+  .toc-toggle {
+    display: inline-flex;
+  }
+
+  .toc-backdrop {
+    display: block;
+    pointer-events: none;
+  }
+
+  .toc-backdrop.is-visible {
+    pointer-events: auto;
   }
 
   .sidebar-backdrop {
@@ -892,6 +994,32 @@ button {
 
   .content-wrap {
     padding: var(--sp-6) var(--sp-5) var(--sp-10);
+  }
+
+  /* Mobile TOC becomes a bottom-sheet drawer (instead of hidden) */
+  .lesson-toc {
+    display: block;
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    top: auto;
+    width: auto;
+    max-height: 55vh;
+    overflow: auto;
+    background: rgba(17, 19, 25, 0.92);
+    border: 1px solid var(--surface-border);
+    border-radius: 16px;
+    padding: var(--sp-5);
+    transform: translateY(120%);
+    transition: transform var(--t-base);
+    z-index: 99;
+    box-shadow: 0 18px 60px rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+  }
+
+  .lesson-toc.is-open {
+    transform: translateY(0);
   }
 
   .doc-title {

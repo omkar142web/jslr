@@ -13608,11 +13608,10 @@ function defer(f, ms) {
       card.addEventListener("click", function () {
         currentSectionIndex = idx;
         lessons = getLessons(section);
-        // var resumeIndex =
-          // lastVisitedLesson[idx] !== undefined ? lastVisitedLesson[idx] : 0;
-          var resumeIndex = getResumeIndex(idx, getLessons(section));
+        var resumeIndex = getResumeIndex(idx, getLessons(section));
         setHash(section.id || idx, getLessonSlug(lessons[resumeIndex]));
         updateSectionInfo();
+        buildSectionSwitcher();
         if (lessonSearchEl) lessonSearchEl.value = "";
         buildLessonList();
         selectLesson(resumeIndex);

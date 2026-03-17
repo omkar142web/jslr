@@ -358,6 +358,7 @@ button {
 }
 
 .sidebar-section-switcher .section-card {
+  text-align: center !important;
   display: flex;
   flex-direction: column;
   justify-content: center;

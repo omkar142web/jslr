@@ -141,15 +141,7 @@ const javascriptCourse = {
           Text: `• Overview of the Topic
 • Key Ideas and Explanations
 • Supporting Details and Examples
-• Final Thoughts and Observations
-
-> Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae fugit voluptate quis eveniet molestias illum doloribus esse. Illum nobis consequatur ab recusandae a rerum veniam quibusdam hic quidem accusamus.
-
-> Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus aliquid modi quos nesciunt recusandae veniam nostrum doloremque ad autem quae aspernatur soluta accusantium eligendi consequatur quam perspiciatis expedita.
-
-> Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit facilis quam repellendus provident rem quae nulla reprehenderit iure fuga magni placeat illo sed temporibus.
-
-> Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores debitis quo enim dolore recusandae corrupti natus iste aut eligendi saepe et eum illum modi nesciunt ipsum tempore magnam amet.`,
+• Final Thoughts and Observations`,
         },
         { title: "Numbers", Text: "Numbers - empty for now!!" },
         { title: "Strings", Text: "Strings - empty for now!!" },

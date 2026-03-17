@@ -1,0 +1,442 @@
+
+<main class="doc">
+
+<header class="doc-header">
+<h1 class="doc-title">Function Object, NFE</h1>
+
+<p class="doc-description">
+In JavaScript, functions are values. Every value has a type, and functions are actually objects.
+</p>
+
+<p class="doc-description">
+That means functions can be called, but also treated like objects with properties.
+</p>
+
+</header>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Functions Are Objects</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Functions in JavaScript are special objects that can be executed.
+</p>
+
+<p class="concept-text">
+They can also store properties, be passed as values, or modified like any other object.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">The name Property</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Every function has a <code>name</code> property that stores the function’s name.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function sayHi() {
+  alert("Hi");
+}
+
+alert(sayHi.name); // sayHi
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Automatic Function Names</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+JavaScript automatically assigns names to functions based on their context.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let sayHi = function() {
+  alert("Hi");
+};
+
+alert(sayHi.name); // sayHi
+</code></pre>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function f(sayHi = function(){}) {
+  alert(sayHi.name); // sayHi
+}
+
+f();
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Method Names</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = {
+
+  sayHi() {
+    // ...
+  },
+
+  sayBye: function() {
+    // ...
+  }
+
+};
+
+alert(user.sayHi.name);  // sayHi
+alert(user.sayBye.name); // sayBye
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Functions Without Names</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let arr = [function() {}];
+
+alert(arr[0].name); // empty string
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Sometimes JavaScript cannot determine the correct name, so the <code>name</code> property is empty.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">The length Property</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Functions also have a <code>length</code> property that shows the number of parameters in the function definition.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function f1(a) {}
+function f2(a, b) {}
+function many(a, b, ...more) {}
+
+alert(f1.length); // 1
+alert(f2.length); // 2
+alert(many.length); // 2
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Using length for Polymorphism</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function ask(question, ...handlers) {
+
+  let isYes = confirm(question);
+
+  for (let handler of handlers) {
+
+    if (handler.length == 0) {
+
+      if (isYes) handler();
+
+    } else {
+
+      handler(isYes);
+
+    }
+
+  }
+
+}
+
+ask("Question?",
+  () => alert("You said yes"),
+  result => alert(result)
+);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Custom Function Properties</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Functions can have custom properties just like objects.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function sayHi() {
+
+  alert("Hi");
+
+  sayHi.counter++;
+
+}
+
+sayHi.counter = 0;
+
+sayHi();
+sayHi();
+
+alert(\`Called \${sayHi.counter} times\`);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Properties vs Variables</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Function properties are not the same as local variables.
+</p>
+
+<p class="concept-text">
+They exist independently from variables declared inside the function.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Using Properties Instead of Closures</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function makeCounter() {
+
+  function counter() {
+    return counter.count++;
+  }
+
+  counter.count = 0;
+
+  return counter;
+
+}
+
+let counter = makeCounter();
+
+alert(counter());
+alert(counter());
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Named Function Expression (NFE)</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+A Named Function Expression is a function expression that includes a name.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let sayHi = function func(who) {
+  alert(\`Hello, \${who}\`);
+};
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Why Use NFE?</h2>
+
+<ul class="summary-list">
+
+<li>Allows the function to reference itself internally.</li>
+
+<li>The internal name is not visible outside the function.</li>
+
+</ul>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Recursive Call with NFE</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let sayHi = function func(who) {
+
+  if (who) {
+    alert(\`Hello, \${who}\`);
+  } else {
+    func("Guest");
+  }
+
+};
+
+sayHi();
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Problem Without NFE</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let sayHi = function(who) {
+
+  if (who) {
+    alert(\`Hello, \${who}\`);
+  } else {
+    sayHi("Guest");
+  }
+
+};
+
+let welcome = sayHi;
+
+sayHi = null;
+
+welcome(); // Error
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Fixed with NFE</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let sayHi = function func(who) {
+
+  if (who) {
+    alert(\`Hello, \${who}\`);
+  } else {
+    func("Guest");
+  }
+
+};
+
+let welcome = sayHi;
+sayHi = null;
+
+welcome(); // Works
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section" id="summary">
+
+<h2 class="section-title">Summary</h2>
+
+<ul class="summary-list">
+
+<li>Functions in JavaScript are objects.</li>
+
+<li>They have built-in properties like <code>name</code> and <code>length</code>.</li>
+
+<li>Functions can also store custom properties.</li>
+
+<li>A Named Function Expression (NFE) is a function expression with a name.</li>
+
+<li>The internal name allows the function to call itself reliably.</li>
+
+<li>This technique is useful for recursion and safer function references.</li>
+
+</ul>
+
+</section>
+
+</main>

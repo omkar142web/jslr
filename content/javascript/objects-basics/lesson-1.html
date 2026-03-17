@@ -1,0 +1,442 @@
+
+<main class="doc">
+
+<header class="doc-header">
+<h1 class="doc-title">Object References and Copying</h1>
+
+<p class="doc-description">
+One of the fundamental differences of objects versus primitives is that objects are stored and copied “by reference”, whereas primitive values: strings, numbers, booleans, etc – are always copied “as a whole value”.
+</p>
+
+<p class="doc-description">
+That’s easy to understand if we look a bit under the hood of what happens when we copy a value.
+</p>
+
+</header>
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Copying Primitive Values</h2>
+
+<article class="concept-block">
+<p class="concept-text">
+Let’s start with a primitive, such as a string.
+</p>
+
+<p class="concept-text">
+Here we put a copy of message into phrase:
+</p>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let message = "Hello!";
+let phrase = message;
+</code></pre>
+</article>
+
+<article class="concept-block">
+<p class="concept-text">
+As a result we have two independent variables, each one storing the string "Hello!".
+</p>
+
+<p class="concept-text">
+Quite an obvious result, right?
+</p>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Objects Store References</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Objects are not like that.
+</p>
+
+<p class="concept-text">
+A variable assigned to an object stores not the object itself, but its “address in memory” – in other words “a reference” to it.
+</p>
+
+<p class="concept-text">
+Let’s look at an example of such a variable:
+</p>
+
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let user = {
+  name: "John"
+};
+</code></pre>
+
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+The object is stored somewhere in memory, while the user variable has a “reference” to it.
+</p>
+
+<p class="concept-text">
+We may think of an object variable, such as user, like a sheet of paper with the address of the object on it.
+</p>
+
+<p class="concept-text">
+When we perform actions with the object, e.g. take a property <code>user.name</code>, the JavaScript engine looks at what’s at that address and performs the operation on the actual object.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Copying Object References</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Now here’s why it’s important.
+</p>
+
+<p class="concept-text">
+When an object variable is copied, the reference is copied, but the object itself is not duplicated.
+</p>
+
+<p class="concept-text">
+For instance:
+</p>
+
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let user = { name: "John" };
+
+let admin = user; // copy the reference
+</code></pre>
+
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Now we have two variables, each storing a reference to the same object.
+</p>
+
+<p class="concept-text">
+As you can see, there’s still one object, but now with two variables that reference it.
+</p>
+
+<p class="concept-text">
+We can use either variable to access the object and modify its contents:
+</p>
+
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let user = { name: 'John' };
+
+let admin = user;
+
+admin.name = 'Pete'; // changed by the "admin" reference
+
+alert(user.name); // 'Pete', changes are seen from the "user" reference
+</code></pre>
+
+</article>
+
+<div class="note-block">
+It’s as if we had a cabinet with two keys and used one of them (admin) to get into it and make changes. Then, if we later use another key (user), we are still opening the same cabinet and can access the changed contents.
+</div>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Comparison by Reference</h2>
+
+<article class="concept-block">
+<p class="concept-text">
+Two objects are equal only if they are the same object.
+</p>
+
+<p class="concept-text">
+For instance, here <code>a</code> and <code>b</code> reference the same object, thus they are equal:
+</p>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let a = {};
+let b = a; // copy the reference
+
+alert( a == b ); // true, both variables reference the same object
+alert( a === b ); // true
+</code></pre>
+</article>
+
+<article class="concept-block">
+<p class="concept-text">
+And here two independent objects are not equal, even though they look alike (both are empty):
+</p>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let a = {};
+let b = {}; // two independent objects
+
+alert( a == b ); // false
+</code></pre>
+</article>
+
+<article class="concept-block">
+<p class="concept-text">
+For comparisons like <code>obj1 > obj2</code> or for a comparison against a primitive <code>obj == 5</code>, objects are converted to primitives.
+We’ll study how object conversions work very soon, but to tell the truth, such comparisons are needed very rarely – usually they appear as a result of a programming mistake.
+</p>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Const Objects Can Be Modified</h2>
+
+<article class="concept-block">
+<p class="concept-text">
+An important side effect of storing objects as references is that an object declared as <code>const</code> can be modified.
+</p>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+const user = {
+  name: "John"
+};
+
+user.name = "Pete"; // (*)
+
+alert(user.name); // Pete
+</code></pre>
+</article>
+
+<article class="concept-block">
+<p class="concept-text">
+It might seem that the line (*) would cause an error, but it does not. The value of <code>user</code> is constant, it must always reference the same object, but properties of that object are free to change.
+</p>
+
+<p class="concept-text">
+In other words, the <code>const user</code> gives an error only if we try to set <code>user = ...</code> as a whole.
+</p>
+
+<p class="concept-text">
+That said, if we really need to make constant object properties, it’s also possible, but using totally different methods. We’ll mention that in the chapter Property flags and descriptors.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Cloning and Merging — Object.assign</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+So, copying an object variable creates one more reference to the same object.
+</p>
+
+<p class="concept-text">
+But what if we need to duplicate an object?
+</p>
+
+<p class="concept-text">
+We can create a new object and replicate the structure of the existing one, by iterating over its properties and copying them on the primitive level.
+</p>
+
+<p class="concept-text">
+Like this:
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = {
+  name: "John",
+  age: 30
+};
+
+let clone = {}; // the new empty object
+
+for (let key in user) {
+  clone[key] = user[key];
+}
+
+clone.name = "Pete";
+
+alert( user.name ); // still John in the original object
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Object.assign()</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+We can also use the method <code>Object.assign</code>.
+</p>
+
+<p class="concept-text">
+The syntax is:
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+Object.assign(dest, ...sources)
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+The first argument <code>dest</code> is a target object.
+Further arguments is a list of source objects.
+It copies the properties of all source objects into the target <code>dest</code>, and then returns it as the result.
+</p>
+
+<p class="concept-text">
+For example, we have user object, let’s add a couple of permissions to it:
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = { name: "John" };
+
+let permissions1 = { canView: true };
+let permissions2 = { canEdit: true };
+
+Object.assign(user, permissions1, permissions2);
+
+alert(user.name); 
+alert(user.canView); 
+alert(user.canEdit);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Nested Cloning Problem</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = {
+  name: "John",
+  sizes: {
+    height: 182,
+    width: 50
+  }
+};
+
+alert( user.sizes.height );
+</code></pre>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let clone = Object.assign({}, user);
+
+alert( user.sizes === clone.sizes ); // true
+
+user.sizes.width = 60;
+alert(clone.sizes.width);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">structuredClone</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let clone = structuredClone(user);
+
+alert( user.sizes === clone.sizes ); // false
+
+user.sizes.width = 60;
+alert(clone.sizes.width);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section" id="summary">
+
+<h2 class="section-title">Summary</h2>
+
+<ul class="summary-list">
+
+<li>Objects are assigned and copied by reference.</li>
+
+<li>A variable stores a reference (memory address) to the object.</li>
+
+<li>Copying a variable copies the reference, not the object.</li>
+
+<li>All operations via copied references affect the same object.</li>
+
+<li>Object.assign can be used for shallow copying.</li>
+
+<li>structuredClone can perform deep cloning.</li>
+
+<li>Deep cloning ensures nested objects are copied independently.</li>
+
+<li>Libraries like lodash provide functions such as _.cloneDeep for complex cloning.</li>
+
+</ul>
+
+</section>
+
+</main>

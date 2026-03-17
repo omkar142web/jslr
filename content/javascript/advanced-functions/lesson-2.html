@@ -1,0 +1,378 @@
+
+<main class="doc">
+
+<header class="doc-header">
+<h1 class="doc-title">Variable Scope and Closure</h1>
+
+<p class="doc-description">
+JavaScript is a very function-oriented language. Functions can be created anywhere, passed as arguments, and executed later in completely different parts of the code.
+</p>
+
+<p class="doc-description">
+Functions can also access variables outside their own scope. In this chapter we will learn how this works using scope, lexical environments, and closures.
+</p>
+
+</header>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Variable Declarations</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+JavaScript provides three ways to declare variables:
+</p>
+
+<ul class="summary-list">
+<li><code>let</code></li>
+<li><code>const</code></li>
+<li><code>var</code> (older method)</li>
+</ul>
+
+<p class="concept-text">
+In modern JavaScript we usually use <code>let</code> and <code>const</code>. The behavior discussed here applies to both.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Block Scope</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Variables declared inside a code block <code>{ }</code> are only visible inside that block.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+{
+  let message = "Hello";
+  alert(message);
+}
+
+alert(message); // Error
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Blocks allow us to isolate variables so they do not conflict with variables outside the block.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Example with Multiple Blocks</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+{
+  let message = "Hello";
+  alert(message);
+}
+
+{
+  let message = "Goodbye";
+  alert(message);
+}
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Scope in if Statements</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+if (true) {
+  let phrase = "Hello!";
+  alert(phrase);
+}
+
+alert(phrase); // Error
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Scope in Loops</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+for (let i = 0; i < 3; i++) {
+  alert(i);
+}
+
+alert(i); // Error
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Nested Functions</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+A function defined inside another function is called a nested function.
+</p>
+
+<p class="concept-text">
+Nested functions can access variables from their outer function.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function sayHiBye(firstName, lastName) {
+
+  function getFullName() {
+    return firstName + " " + lastName;
+  }
+
+  alert("Hello, " + getFullName());
+  alert("Bye, " + getFullName());
+
+}
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Returning Nested Functions</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function makeCounter() {
+  let count = 0;
+
+  return function() {
+    return count++;
+  };
+}
+
+let counter = makeCounter();
+
+alert(counter());
+alert(counter());
+alert(counter());
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Even after <code>makeCounter()</code> finishes executing, the returned function still has access to the variable <code>count</code>.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Lexical Environment</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Every function, code block, and script has an internal object called a Lexical Environment.
+</p>
+
+<p class="concept-text">
+This object stores variables and references to outer environments.
+</p>
+
+</article>
+
+<ul class="summary-list">
+<li>Environment Record – stores local variables.</li>
+<li>Reference to the outer environment.</li>
+</ul>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Function Declarations</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Function declarations are fully initialized when the lexical environment is created.
+</p>
+
+<p class="concept-text">
+This means functions declared using <code>function</code> can be used before their declaration.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Inner and Outer Environments</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+When a function runs, a new lexical environment is created for that call.
+</p>
+
+<p class="concept-text">
+If a variable is not found locally, JavaScript searches the outer environments until it reaches the global environment.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Closures</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+A closure is a function that remembers its outer variables and can access them later.
+</p>
+
+<p class="concept-text">
+In JavaScript, all functions automatically behave as closures.
+</p>
+
+</article>
+
+<ul class="summary-list">
+<li>Functions remember the environment where they were created.</li>
+<li>They access variables from that environment even after execution ends.</li>
+</ul>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Garbage Collection</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Normally, lexical environments are removed from memory after a function finishes executing.
+</p>
+
+<p class="concept-text">
+However, if a nested function still references that environment, it stays in memory.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function f() {
+  let value = 123;
+
+  return function() {
+    alert(value);
+  }
+}
+
+let g = f();
+
+g = null;
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Engine Optimizations</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+JavaScript engines often optimize memory usage by removing unused variables.
+</p>
+
+<p class="concept-text">
+Sometimes this optimization can affect debugging, especially in Chrome's V8 engine.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section" id="summary">
+
+<h2 class="section-title">Summary</h2>
+
+<ul class="summary-list">
+
+<li>Variables declared with <code>let</code> and <code>const</code> are block-scoped.</li>
+
+<li>Nested functions can access variables from their outer scope.</li>
+
+<li>Each function execution creates a new lexical environment.</li>
+
+<li>Variables are stored inside environment records.</li>
+
+<li>A closure is a function that remembers outer variables.</li>
+
+<li>Closures keep lexical environments alive while they are still referenced.</li>
+
+<li>JavaScript engines may optimize unused variables internally.</li>
+
+</ul>
+
+</section>
+
+</main>

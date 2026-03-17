@@ -1,0 +1,448 @@
+
+<main class="doc">
+
+<header class="doc-header">
+<h1 class="doc-title">JavaScript Map and Set</h1>
+<p class="doc-description">
+Until now we used <strong>Objects</strong> for keyed collections and
+<strong>Arrays</strong> for ordered collections.  
+However, JavaScript also provides two specialized structures:
+<strong>Map</strong> and <strong>Set</strong>.
+</p>
+</header>
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Map</h2>
+
+<article class="concept-block">
+<h3 class="concept-title">What is Map?</h3>
+<p class="concept-text">
+A <code>Map</code> is a collection of keyed data items similar to an object.
+The major difference is that <strong>Map allows keys of any type</strong>.
+Objects convert keys to strings, but Map preserves the key type.
+</p>
+</article>
+
+<table class="data-table">
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+
+<tr>
+<td><code>new Map()</code></td>
+<td>Create a new Map</td>
+</tr>
+
+<tr>
+<td><code>map.set(key,value)</code></td>
+<td>Store value by key</td>
+</tr>
+
+<tr>
+<td><code>map.get(key)</code></td>
+<td>Return value by key</td>
+</tr>
+
+<tr>
+<td><code>map.has(key)</code></td>
+<td>Check if key exists</td>
+</tr>
+
+<tr>
+<td><code>map.delete(key)</code></td>
+<td>Remove key/value pair</td>
+</tr>
+
+<tr>
+<td><code>map.clear()</code></td>
+<td>Remove all elements</td>
+</tr>
+
+<tr>
+<td><code>map.size</code></td>
+<td>Total number of elements</td>
+</tr>
+
+</tbody>
+</table>
+
+</section>
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Map Example</h2>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let map = new Map();
+
+map.set('1','str1');
+map.set(1,'num1');
+map.set(true,'bool1');
+
+alert(map.get(1));
+alert(map.get('1'));
+
+alert(map.size);
+</code></pre>
+
+<p class="example-note">
+Map keeps key types separate.  
+Number <code>1</code> and string <code>"1"</code> are different keys.
+</p>
+
+</article>
+
+</section>
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Objects as Keys</h2>
+
+<article class="concept-block">
+<h3 class="concept-title">Important Map Feature</h3>
+<p class="concept-text">
+Unlike objects, a Map can use other objects as keys.
+This makes it very useful when associating data with specific objects.
+</p>
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let john = { name: "John" };
+
+let visitsCountMap = new Map();
+
+visitsCountMap.set(john,123);
+
+alert(visitsCountMap.get(john));
+</code></pre>
+
+</article>
+
+<div class="note-block">
+Objects convert object keys to the same string
+<code>"[object Object]"</code>, but Map keeps the object reference.
+</div>
+
+</section>
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Map Key Comparison</h2>
+
+<article class="concept-block">
+<h3 class="concept-title">SameValueZero Algorithm</h3>
+<p class="concept-text">
+Map compares keys using the <strong>SameValueZero</strong> algorithm.
+It behaves almost the same as strict equality <code>===</code>,
+except that <code>NaN</code> is considered equal to <code>NaN</code>.
+</p>
+</article>
+
+</section>
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Method Chaining</h2>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+map.set('1','str1')
+   .set(1,'num1')
+   .set(true,'bool1');
+</code></pre>
+
+<p class="example-note">
+Each <code>set()</code> returns the map itself, allowing chained calls.
+</p>
+
+</article>
+
+</section>
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Iterating Over Map</h2>
+
+<table class="data-table">
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+
+<tr>
+<td><code>map.keys()</code></td>
+<td>Iterates keys</td>
+</tr>
+
+<tr>
+<td><code>map.values()</code></td>
+<td>Iterates values</td>
+</tr>
+
+<tr>
+<td><code>map.entries()</code></td>
+<td>Iterates key/value pairs</td>
+</tr>
+
+</tbody>
+</table>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let recipeMap = new Map([
+ ['cucumber',500],
+ ['tomatoes',350],
+ ['onion',50]
+]);
+
+for(let vegetable of recipeMap.keys()){
+ alert(vegetable);
+}
+
+for(let amount of recipeMap.values()){
+ alert(amount);
+}
+
+for(let entry of recipeMap){
+ alert(entry);
+}
+</code></pre>
+
+</article>
+
+</section>
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Map.forEach()</h2>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+recipeMap.forEach((value,key,map)=>{
+ alert(\`\${key}: \${value}\`);
+});
+</code></pre>
+
+</article>
+
+</section>
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Object.entries and Map</h2>
+
+<article class="concept-block">
+<h3 class="concept-title">Create Map from Object</h3>
+<p class="concept-text">
+<code>Object.entries(obj)</code> returns an array of
+<code>[key,value]</code> pairs which can be used to create a Map.
+</p>
+</article>
+
+<pre class="code-block"><code>
+let obj={
+ name:"John",
+ age:30
+};
+
+let map=new Map(Object.entries(obj));
+
+alert(map.get("name"));
+</code></pre>
+
+</section>
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Object.fromEntries</h2>
+
+<article class="concept-block">
+<h3 class="concept-title">Convert Map to Object</h3>
+<p class="concept-text">
+The method <code>Object.fromEntries()</code> performs the reverse
+operation and converts key/value pairs into a plain object.
+</p>
+</article>
+
+<pre class="code-block"><code>
+let map=new Map();
+
+map.set("banana",1);
+map.set("orange",2);
+map.set("meat",4);
+
+let obj=Object.fromEntries(map);
+
+alert(obj.orange);
+</code></pre>
+
+</section>
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Set</h2>
+
+<article class="concept-block">
+<h3 class="concept-title">Unique Values Collection</h3>
+<p class="concept-text">
+A <code>Set</code> is a collection of values where each value may appear
+only once.
+</p>
+</article>
+
+<table class="data-table">
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td><code>new Set(iterable)</code></td>
+<td>Create a set</td>
+</tr>
+
+<tr>
+<td><code>set.add(value)</code></td>
+<td>Add value</td>
+</tr>
+
+<tr>
+<td><code>set.delete(value)</code></td>
+<td>Remove value</td>
+</tr>
+
+<tr>
+<td><code>set.has(value)</code></td>
+<td>Check if value exists</td>
+</tr>
+
+<tr>
+<td><code>set.clear()</code></td>
+<td>Remove all values</td>
+</tr>
+
+<tr>
+<td><code>set.size</code></td>
+<td>Total values count</td>
+</tr>
+
+</tbody>
+</table>
+
+</section>
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Set Example</h2>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let set = new Set();
+
+let john = {name:"John"};
+let pete = {name:"Pete"};
+let mary = {name:"Mary"};
+
+set.add(john);
+set.add(pete);
+set.add(mary);
+set.add(john);
+set.add(mary);
+
+alert(set.size);
+
+for(let user of set){
+ alert(user.name);
+}
+</code></pre>
+
+<p class="example-note">
+Duplicate values are automatically ignored.
+</p>
+
+</article>
+
+</section>
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Iterating Over Set</h2>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let set=new Set(["oranges","apples","bananas"]);
+
+for(let value of set){
+ alert(value);
+}
+
+set.forEach((value,valueAgain,set)=>{
+ alert(value);
+});
+</code></pre>
+
+</article>
+
+</section>
+
+
+<section class="doc-section" id="summary">
+
+<h2 class="section-title">Summary</h2>
+
+<ul class="summary-list">
+
+<li><strong>Map</strong> is a collection of key-value pairs.</li>
+
+<li>Map allows keys of <strong>any type</strong>, including objects.</li>
+
+<li>Map preserves insertion order during iteration.</li>
+
+<li><code>Object.entries()</code> converts objects to Map format.</li>
+
+<li><code>Object.fromEntries()</code> converts Map to object.</li>
+
+<li><strong>Set</strong> is a collection of unique values.</li>
+
+<li>Repeated values in a Set are automatically ignored.</li>
+
+<li>Map and Set both support iteration using <code>for..of</code>.</li>
+
+</ul>
+
+</section>
+
+</main>

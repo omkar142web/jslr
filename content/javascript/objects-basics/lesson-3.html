@@ -1,0 +1,451 @@
+
+<main class="doc">
+
+<header class="doc-header">
+<h1 class="doc-title">Object Methods, "this"</h1>
+
+<p class="doc-description">
+Objects are usually created to represent entities of the real world, like users, orders and so on.
+</p>
+
+</header>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Objects Represent Real Entities</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = {
+  name: "John",
+  age: 30
+};
+</code></pre>
+</article>
+
+<article class="concept-block">
+<p class="concept-text">
+In the real world, a user can act: select something from the shopping cart, login, logout etc.
+</p>
+
+<p class="concept-text">
+Actions are represented in JavaScript by functions in properties.
+</p>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Method Examples</h2>
+
+<article class="concept-block">
+<p class="concept-text">
+For a start, let’s teach the user to say hello:
+</p>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = {
+  name: "John",
+  age: 30
+};
+
+user.sayHi = function() {
+  alert("Hello!");
+};
+
+user.sayHi(); // Hello!
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Here we used a Function Expression to create a function and assign it to the property <code>user.sayHi</code>.
+</p>
+
+<p class="concept-text">
+Then we can call it as <code>user.sayHi()</code>. The user can now speak.
+</p>
+
+<p class="concept-text">
+A function that is a property of an object is called its <strong>method</strong>.
+</p>
+
+<p class="concept-text">
+So here we have a method <code>sayHi</code> of the object <code>user</code>.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Using a Predeclared Function</h2>
+
+<article class="concept-block">
+<p class="concept-text">
+We could also use a pre-declared function as a method.
+</p>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = {
+  // ...
+};
+
+function sayHi() {
+  alert("Hello!");
+}
+
+user.sayHi = sayHi;
+
+user.sayHi(); // Hello!
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Object-Oriented Programming</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+When we write our code using objects to represent entities, that’s called object-oriented programming, in short: OOP.
+</p>
+
+<p class="concept-text">
+OOP is a big topic and an interesting science of its own.
+</p>
+
+<p class="concept-text">
+It involves deciding how to choose the right entities and organize interaction between them.
+</p>
+
+<p class="concept-text">
+This is called software architecture and there are many famous books about it, such as:
+</p>
+
+<ul class="summary-list">
+<li>Design Patterns: Elements of Reusable Object-Oriented Software</li>
+<li>Object-Oriented Analysis and Design with Applications</li>
+</ul>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Method Shorthand</h2>
+
+<article class="concept-block">
+<p class="concept-text">
+There exists a shorter syntax for methods in an object literal.
+</p>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+user = {
+  sayHi: function() {
+    alert("Hello");
+  }
+};
+
+user = {
+  sayHi() {
+    alert("Hello");
+  }
+};
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Here we omit the word <code>function</code> and simply write the method name followed by parentheses.
+</p>
+
+<p class="concept-text">
+Although there are subtle differences related to inheritance, in almost all cases the shorter syntax is preferred.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">“this” in Methods</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+It’s common that an object method needs to access information stored inside the object.
+</p>
+
+<p class="concept-text">
+To access the object, a method can use the <code>this</code> keyword.
+</p>
+
+<p class="concept-text">
+The value of <code>this</code> is the object before the dot used to call the method.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = {
+  name: "John",
+  age: 30,
+
+  sayHi() {
+    alert(this.name);
+  }
+
+};
+
+user.sayHi(); // John
+</code></pre>
+</article>
+
+<article class="concept-block">
+<p class="concept-text">
+During the execution of <code>user.sayHi()</code>, the value of <code>this</code> will be the object <code>user</code>.
+</p>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Using Object Name Instead of this</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = {
+  name: "John",
+  age: 30,
+
+  sayHi() {
+    alert(user.name);
+  }
+
+};
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+This approach is unreliable.
+</p>
+
+<p class="concept-text">
+If we copy the object to another variable and change the original reference, the method may fail.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = {
+  name: "John",
+  age: 30,
+
+  sayHi() {
+    alert(user.name);
+  }
+
+};
+
+let admin = user;
+user = null;
+
+admin.sayHi(); // Error
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">“this” is Not Bound</h2>
+
+<article class="concept-block">
+<p class="concept-text">
+In JavaScript, the keyword <code>this</code> behaves differently compared to many other programming languages.
+</p>
+
+<p class="concept-text">
+It can be used in any function, even if it is not part of an object.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function sayHi() {
+  alert(this.name);
+}
+</code></pre>
+</article>
+
+<article class="concept-block">
+<p class="concept-text">
+The value of <code>this</code> is evaluated at runtime depending on how the function is called.
+</p>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Same Function, Different Objects</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = { name: "John" };
+let admin = { name: "Admin" };
+
+function sayHi() {
+  alert(this.name);
+}
+
+user.f = sayHi;
+admin.f = sayHi;
+
+user.f();  // John
+admin.f(); // Admin
+
+admin['f'](); // Admin
+</code></pre>
+</article>
+
+<article class="concept-block">
+<p class="concept-text">
+If <code>obj.f()</code> is called, then inside the function <code>this</code> equals <code>obj</code>.
+</p>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Calling Without an Object</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function sayHi() {
+  alert(this);
+}
+
+sayHi(); // undefined
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+In strict mode, <code>this</code> becomes <code>undefined</code>.
+</p>
+
+<p class="concept-text">
+In non-strict mode, it refers to the global object (<code>window</code> in browsers).
+</p>
+
+<p class="concept-text">
+Usually calling such a function is a programming mistake.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Arrow Functions Have No “this”</h2>
+
+<article class="concept-block">
+<p class="concept-text">
+Arrow functions are special because they do not have their own <code>this</code>.
+</p>
+
+<p class="concept-text">
+Instead, they inherit <code>this</code> from the outer function.
+</p>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = {
+  firstName: "Ilya",
+  sayHi() {
+    let arrow = () => alert(this.firstName);
+    arrow();
+  }
+};
+
+user.sayHi(); // Ilya
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section" id="summary">
+
+<h2 class="section-title">Summary</h2>
+
+<ul class="summary-list">
+
+<li>Functions stored inside object properties are called methods.</li>
+
+<li>Methods allow objects to perform actions.</li>
+
+<li>Methods can access object properties using <code>this</code>.</li>
+
+<li>The value of <code>this</code> is determined at runtime.</li>
+
+<li>When called as <code>object.method()</code>, the value of <code>this</code> becomes the object.</li>
+
+<li>Functions can be reused across multiple objects.</li>
+
+<li>Arrow functions do not have their own <code>this</code> and instead inherit it from the outer context.</li>
+
+</ul>
+
+</section>
+
+</main>

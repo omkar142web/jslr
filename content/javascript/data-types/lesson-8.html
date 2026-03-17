@@ -1,0 +1,271 @@
+
+<main class="doc">
+
+<header class="doc-header">
+<h1 class="doc-title">Object.keys, Object.values, Object.entries</h1>
+<p class="doc-description">
+JavaScript provides helper methods to iterate over the keys and values
+of plain objects. These methods make working with objects easier
+and allow transformations similar to array operations.
+</p>
+</header>
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Iteration Across Data Structures</h2>
+
+<article class="concept-block">
+<h3 class="concept-title">Common Iteration Methods</h3>
+<p class="concept-text">
+Many JavaScript data structures support iteration methods such as
+<code>keys()</code>, <code>values()</code>, and <code>entries()</code>.
+These methods are available in structures like <strong>Map</strong>,
+<strong>Set</strong>, and <strong>Array</strong>.
+</p>
+</article>
+
+<article class="concept-block">
+<h3 class="concept-title">Objects Work Differently</h3>
+<p class="concept-text">
+Plain objects also support similar functionality, but the syntax is
+slightly different. Instead of calling methods on the object directly,
+we use static methods from the <code>Object</code> class.
+</p>
+</article>
+
+</section>
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Object.keys, Object.values, Object.entries</h2>
+
+<table class="data-table">
+
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td><code>Object.keys(obj)</code></td>
+<td>Returns an array of object keys</td>
+</tr>
+
+<tr>
+<td><code>Object.values(obj)</code></td>
+<td>Returns an array of object values</td>
+</tr>
+
+<tr>
+<td><code>Object.entries(obj)</code></td>
+<td>Returns an array of <code>[key,value]</code> pairs</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</section>
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Map vs Object Syntax</h2>
+
+<table class="data-table">
+
+<thead>
+<tr>
+<th>Feature</th>
+<th>Map</th>
+<th>Object</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>Call Syntax</td>
+<td><code>map.keys()</code></td>
+<td><code>Object.keys(obj)</code></td>
+</tr>
+
+<tr>
+<td>Return Type</td>
+<td>Iterable</td>
+<td>Real Array</td>
+</tr>
+
+</tbody>
+
+</table>
+
+<div class="note-block">
+Object methods return real arrays for historical reasons,
+while Map methods return iterable objects.
+</div>
+
+</section>
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Example</h2>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let user = {
+  name: "John",
+  age: 30
+};
+
+Object.keys(user);
+// ["name","age"]
+
+Object.values(user);
+// ["John",30]
+
+Object.entries(user);
+// [["name","John"],["age",30]]
+</code></pre>
+
+</article>
+
+</section>
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Looping Over Values</h2>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let user = {
+  name: "John",
+  age: 30
+};
+
+for (let value of Object.values(user)) {
+  alert(value);
+}
+</code></pre>
+
+<p class="example-note">
+This loop prints the property values of the object.
+</p>
+
+</article>
+
+</section>
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Symbol Properties</h2>
+
+<article class="concept-block">
+<h3 class="concept-title">Ignored by Default</h3>
+<p class="concept-text">
+Just like the <code>for..in</code> loop, the methods
+<code>Object.keys()</code>, <code>Object.values()</code>, and
+<code>Object.entries()</code> ignore properties whose keys are Symbols.
+</p>
+</article>
+
+<article class="concept-block">
+<h3 class="concept-title">Accessing Symbol Keys</h3>
+<p class="concept-text">
+To get symbol properties, we can use
+<code>Object.getOwnPropertySymbols(obj)</code> or
+<code>Reflect.ownKeys(obj)</code>.
+</p>
+</article>
+
+</section>
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Transforming Objects</h2>
+
+<article class="concept-block">
+<h3 class="concept-title">Using Array Methods</h3>
+<p class="concept-text">
+Objects do not support array methods like
+<code>map()</code> or <code>filter()</code>.
+However, we can convert objects into arrays using
+<code>Object.entries()</code>, apply transformations,
+and convert them back with <code>Object.fromEntries()</code>.
+</p>
+</article>
+
+</section>
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Example: Transform Object Values</h2>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let prices = {
+  banana: 1,
+  orange: 2,
+  meat: 4
+};
+
+let doublePrices = Object.fromEntries(
+
+  Object.entries(prices).map(
+    entry => [entry[0], entry[1] * 2]
+  )
+
+);
+
+alert(doublePrices.meat);
+</code></pre>
+
+<p class="example-note">
+First we convert the object to an array,
+then transform it with <code>map()</code>,
+and finally convert it back into an object.
+</p>
+
+</article>
+
+</section>
+
+
+<section class="doc-section" id="summary">
+
+<h2 class="section-title">Summary</h2>
+
+<ul class="summary-list">
+
+<li><code>Object.keys(obj)</code> returns an array of keys.</li>
+
+<li><code>Object.values(obj)</code> returns an array of values.</li>
+
+<li><code>Object.entries(obj)</code> returns an array of key/value pairs.</li>
+
+<li>These methods return real arrays instead of iterables.</li>
+
+<li>Symbol properties are ignored by default.</li>
+
+<li><code>Object.entries()</code> combined with <code>Object.fromEntries()</code>
+allows powerful object transformations.</li>
+
+</ul>
+
+</section>
+
+</main>

@@ -1,0 +1,488 @@
+
+
+<main class="doc">
+
+<header class="doc-header">
+<h1 class="doc-title">JavaScript Arrays</h1>
+<p class="doc-description">
+Arrays are special objects designed to store ordered collections of data.
+They allow easy access, insertion, and removal of elements using numeric indexes.
+</p>
+</header>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Arrays</h2>
+
+<article class="concept-block">
+<h3 class="concept-title">Ordered Collections</h3>
+<p class="concept-text">
+Objects store values using keys. But sometimes we need an ordered list
+where elements have positions: first, second, third, etc.
+Arrays are designed specifically for storing ordered collections.
+</p>
+</article>
+
+<article class="concept-block">
+<h3 class="concept-title">Why Not Objects?</h3>
+<p class="concept-text">
+Objects do not provide convenient ways to manage order. We cannot insert
+properties between existing ones easily. Arrays solve this problem by
+using numeric indexes.
+</p>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Declaration</h2>
+
+<article class="example-block">
+
+<h3 class="example-title">Creating Arrays</h3>
+
+<pre class="code-block"><code>
+let arr = new Array();
+let arr = [];
+</code></pre>
+
+<p class="example-note">
+Square brackets <code>[]</code> are the most commonly used syntax.
+</p>
+
+</article>
+
+
+
+<article class="example-block">
+
+<h3 class="example-title">Array with Initial Values</h3>
+
+<pre class="code-block"><code>
+let fruits = ["Apple", "Orange", "Plum"];
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Accessing Elements</h2>
+
+<pre class="code-block"><code>
+let fruits = ["Apple", "Orange", "Plum"];
+
+alert(fruits[0]); // Apple
+alert(fruits[1]); // Orange
+alert(fruits[2]); // Plum
+</code></pre>
+
+
+
+<article class="example-block">
+
+<h3 class="example-title">Replace Element</h3>
+
+<pre class="code-block"><code>
+fruits[2] = "Pear";
+</code></pre>
+
+</article>
+
+
+
+<article class="example-block">
+
+<h3 class="example-title">Add Element</h3>
+
+<pre class="code-block"><code>
+fruits[3] = "Lemon";
+</code></pre>
+
+</article>
+
+
+
+<article class="example-block">
+
+<h3 class="example-title">Array Length</h3>
+
+<pre class="code-block"><code>
+let fruits = ["Apple", "Orange", "Plum"];
+
+alert(fruits.length); // 3
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Arrays Can Store Any Type</h2>
+
+<pre class="code-block"><code>
+let arr = [
+  "Apple",
+  { name: "John" },
+  true,
+  function() { alert("hello"); }
+];
+
+alert(arr[1].name);
+arr[3]();
+</code></pre>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Trailing Comma</h2>
+
+<pre class="code-block"><code>
+let fruits = [
+  "Apple",
+  "Orange",
+  "Plum",
+];
+</code></pre>
+
+<p class="section-note">
+Trailing commas make inserting or removing items easier.
+</p>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Get Last Element with at()</h2>
+
+<pre class="code-block"><code>
+let fruits = ["Apple", "Orange", "Plum"];
+
+alert(fruits[fruits.length - 1]);
+
+alert(fruits.at(-1));
+</code></pre>
+
+<div class="note-block">
+<code>arr.at(-1)</code> returns the last element.
+Negative indexes count from the end of the array.
+</div>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Stack and Queue</h2>
+
+<article class="concept-block">
+<h3 class="concept-title">Queue (FIFO)</h3>
+<p class="concept-text">
+Queue follows the First-In-First-Out principle.
+Elements are added at the end and removed from the beginning.
+</p>
+</article>
+
+<article class="concept-block">
+<h3 class="concept-title">Stack (LIFO)</h3>
+<p class="concept-text">
+Stack follows the Last-In-First-Out principle.
+Elements are added and removed from the end.
+</p>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">pop and push</h2>
+
+<article class="example-block">
+
+<h3 class="example-title">pop()</h3>
+
+<pre class="code-block"><code>
+let fruits = ["Apple", "Orange", "Pear"];
+
+fruits.pop();
+
+alert(fruits);
+</code></pre>
+
+</article>
+
+
+
+<article class="example-block">
+
+<h3 class="example-title">push()</h3>
+
+<pre class="code-block"><code>
+let fruits = ["Apple", "Orange"];
+
+fruits.push("Pear");
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">shift and unshift</h2>
+
+<article class="example-block">
+
+<h3 class="example-title">shift()</h3>
+
+<pre class="code-block"><code>
+let fruits = ["Apple", "Orange", "Pear"];
+
+fruits.shift();
+</code></pre>
+
+</article>
+
+
+
+<article class="example-block">
+
+<h3 class="example-title">unshift()</h3>
+
+<pre class="code-block"><code>
+let fruits = ["Orange", "Pear"];
+
+fruits.unshift("Apple");
+</code></pre>
+
+</article>
+
+
+
+<article class="example-block">
+
+<h3 class="example-title">Multiple Elements</h3>
+
+<pre class="code-block"><code>
+let fruits = ["Apple"];
+
+fruits.push("Orange", "Peach");
+
+fruits.unshift("Pineapple", "Lemon");
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Internals</h2>
+
+<p class="concept-text">
+Arrays are actually special objects. Their indexes work like object keys,
+but JavaScript engines optimize them for fast ordered data storage.
+</p>
+
+<div class="note-block">
+Avoid treating arrays like objects by adding random properties
+or creating huge gaps between indexes.
+</div>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Performance</h2>
+
+<p class="concept-text">
+Methods <code>push()</code> and <code>pop()</code> are fast because they work with the end
+of the array. Methods <code>shift()</code> and <code>unshift()</code> are slower because
+they must move all elements in memory.
+</p>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Loops</h2>
+
+<article class="example-block">
+
+<h3 class="example-title">for Loop</h3>
+
+<pre class="code-block"><code>
+let arr = ["Apple", "Orange", "Pear"];
+
+for (let i = 0; i < arr.length; i++) {
+  alert(arr[i]);
+}
+</code></pre>
+
+</article>
+
+
+
+<article class="example-block">
+
+<h3 class="example-title">for...of</h3>
+
+<pre class="code-block"><code>
+let fruits = ["Apple", "Orange", "Plum"];
+
+for (let fruit of fruits) {
+  alert(fruit);
+}
+</code></pre>
+
+</article>
+
+
+
+<article class="example-block">
+
+<h3 class="example-title">Avoid for...in</h3>
+
+<pre class="code-block"><code>
+for (let key in arr) {
+  alert(arr[key]);
+}
+</code></pre>
+
+<p class="example-note">
+This loop is designed for objects and may include non-numeric properties.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Length Property</h2>
+
+<pre class="code-block"><code>
+let arr = [1,2,3,4,5];
+
+arr.length = 2;
+
+alert(arr);
+</code></pre>
+
+<p class="section-note">
+Reducing length truncates the array.
+</p>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Multidimensional Arrays</h2>
+
+<pre class="code-block"><code>
+let matrix = [
+  [1,2,3],
+  [4,5,6],
+  [7,8,9]
+];
+
+alert(matrix[0][1]);
+</code></pre>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Array toString</h2>
+
+<pre class="code-block"><code>
+let arr = [1,2,3];
+
+alert(arr);
+
+alert(String(arr));
+</code></pre>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Comparing Arrays</h2>
+
+<pre class="code-block"><code>
+alert([] == []);
+alert([0] == [0]);
+</code></pre>
+
+<div class="note-block">
+Arrays should not be compared using <code>==</code>. They are objects and
+only equal if they reference the same object.
+</div>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Summary</h2>
+
+<ul class="summary-list">
+
+<li>Arrays store ordered collections of data.</li>
+
+<li>Create arrays using <code>[]</code> or <code>new Array()</code>.</li>
+
+<li>Elements are accessed using indexes starting from 0.</li>
+
+<li><code>push()</code> and <code>pop()</code> work with the end of the array.</li>
+
+<li><code>shift()</code> and <code>unshift()</code> work with the beginning.</li>
+
+<li><code>for...of</code> is the recommended way to iterate arrays.</li>
+
+<li>Arrays are objects and are copied by reference.</li>
+
+<li>Do not compare arrays using <code>==</code>.</li>
+
+</ul>
+
+</section>
+
+</main>
+

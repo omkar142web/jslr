@@ -1,0 +1,502 @@
+
+<main class="doc">
+
+<header class="doc-header">
+<h1 class="doc-title">JavaScript Date and Time</h1>
+<p class="doc-description">
+JavaScript provides the built-in <code>Date</code> object to store and manage
+dates and time. It allows us to measure time, work with timestamps,
+and retrieve or modify date components.
+</p>
+</header>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">What is Date?</h2>
+
+<article class="concept-block">
+<h3 class="concept-title">Date Object</h3>
+<p class="concept-text">
+The <code>Date</code> object stores both date and time together.
+It provides methods for retrieving and modifying components like
+year, month, day, hours, minutes, and seconds.
+</p>
+</article>
+
+<article class="concept-block">
+<h3 class="concept-title">Common Uses</h3>
+<p class="concept-text">
+Dates are commonly used to store creation or modification times,
+measure performance, or display the current time.
+</p>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Creating Dates</h2>
+
+<table class="data-table">
+<thead>
+<tr>
+<th>Constructor</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+
+<tr>
+<td><code>new Date()</code></td>
+<td>Create a Date for the current date and time</td>
+</tr>
+
+<tr>
+<td><code>new Date(milliseconds)</code></td>
+<td>Create a date from milliseconds since Jan 1, 1970</td>
+</tr>
+
+<tr>
+<td><code>new Date(dateString)</code></td>
+<td>Create a date by parsing a string</td>
+</tr>
+
+<tr>
+<td><code>new Date(year, month, ...)</code></td>
+<td>Create a date using components</td>
+</tr>
+
+</tbody>
+</table>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Current Date</h2>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let now = new Date();
+
+alert(now);
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Timestamp Creation</h2>
+
+<article class="concept-block">
+<p class="concept-text">
+A timestamp is the number of milliseconds that have passed
+since January 1st, 1970 (UTC+0).
+</p>
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let Jan01_1970 = new Date(0);
+
+alert(Jan01_1970);
+
+let Jan02_1970 = new Date(24 * 3600 * 1000);
+
+alert(Jan02_1970);
+</code></pre>
+
+</article>
+
+<article class="example-block">
+
+<h3 class="example-title">Negative Timestamp</h3>
+
+<pre class="code-block"><code>
+let Dec31_1969 = new Date(-24 * 3600 * 1000);
+
+alert(Dec31_1969);
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Creating Date from String</h2>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let date = new Date("2017-01-26");
+
+alert(date);
+</code></pre>
+
+</article>
+
+<div class="note-block">
+The time defaults to midnight GMT and is adjusted based
+on the local timezone where the code runs.
+</div>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Creating Date from Components</h2>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+new Date(2011,0,1,0,0,0,0);
+
+new Date(2011,0,1);
+</code></pre>
+
+</article>
+
+<article class="concept-block">
+<p class="concept-text">
+Months are counted from 0 (January) to 11 (December).
+Missing parameters default to zero.
+</p>
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let date = new Date(2011,0,1,2,3,4,567);
+
+alert(date);
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Accessing Date Components</h2>
+
+<table class="data-table">
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+
+<tr>
+<td><code>getFullYear()</code></td>
+<td>Get full year</td>
+</tr>
+
+<tr>
+<td><code>getMonth()</code></td>
+<td>Get month (0-11)</td>
+</tr>
+
+<tr>
+<td><code>getDate()</code></td>
+<td>Get day of month</td>
+</tr>
+
+<tr>
+<td><code>getHours()</code></td>
+<td>Get hour</td>
+</tr>
+
+<tr>
+<td><code>getMinutes()</code></td>
+<td>Get minutes</td>
+</tr>
+
+<tr>
+<td><code>getSeconds()</code></td>
+<td>Get seconds</td>
+</tr>
+
+<tr>
+<td><code>getMilliseconds()</code></td>
+<td>Get milliseconds</td>
+</tr>
+
+<tr>
+<td><code>getDay()</code></td>
+<td>Get day of week (0=Sunday)</td>
+</tr>
+
+</tbody>
+</table>
+
+<div class="note-block">
+Avoid <code>getYear()</code>.  
+It is deprecated. Use <code>getFullYear()</code> instead.
+</div>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">UTC Methods</h2>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let date = new Date();
+
+alert(date.getHours());
+
+alert(date.getUTCHours());
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Special Methods</h2>
+
+<table class="data-table">
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td><code>getTime()</code></td>
+<td>Returns timestamp in milliseconds</td>
+</tr>
+
+<tr>
+<td><code>getTimezoneOffset()</code></td>
+<td>Difference between UTC and local time zone</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Setting Date Components</h2>
+
+<table class="data-table">
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr><td>setFullYear()</td><td>Set year</td></tr>
+<tr><td>setMonth()</td><td>Set month</td></tr>
+<tr><td>setDate()</td><td>Set day of month</td></tr>
+<tr><td>setHours()</td><td>Set hours</td></tr>
+<tr><td>setMinutes()</td><td>Set minutes</td></tr>
+<tr><td>setSeconds()</td><td>Set seconds</td></tr>
+<tr><td>setMilliseconds()</td><td>Set milliseconds</td></tr>
+<tr><td>setTime()</td><td>Set timestamp</td></tr>
+
+</tbody>
+</table>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Autocorrection</h2>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let date = new Date(2013,0,32);
+
+alert(date);
+</code></pre>
+
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let date = new Date(2016,1,28);
+
+date.setDate(date.getDate() + 2);
+
+alert(date);
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Date to Number</h2>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let date = new Date();
+
+alert(+date);
+</code></pre>
+
+</article>
+
+<article class="example-block">
+
+<h3 class="example-title">Measuring Execution Time</h3>
+
+<pre class="code-block"><code>
+let start = new Date();
+
+for(let i=0;i<100000;i++){
+let doSomething=i*i*i;
+}
+
+let end = new Date();
+
+alert(end - start);
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Date.now()</h2>
+
+<article class="concept-block">
+<p class="concept-text">
+<code>Date.now()</code> returns the current timestamp without
+creating a Date object.
+</p>
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let start = Date.now();
+
+for(let i=0;i<100000;i++){
+let doSomething=i*i*i;
+}
+
+let end = Date.now();
+
+alert(end - start);
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Date.parse()</h2>
+
+<article class="concept-block">
+<p class="concept-text">
+<code>Date.parse()</code> reads a date string and returns
+the corresponding timestamp.
+</p>
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let ms = Date.parse("2012-01-26T13:51:50.417-07:00");
+
+alert(ms);
+</code></pre>
+
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let date = new Date(Date.parse("2012-01-26T13:51:50.417-07:00"));
+
+alert(date);
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section" id="summary">
+
+<h2 class="section-title">Summary</h2>
+
+<ul class="summary-list">
+
+<li>The <code>Date</code> object represents both date and time.</li>
+
+<li>Months start from zero (January = 0).</li>
+
+<li>Days of week start from zero (Sunday = 0).</li>
+
+<li>Date objects auto-correct out-of-range values.</li>
+
+<li>Subtracting two dates returns the difference in milliseconds.</li>
+
+<li><code>Date.now()</code> returns the current timestamp.</li>
+
+<li>JavaScript timestamps use milliseconds.</li>
+
+<li>For higher precision in browsers use <code>performance.now()</code>.</li>
+
+</ul>
+
+</section>
+
+</main>

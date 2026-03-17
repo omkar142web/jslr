@@ -1,0 +1,426 @@
+
+<main class="doc">
+
+<header class="doc-header">
+<h1 class="doc-title">Recursion and Stack</h1>
+
+<p class="doc-description">
+Let’s return to functions and study them more in-depth. Our first topic will be recursion.
+</p>
+
+<p class="doc-description">
+Recursion is a programming pattern useful when a task can be split into several smaller tasks of the same type.
+</p>
+
+</header>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">What is Recursion?</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+When a function solves a task, it may call other functions during execution.
+</p>
+
+<p class="concept-text">
+A special case occurs when a function calls itself. That is called recursion.
+</p>
+
+<p class="concept-text">
+Recursion is useful when a task can be simplified into:
+</p>
+
+<ul class="summary-list">
+<li>A simple action.</li>
+<li>A smaller version of the same task.</li>
+</ul>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Example: Power Function</h2>
+
+<article class="concept-block">
+<p class="concept-text">
+Let’s write a function <code>pow(x, n)</code> that raises a number to a power.
+</p>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+pow(2,2) = 4
+pow(2,3) = 8
+pow(2,4) = 16
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Iterative Solution</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function pow(x, n) {
+  let result = 1;
+
+  for (let i = 0; i < n; i++) {
+    result *= x;
+  }
+
+  return result;
+}
+
+alert(pow(2,3));
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Recursive Solution</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function pow(x, n) {
+  if (n == 1) {
+    return x;
+  } else {
+    return x * pow(x, n - 1);
+  }
+}
+
+alert(pow(2,3));
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Recursive functions have two important parts:
+</p>
+
+<ul class="summary-list">
+<li><strong>Base case</strong> – the simplest case that stops recursion.</li>
+<li><strong>Recursive step</strong> – where the function calls itself with simpler input.</li>
+</ul>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Example Execution</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+pow(2,4) = 2 * pow(2,3)
+pow(2,3) = 2 * pow(2,2)
+pow(2,2) = 2 * pow(2,1)
+pow(2,1) = 2
+</code></pre>
+</article>
+
+<article class="concept-block">
+<p class="concept-text">
+The recursion reduces the problem step by step until reaching the base case.
+</p>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Short Recursive Syntax</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function pow(x, n) {
+  return (n == 1) ? x : x * pow(x, n - 1);
+}
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Recursion Depth</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+The maximum number of nested calls is called recursion depth.
+</p>
+
+<p class="concept-text">
+JavaScript engines limit recursion depth to prevent stack overflow.
+</p>
+
+</article>
+
+<div class="note-block">
+Typical recursion depth limit is around 10000 calls depending on the engine.
+</div>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Execution Context and Stack</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Each function call has an execution context which stores:
+</p>
+
+<ul class="summary-list">
+<li>Current variables</li>
+<li>Current execution line</li>
+<li>The value of <code>this</code></li>
+</ul>
+
+<p class="concept-text">
+Execution contexts are stored in a structure called the call stack.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Recursive Traversal</h2>
+
+<article class="concept-block">
+<p class="concept-text">
+Recursion is useful for processing recursive data structures such as company departments.
+</p>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let company = {
+  sales: [
+    {name: "John", salary: 1000},
+    {name: "Alice", salary: 1600}
+  ],
+
+  development: {
+    sites: [
+      {name: "Peter", salary: 2000},
+      {name: "Alex", salary: 1800}
+    ],
+
+    internals: [
+      {name: "Jack", salary: 1300}
+    ]
+  }
+};
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Recursive Salary Calculation</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function sumSalaries(department) {
+
+  if (Array.isArray(department)) {
+    return department.reduce(
+      (prev, current) => prev + current.salary,
+      0
+    );
+
+  } else {
+    let sum = 0;
+
+    for (let subdep of Object.values(department)) {
+      sum += sumSalaries(subdep);
+    }
+
+    return sum;
+  }
+
+}
+
+alert(sumSalaries(company));
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Recursive Data Structures</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+A recursive data structure is a structure that references itself.
+</p>
+
+<p class="concept-text">
+Examples include:
+</p>
+
+<ul class="summary-list">
+<li>HTML DOM tree</li>
+<li>Company department structures</li>
+<li>Linked lists</li>
+</ul>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Linked List</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let list = {
+  value: 1,
+  next: {
+    value: 2,
+    next: {
+      value: 3,
+      next: {
+        value: 4,
+        next: null
+      }
+    }
+  }
+};
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Each element contains:
+</p>
+
+<ul class="summary-list">
+<li>value</li>
+<li>next reference to another list element</li>
+</ul>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Linked List Creation</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let list = { value: 1 };
+
+list.next = { value: 2 };
+list.next.next = { value: 3 };
+list.next.next.next = { value: 4 };
+list.next.next.next.next = null;
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Prepending a Value</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+list = { value: "new item", next: list };
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Removing an Element</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+list.next = list.next.next;
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section" id="summary">
+
+<h2 class="section-title">Summary</h2>
+
+<ul class="summary-list">
+
+<li>Recursion means a function calling itself.</li>
+
+<li>Recursive functions must have a base case.</li>
+
+<li>The recursion step breaks the problem into smaller parts.</li>
+
+<li>Each recursive call creates an execution context stored in the stack.</li>
+
+<li>Recursive data structures reference themselves.</li>
+
+<li>Examples include trees, company structures and linked lists.</li>
+
+<li>Recursive functions can usually be rewritten using loops.</li>
+
+<li>Recursion often produces simpler and cleaner code.</li>
+
+</ul>
+
+</section>
+
+</main>

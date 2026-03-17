@@ -1,0 +1,729 @@
+[
+  {
+    "courseId": "javascript",
+    "sectionId": "intro",
+    "lessonIndex": 0,
+    "title": "An Introduction to JavaScript",
+    "snippet": "An Introduction to JavaScript"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "intro",
+    "lessonIndex": 1,
+    "title": "Manuals and specifications",
+    "snippet": "Manuals and specifications"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "intro",
+    "lessonIndex": 2,
+    "title": "Code editors",
+    "snippet": "Code editors"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "intro",
+    "lessonIndex": 3,
+    "title": "Developer console",
+    "snippet": "Developer console"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "fundamentals",
+    "lessonIndex": 0,
+    "title": "Hello, world!",
+    "snippet": "Hello, world!"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "fundamentals",
+    "lessonIndex": 1,
+    "title": "Code structure",
+    "snippet": "Code structure"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "fundamentals",
+    "lessonIndex": 2,
+    "title": "The modern mode, \"use strict\"",
+    "snippet": "The modern mode, \"use strict\""
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "fundamentals",
+    "lessonIndex": 3,
+    "title": "Variables",
+    "snippet": "Variables"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "fundamentals",
+    "lessonIndex": 4,
+    "title": "Data types",
+    "snippet": "Data types"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "fundamentals",
+    "lessonIndex": 5,
+    "title": "Interaction: alert, prompt, confirm",
+    "snippet": "Interaction: alert, prompt, confirm"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "fundamentals",
+    "lessonIndex": 6,
+    "title": "Type Conversions",
+    "snippet": "Type Conversions"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "fundamentals",
+    "lessonIndex": 7,
+    "title": "Basic operators, maths",
+    "snippet": "Basic operators, maths"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "fundamentals",
+    "lessonIndex": 8,
+    "title": "Comparisons",
+    "snippet": "Comparisons"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "fundamentals",
+    "lessonIndex": 9,
+    "title": "Conditional branching: if, '?'",
+    "snippet": "Conditional branching: if, '?'"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "fundamentals",
+    "lessonIndex": 10,
+    "title": "Logical operators",
+    "snippet": "Logical operators"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "fundamentals",
+    "lessonIndex": 11,
+    "title": "Nullish coalescing operator '??'",
+    "snippet": "Nullish coalescing operator '??'"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "fundamentals",
+    "lessonIndex": 12,
+    "title": "Loops: while and for",
+    "snippet": "Loops: while and for"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "fundamentals",
+    "lessonIndex": 13,
+    "title": "The switch statement",
+    "snippet": "The switch statement"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "fundamentals",
+    "lessonIndex": 14,
+    "title": "Functions",
+    "snippet": "Functions"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "fundamentals",
+    "lessonIndex": 15,
+    "title": "Function expressions",
+    "snippet": "Function expressions"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "fundamentals",
+    "lessonIndex": 16,
+    "title": "Arrow functions",
+    "snippet": "Arrow functions"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "code-quality",
+    "lessonIndex": 0,
+    "title": "Code quality",
+    "snippet": "Code quality"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "code-quality",
+    "lessonIndex": 1,
+    "title": "Debugging in the browser",
+    "snippet": "Debugging in the browser"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "code-quality",
+    "lessonIndex": 2,
+    "title": "Coding Style",
+    "snippet": "Coding Style"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "code-quality",
+    "lessonIndex": 3,
+    "title": "Comments",
+    "snippet": "Comments"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "code-quality",
+    "lessonIndex": 4,
+    "title": "Ninja code",
+    "snippet": "Ninja code"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "code-quality",
+    "lessonIndex": 5,
+    "title": "Automated testing with Mocha",
+    "snippet": "Automated testing with Mocha"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "code-quality",
+    "lessonIndex": 6,
+    "title": "Polyfills and transpilers",
+    "snippet": "Polyfills and transpilers"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "objects-basics",
+    "lessonIndex": 0,
+    "title": "Objects",
+    "snippet": "Objects As we know from the chapter Data types, there are eight data types in JavaScript. Seven of them are called “primitive”, because their values contain only a single thing (be it a string or a nu..."
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "objects-basics",
+    "lessonIndex": 1,
+    "title": "Object references and copying",
+    "snippet": "Object References and Copying One of the fundamental differences of objects versus primitives is that objects are stored and copied “by reference”, whereas primitive values: strings, numbers, booleans..."
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "objects-basics",
+    "lessonIndex": 2,
+    "title": "Garbage collection",
+    "snippet": "Garbage Collection Memory management in JavaScript is performed automatically and invisibly to us. We create primitives, objects, functions… All that takes memory. What happens when something is not n..."
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "objects-basics",
+    "lessonIndex": 3,
+    "title": "Object methods, \"this\"",
+    "snippet": "Object Methods, \"this\" Objects are usually created to represent entities of the real world, like users, orders and so on. Objects Represent Real Entities let user = { name: \"John\", age: 30 }; In the r..."
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "objects-basics",
+    "lessonIndex": 4,
+    "title": "Constructor, operator \"new\"",
+    "snippet": "Constructor, Operator \"new\" The regular {...} syntax allows us to create one object. But often we need to create many similar objects, like multiple users or menu items and so on. That can be done usi..."
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "objects-basics",
+    "lessonIndex": 5,
+    "title": "Optional chaining '?.'",
+    "snippet": "Optional Chaining '?.' The optional chaining ?. is a safe way to access nested object properties, even if an intermediate property doesn’t exist. This is a recent addition to the language. Old browser..."
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "objects-basics",
+    "lessonIndex": 6,
+    "title": "Symbol type",
+    "snippet": "Symbol Type By specification, only two primitive types may serve as object property keys. Allowed Property Key Types Only two primitive types may serve as object property keys: string type symbol type..."
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "objects-basics",
+    "lessonIndex": 7,
+    "title": "Object to primitive conversion",
+    "snippet": "Object to Primitive Conversion What happens when objects are added obj1 + obj2 , subtracted obj1 - obj2 or printed using alert(obj) ? In such situations JavaScript automatically converts objects to pr..."
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "data-types",
+    "lessonIndex": 0,
+    "title": "Methods of primitives",
+    "snippet": "Methods of Primitives JavaScript allows primitives such as strings and numbers to behave like objects when accessing properties or methods. Primitives vs Objects Primitive Values A primitive is a valu..."
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "data-types",
+    "lessonIndex": 1,
+    "title": "Numbers",
+    "snippet": "JavaScript Numbers In modern JavaScript there are two types of numbers: regular numbers stored in 64-bit IEEE-754 format, and BigInt for arbitrarily large integers. Number Types Regular Numbers JavaSc..."
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "data-types",
+    "lessonIndex": 2,
+    "title": "Strings",
+    "snippet": "JavaScript Strings Strings represent textual data in JavaScript. Internally they use UTF-16 encoding and can be written using single quotes, double quotes, or backticks. Strings What are Strings? In J..."
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "data-types",
+    "lessonIndex": 3,
+    "title": "Arrays",
+    "snippet": "JavaScript Arrays Arrays are special objects designed to store ordered collections of data. They allow easy access, insertion, and removal of elements using numeric indexes. Arrays Ordered Collections..."
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "data-types",
+    "lessonIndex": 4,
+    "title": "Array methods",
+    "snippet": "JavaScript Array Methods Arrays provide many built-in methods to manipulate, search, transform, and iterate over collections of data. In this chapter the methods are grouped by purpose to make them ea..."
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "data-types",
+    "lessonIndex": 5,
+    "title": "Iterables",
+    "snippet": "JavaScript Iterables Iterable objects are a generalization of arrays. They allow any object to be used in a for..of loop if it implements the proper iteration protocol. What are Iterables? General Ide..."
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "data-types",
+    "lessonIndex": 6,
+    "title": "Map and Set",
+    "snippet": "JavaScript Map and Set Until now we used Objects for keyed collections and Arrays for ordered collections. However, JavaScript also provides two specialized structures: Map and Set . Map What is Map? ..."
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "data-types",
+    "lessonIndex": 7,
+    "title": "WeakMap and WeakSet",
+    "snippet": "JavaScript WeakMap and WeakSet WeakMap and WeakSet are special collections that store objects with weak references . If an object becomes unreachable elsewhere in the program, JavaScript can automatic..."
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "data-types",
+    "lessonIndex": 8,
+    "title": "Object.keys, values, entries",
+    "snippet": "Object.keys, Object.values, Object.entries JavaScript provides helper methods to iterate over the keys and values of plain objects. These methods make working with objects easier and allow transformat..."
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "data-types",
+    "lessonIndex": 9,
+    "title": "Destructuring assignment",
+    "snippet": "Destructuring Assignment Destructuring assignment is a special JavaScript syntax that allows us to unpack arrays or objects into multiple variables . It is extremely useful when working with objects, ..."
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "data-types",
+    "lessonIndex": 10,
+    "title": "Date and time",
+    "snippet": "JavaScript Date and Time JavaScript provides the built-in Date object to store and manage dates and time. It allows us to measure time, work with timestamps, and retrieve or modify date components. Wh..."
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "data-types",
+    "lessonIndex": 11,
+    "title": "JSON methods, toJSON",
+    "snippet": "JSON Methods and toJSON JSON (JavaScript Object Notation) is a standard format used to convert JavaScript objects into strings for storage or transmission and convert them back into objects. Why JSON ..."
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "advanced-functions",
+    "lessonIndex": 0,
+    "title": "Recursion and stack",
+    "snippet": "Recursion and Stack Let’s return to functions and study them more in-depth. Our first topic will be recursion. Recursion is a programming pattern useful when a task can be split into several smaller t..."
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "advanced-functions",
+    "lessonIndex": 1,
+    "title": "Rest parameters and spread syntax",
+    "snippet": "Rest Parameters and Spread Syntax Many JavaScript built-in functions support an arbitrary number of arguments. Functions with Many Arguments Some built-in functions accept any number of arguments. Mat..."
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "advanced-functions",
+    "lessonIndex": 2,
+    "title": "Variable scope, closure",
+    "snippet": "Variable Scope and Closure JavaScript is a very function-oriented language. Functions can be created anywhere, passed as arguments, and executed later in completely different parts of the code. Functi..."
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "advanced-functions",
+    "lessonIndex": 3,
+    "title": "The old \"var\"",
+    "snippet": "The Old \"var\" This chapter explains the old var keyword. It is mainly useful for understanding older JavaScript code. Modern JavaScript uses let and const instead. Variable Declarations JavaScript pro..."
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "advanced-functions",
+    "lessonIndex": 4,
+    "title": "Global object",
+    "snippet": "Global Object The global object provides variables and functions that are available everywhere in the program. These include built-in language features and environment-specific APIs. What is the Globa..."
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "advanced-functions",
+    "lessonIndex": 5,
+    "title": "Function object, NFE",
+    "snippet": "Function Object, NFE In JavaScript, functions are values. Every value has a type, and functions are actually objects. That means functions can be called, but also treated like objects with properties...."
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "advanced-functions",
+    "lessonIndex": 6,
+    "title": "The \"new Function\" syntax",
+    "snippet": "The \"new Function\" Syntax JavaScript provides another way to create functions using the new Function constructor. It is rarely used in normal development, but sometimes there is no alternative. Syntax..."
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "advanced-functions",
+    "lessonIndex": 7,
+    "title": "Scheduling: setTimeout and setInterval",
+    "snippet": "Scheduling: setTimeout and setInterval Sometimes we want a function to run later instead of immediately. This is called scheduling a call . JavaScript environments such as browsers and Node.js provide..."
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "advanced-functions",
+    "lessonIndex": 8,
+    "title": "Decorators and forwarding, call/apply",
+    "snippet": "Decorators and Forwarding, call/apply JavaScript provides powerful flexibility when working with functions. Functions can be passed around, wrapped, modified, and extended without changing the origina..."
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "advanced-functions",
+    "lessonIndex": 9,
+    "title": "Function binding",
+    "snippet": "Function Binding When object methods are passed as callbacks (for example to setTimeout ), the value of this can be lost. JavaScript provides ways to preserve the correct this context using wrappers a..."
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "advanced-functions",
+    "lessonIndex": 10,
+    "title": "Arrow functions revisited",
+    "snippet": "Arrow Functions Revisited Arrow functions are not just a shorter syntax for writing functions. They have several special behaviors that make them very useful in many JavaScript situations. They are es..."
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "prototypes",
+    "lessonIndex": 0,
+    "title": "Prototypal inheritance",
+    "snippet": "Prototypal inheritance"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "prototypes",
+    "lessonIndex": 1,
+    "title": "F.prototype",
+    "snippet": "F.prototype"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "prototypes",
+    "lessonIndex": 2,
+    "title": "Native prototypes",
+    "snippet": "Native prototypes"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "prototypes",
+    "lessonIndex": 3,
+    "title": "Prototype methods",
+    "snippet": "Prototype methods"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "classes",
+    "lessonIndex": 0,
+    "title": "Class basic syntax",
+    "snippet": "Class basic syntax"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "classes",
+    "lessonIndex": 1,
+    "title": "Class inheritance",
+    "snippet": "Class inheritance"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "classes",
+    "lessonIndex": 2,
+    "title": "Static properties and methods",
+    "snippet": "Static properties and methods"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "classes",
+    "lessonIndex": 3,
+    "title": "Private and protected properties",
+    "snippet": "Private and protected properties"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "classes",
+    "lessonIndex": 4,
+    "title": "Extending built-in classes",
+    "snippet": "Extending built-in classes"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "classes",
+    "lessonIndex": 5,
+    "title": "Class checking: \"instanceof\"",
+    "snippet": "Class checking: \"instanceof\""
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "classes",
+    "lessonIndex": 6,
+    "title": "Mixins",
+    "snippet": "Mixins"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "async",
+    "lessonIndex": 0,
+    "title": "Introduction: callbacks",
+    "snippet": "Introduction: callbacks"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "async",
+    "lessonIndex": 1,
+    "title": "Promise",
+    "snippet": "Promise"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "async",
+    "lessonIndex": 2,
+    "title": "Promises chaining",
+    "snippet": "Promises chaining"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "async",
+    "lessonIndex": 3,
+    "title": "Error handling with promises",
+    "snippet": "Error handling with promises"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "async",
+    "lessonIndex": 4,
+    "title": "Promise API",
+    "snippet": "Promise API"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "async",
+    "lessonIndex": 5,
+    "title": "Promisification",
+    "snippet": "Promisification"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "async",
+    "lessonIndex": 6,
+    "title": "Microtasks",
+    "snippet": "Microtasks"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "async",
+    "lessonIndex": 7,
+    "title": "Async/await",
+    "snippet": "Async/await"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "modules",
+    "lessonIndex": 0,
+    "title": "Modules introduction",
+    "snippet": "Modules introduction"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "modules",
+    "lessonIndex": 1,
+    "title": "Export and Import",
+    "snippet": "Export and Import"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "modules",
+    "lessonIndex": 2,
+    "title": "Dynamic imports",
+    "snippet": "Dynamic imports"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "browser",
+    "subSectionIndex": 0,
+    "lessonIndex": 0,
+    "title": "Browser environment, specs",
+    "snippet": "Browser environment, specs"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "browser",
+    "subSectionIndex": 0,
+    "lessonIndex": 1,
+    "title": "DOM tree",
+    "snippet": "DOM tree"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "browser",
+    "subSectionIndex": 0,
+    "lessonIndex": 2,
+    "title": "Walking the DOM",
+    "snippet": "Walking the DOM"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "browser",
+    "subSectionIndex": 0,
+    "lessonIndex": 3,
+    "title": "Searching: querySelector",
+    "snippet": "Searching: querySelector"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "browser",
+    "subSectionIndex": 0,
+    "lessonIndex": 4,
+    "title": "Node properties",
+    "snippet": "Node properties"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "browser",
+    "subSectionIndex": 0,
+    "lessonIndex": 5,
+    "title": "Attributes and properties",
+    "snippet": "Attributes and properties"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "browser",
+    "subSectionIndex": 0,
+    "lessonIndex": 6,
+    "title": "Modifying the document",
+    "snippet": "Modifying the document"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "browser",
+    "subSectionIndex": 1,
+    "lessonIndex": 0,
+    "title": "Introduction to browser events",
+    "snippet": "Introduction to browser events"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "browser",
+    "subSectionIndex": 1,
+    "lessonIndex": 1,
+    "title": "Bubbling and capturing",
+    "snippet": "Bubbling and capturing"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "browser",
+    "subSectionIndex": 1,
+    "lessonIndex": 2,
+    "title": "Event delegation",
+    "snippet": "Event delegation"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "browser",
+    "subSectionIndex": 1,
+    "lessonIndex": 3,
+    "title": "Browser default actions",
+    "snippet": "Browser default actions"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "browser",
+    "subSectionIndex": 1,
+    "lessonIndex": 4,
+    "title": "Dispatching custom events",
+    "snippet": "Dispatching custom events"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "browser",
+    "subSectionIndex": 2,
+    "lessonIndex": 0,
+    "title": "Mouse events",
+    "snippet": "Mouse events"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "browser",
+    "subSectionIndex": 2,
+    "lessonIndex": 1,
+    "title": "Pointer events",
+    "snippet": "Pointer events"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "browser",
+    "subSectionIndex": 2,
+    "lessonIndex": 2,
+    "title": "Keyboard events",
+    "snippet": "Keyboard events"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "browser",
+    "subSectionIndex": 2,
+    "lessonIndex": 3,
+    "title": "Scrolling",
+    "snippet": "Scrolling"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "browser",
+    "subSectionIndex": 3,
+    "lessonIndex": 0,
+    "title": "Form properties and methods",
+    "snippet": "Form properties and methods"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "browser",
+    "subSectionIndex": 3,
+    "lessonIndex": 1,
+    "title": "focus and blur",
+    "snippet": "focus and blur"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "browser",
+    "subSectionIndex": 3,
+    "lessonIndex": 2,
+    "title": "input and change events",
+    "snippet": "input and change events"
+  },
+  {
+    "courseId": "javascript",
+    "sectionId": "browser",
+    "subSectionIndex": 3,
+    "lessonIndex": 3,
+    "title": "submit event",
+    "snippet": "submit event"
+  }
+]

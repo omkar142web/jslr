@@ -1,0 +1,247 @@
+
+<main class="doc">
+
+<header class="doc-header">
+<h1 class="doc-title">Global Object</h1>
+
+<p class="doc-description">
+The global object provides variables and functions that are available everywhere in the program.
+</p>
+
+<p class="doc-description">
+These include built-in language features and environment-specific APIs.
+</p>
+
+</header>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">What is the Global Object?</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+The global object stores values that can be accessed anywhere in the program.
+</p>
+
+<ul class="summary-list">
+<li>In browsers it is called <code>window</code>.</li>
+<li>In Node.js it is called <code>global</code>.</li>
+<li>The standardized universal name is <code>globalThis</code>.</li>
+</ul>
+
+<p class="concept-text">
+The <code>globalThis</code> variable works across all environments and is recommended for universal code.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Accessing Global Properties</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+All properties of the global object can be accessed directly.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+alert("Hello");
+
+// same as
+
+window.alert("Hello");
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Global Variables with var</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+In browsers, variables declared with <code>var</code> automatically become properties of the global object.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+var gVar = 5;
+
+alert(window.gVar); // 5
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Function declarations behave the same way when written in the global scope.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Variables Declared with let</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Variables declared with <code>let</code> or <code>const</code> do not become properties of the global object.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let gLet = 5;
+
+alert(window.gLet); // undefined
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Creating Global Variables Explicitly</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+If a value should truly be global, we can explicitly assign it to the global object.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+// create global variable
+
+window.currentUser = {
+  name: "John"
+};
+
+// access it anywhere
+
+alert(currentUser.name);
+</code></pre>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+// safer access
+
+alert(window.currentUser.name);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Avoid Too Many Global Variables</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Using many global variables is generally discouraged.
+</p>
+
+<p class="concept-text">
+Programs are easier to understand when functions receive inputs and return results instead of relying on global variables.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Using the Global Object for Polyfills</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+The global object can be used to check if modern language features exist.
+</p>
+
+<p class="concept-text">
+If they are missing, we can provide a polyfill implementation.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+if (!window.Promise) {
+  alert("Your browser is really old!");
+}
+</code></pre>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+if (!window.Promise) {
+
+  window.Promise = ... // custom implementation
+
+}
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section" id="summary">
+
+<h2 class="section-title">Summary</h2>
+
+<ul class="summary-list">
+
+<li>The global object stores variables accessible everywhere.</li>
+
+<li>Built-in objects like <code>Array</code> and browser APIs like <code>window.innerHeight</code> belong to it.</li>
+
+<li>The universal name for the global object is <code>globalThis</code>.</li>
+
+<li>Environment-specific names include <code>window</code> (browser) and <code>global</code> (Node.js).</li>
+
+<li>Variables declared with <code>var</code> in global scope become properties of the global object.</li>
+
+<li>Variables declared with <code>let</code> and <code>const</code> do not.</li>
+
+<li>Global variables should be minimized for better code design.</li>
+
+</ul>
+
+</section>
+
+</main>

@@ -1,0 +1,380 @@
+
+<main class="doc">
+
+<header class="doc-header">
+<h1 class="doc-title">Garbage Collection</h1>
+
+<p class="doc-description">
+Memory management in JavaScript is performed automatically and invisibly to us. We create primitives, objects, functions… All that takes memory.
+</p>
+
+<p class="doc-description">
+What happens when something is not needed any more? How does the JavaScript engine discover it and clean it up?
+</p>
+
+</header>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Reachability</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+The main concept of memory management in JavaScript is reachability.
+</p>
+
+<p class="concept-text">
+Simply put, “reachable” values are those that are accessible or usable somehow. They are guaranteed to be stored in memory.
+</p>
+
+<p class="concept-text">
+There’s a base set of inherently reachable values, that cannot be deleted for obvious reasons.
+</p>
+
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+For instance:
+</p>
+
+<ul class="summary-list">
+<li>The currently executing function, its local variables and parameters.</li>
+<li>Other functions on the current chain of nested calls, their local variables and parameters.</li>
+<li>Global variables.</li>
+<li>There are some other internal ones as well.</li>
+</ul>
+
+<p class="concept-text">
+These values are called roots.
+</p>
+
+<p class="concept-text">
+Any other value is considered reachable if it’s reachable from a root by a reference or by a chain of references.
+</p>
+
+<p class="concept-text">
+For instance, if there’s an object in a global variable, and that object has a property referencing another object, that object is considered reachable. And those that it references are also reachable.
+</p>
+
+<p class="concept-text">
+There’s a background process in the JavaScript engine that is called garbage collector. It monitors all objects and removes those that have become unreachable.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">A Simple Example</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+// user has a reference to the object
+let user = {
+  name: "John"
+};
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Here the arrow depicts an object reference. The global variable "user" references the object {name: "John"}.
+</p>
+
+<p class="concept-text">
+The "name" property of John stores a primitive, so it’s painted inside the object.
+</p>
+
+<p class="concept-text">
+If the value of user is overwritten, the reference is lost:
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+user = null;
+</code></pre>
+</article>
+
+<article class="concept-block">
+<p class="concept-text">
+Now John becomes unreachable. There’s no way to access it and no references to it.
+</p>
+
+<p class="concept-text">
+Garbage collector will junk the data and free the memory.
+</p>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Two References</h2>
+
+<article class="concept-block">
+<p class="concept-text">
+Now let’s imagine we copied the reference from user to admin:
+</p>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+// user has a reference to the object
+let user = {
+  name: "John"
+};
+
+let admin = user;
+</code></pre>
+</article>
+
+<article class="concept-block">
+<p class="concept-text">
+Now if we do the same:
+</p>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+user = null;
+</code></pre>
+</article>
+
+<article class="concept-block">
+<p class="concept-text">
+Then the object is still reachable via admin global variable, so it must stay in memory.
+</p>
+
+<p class="concept-text">
+If we overwrite admin too, then it can be removed.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Interlinked Objects</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function marry(man, woman) {
+  woman.husband = man;
+  man.wife = woman;
+
+  return {
+    father: man,
+    mother: woman
+  }
+}
+
+let family = marry({
+  name: "John"
+}, {
+  name: "Ann"
+});
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Function marry “marries” two objects by giving them references to each other and returns a new object that contains them both.
+</p>
+
+<p class="concept-text">
+As of now, all objects are reachable.
+</p>
+
+<p class="concept-text">
+Now let’s remove two references:
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+delete family.father;
+delete family.mother.husband;
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+It’s not enough to delete only one of these references, because all objects would still be reachable.
+</p>
+
+<p class="concept-text">
+But if we delete both, then John has no incoming reference any more.
+</p>
+
+<p class="concept-text">
+Outgoing references do not matter. Only incoming ones can make an object reachable.
+</p>
+
+<p class="concept-text">
+So John is now unreachable and will be removed from memory together with the data that became inaccessible.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Unreachable Island</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+It is possible that the whole island of interlinked objects becomes unreachable and is removed from the memory.
+</p>
+
+<p class="concept-text">
+The source object is the same as above. Then:
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+family = null;
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+This example demonstrates how important the concept of reachability is.
+</p>
+
+<p class="concept-text">
+John and Ann are still linked to each other, but that’s not enough because the root reference has been removed.
+</p>
+
+<p class="concept-text">
+The former family object has been unlinked from the root, so the whole island becomes unreachable and will be removed.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Internal Algorithms</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+The basic garbage collection algorithm is called “mark-and-sweep”.
+</p>
+
+<p class="concept-text">
+The following garbage collection steps are regularly performed:
+</p>
+
+<ul class="summary-list">
+<li>The garbage collector takes roots and marks them.</li>
+<li>Then it visits and marks all references from them.</li>
+<li>Then it visits marked objects and marks their references.</li>
+<li>The process continues until all reachable references are visited.</li>
+<li>All objects except marked ones are removed.</li>
+</ul>
+
+<p class="concept-text">
+We can imagine the process as spilling paint from the roots that flows through references and marks reachable objects.
+</p>
+
+<p class="concept-text">
+Objects that remain unmarked are removed.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Engine Optimizations</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+JavaScript engines apply many optimizations to make garbage collection faster and avoid delays in execution.
+</p>
+
+<p class="concept-text">
+Some common optimizations include:
+</p>
+
+<ul class="summary-list">
+
+<li><strong>Generational collection</strong> – objects are split into “new” and “old” groups. Short-lived objects are cleaned quickly.</li>
+
+<li><strong>Incremental collection</strong> – large garbage collection processes are divided into smaller steps to avoid long pauses.</li>
+
+<li><strong>Idle-time collection</strong> – garbage collection runs when the CPU is idle.</li>
+
+</ul>
+
+<p class="concept-text">
+Different JavaScript engines implement different algorithms and optimizations.
+</p>
+
+<p class="concept-text">
+Learning engine internals can help when doing low-level performance optimizations.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section" id="summary">
+
+<h2 class="section-title">Summary</h2>
+
+<ul class="summary-list">
+
+<li>Garbage collection in JavaScript happens automatically.</li>
+
+<li>Objects remain in memory while they are reachable.</li>
+
+<li>Reachability means the value can be accessed from a root reference.</li>
+
+<li>A group of interlinked objects can become unreachable together.</li>
+
+<li>Modern engines use advanced algorithms like mark-and-sweep.</li>
+
+<li>Optimizations such as generational, incremental and idle-time collection improve performance.</li>
+
+</ul>
+
+</section>
+
+</main>

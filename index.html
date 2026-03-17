@@ -21,9 +21,11 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     />
 
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="styleContent.css" />
-    <script src="script.js" defer></script>
+    <link rel="stylesheet" href="style.css?v=2" />
+    <link rel="stylesheet" href="styleContent.css?v=2" />
+    <!-- Load Fuse.js for Search functionality -->
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
+    <script type="module" src="js/app.js"></script>
     <!-- Prism syntax highlighting (VS Code Tomorrow Dark theme) -->
     <link
       rel="stylesheet"
@@ -89,25 +91,37 @@
         </div>
 
         <div class="sidebar-scroll-area">
-          <div
-            class="sidebar-section-switcher"
-            id="sectionSwitcher"
-            role="tablist"
-            aria-label="Sections"
-          >
-            <!-- Dynamically populated by script.js -->
+          <!-- Sidebar Tabs -->
+          <div class="sidebar-tabs" id="sidebarTabs" role="tablist">
+            <button class="sidebar-tab active" id="tabSections" data-tab="sections" role="tab" aria-selected="true">Sections</button>
+            <button class="sidebar-tab" id="tabBookmarks" data-tab="bookmarks" role="tab" aria-selected="false">Bookmarks</button>
           </div>
 
-          <div class="sidebar-section-info" id="sidebarSectionInfo">
-            <span class="section-badge" id="sectionBadge">Chapter 5</span>
-            <h2 class="section-heading" id="sectionHeading">Data Types</h2>
-            <p class="section-subtext" id="sectionSubtext">
-              Core data structures in JavaScript
-            </p>
+          <div id="viewSections">
+            <div
+              class="sidebar-section-switcher"
+              id="sectionSwitcher"
+              role="tablist"
+              aria-label="Sections"
+            >
+              <!-- Dynamically populated by app.js -->
+            </div>
+
+            <div class="sidebar-section-info" id="sidebarSectionInfo">
+              <span class="section-badge" id="sectionBadge">Chapter 5</span>
+              <h2 class="section-heading" id="sectionHeading">Data Types</h2>
+              <p class="section-subtext" id="sectionSubtext">
+                Core data structures in JavaScript
+              </p>
+            </div>
+          </div>
+
+          <div id="viewBookmarks" hidden>
+             <!-- Populated dynamically -->
           </div>
 
           <nav class="sidebar-nav" id="lessonNav" aria-label="Lesson list">
-            <!-- Dynamically populated by script.js -->
+            <!-- Dynamically populated by app.js -->
           </nav>
         </div>
 
@@ -138,14 +152,14 @@
               aria-live="polite"
               aria-label="Lesson content"
             >
-              <!-- Dynamically populated by script.js -->
+              <!-- Dynamically populated by app.js -->
             </div>
             <footer
               class="lesson-nav-footer"
               id="lessonNavFooter"
               aria-label="Lesson navigation"
             >
-              <!-- Prev/next buttons populated by script.js -->
+              <!-- Prev/next buttons populated by app.js -->
             </footer>
           </div>
           <aside

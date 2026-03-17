@@ -1,0 +1,352 @@
+
+<main class="doc">
+
+<header class="doc-header">
+<h1 class="doc-title">Methods of Primitives</h1>
+<p class="doc-description">
+JavaScript allows primitives such as strings and numbers to behave
+like objects when accessing properties or methods.
+</p>
+</header>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Primitives vs Objects</h2>
+
+<article class="concept-block">
+<h3 class="concept-title">Primitive Values</h3>
+<p class="concept-text">
+A primitive is a value of a primitive type.
+</p>
+</article>
+
+<table class="data-table">
+
+<thead>
+<tr>
+<th>Primitive Types</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr><td>string</td></tr>
+<tr><td>number</td></tr>
+<tr><td>bigint</td></tr>
+<tr><td>boolean</td></tr>
+<tr><td>symbol</td></tr>
+<tr><td>null</td></tr>
+<tr><td>undefined</td></tr>
+
+</tbody>
+
+</table>
+
+
+<article class="concept-block">
+<h3 class="concept-title">Objects</h3>
+<p class="concept-text">
+Objects can store multiple values as properties and may contain functions.
+</p>
+</article>
+
+<pre class="code-block"><code>
+let john = {
+name:"John",
+sayHi:function(){
+alert("Hi buddy!");
+}
+};
+
+john.sayHi();
+</code></pre>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Objects Are Heavier</h2>
+
+<article class="concept-block">
+<p class="concept-text">
+Objects require additional resources because they store properties,
+methods and internal structures.  
+Primitives are lightweight and faster.
+</p>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Primitive as an Object</h2>
+
+<article class="concept-block">
+<h3 class="concept-title">The JavaScript Solution</h3>
+<p class="concept-text">
+JavaScript allows primitives to access methods by temporarily wrapping
+them inside special objects.
+</p>
+</article>
+
+<ul class="summary-list">
+
+<li>Primitives remain lightweight values.</li>
+
+<li>Special wrapper objects provide methods.</li>
+
+<li>The wrapper object is created temporarily and destroyed.</li>
+
+</ul>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Wrapper Objects</h2>
+
+<table class="data-table">
+
+<thead>
+<tr>
+<th>Primitive</th>
+<th>Wrapper Object</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>string</td>
+<td>String</td>
+</tr>
+
+<tr>
+<td>number</td>
+<td>Number</td>
+</tr>
+
+<tr>
+<td>boolean</td>
+<td>Boolean</td>
+</tr>
+
+<tr>
+<td>symbol</td>
+<td>Symbol</td>
+</tr>
+
+<tr>
+<td>bigint</td>
+<td>BigInt</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Example: String Method</h2>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let str = "Hello";
+
+alert(str.toUpperCase());
+</code></pre>
+
+<p class="example-note">
+The primitive string temporarily becomes a String object
+so that the method can run.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">What Happens Internally</h2>
+
+<article class="concept-block">
+<p class="concept-text">
+When calling a method on a primitive:
+</p>
+</article>
+
+<ul class="summary-list">
+
+<li>A temporary wrapper object is created.</li>
+
+<li>The method runs on that object.</li>
+
+<li>The object is destroyed.</li>
+
+</ul>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Number Methods</h2>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let n = 1.23456;
+
+alert(n.toFixed(2));
+</code></pre>
+
+<p class="example-note">
+The method rounds the number to the given precision.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Constructors for Wrappers</h2>
+
+<article class="concept-block">
+<p class="concept-text">
+JavaScript also has constructors like
+<code>String</code>, <code>Number</code>, and <code>Boolean</code>.
+They can create wrapper objects, but using them with <code>new</code> is discouraged.
+</p>
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+alert(typeof 0);
+
+alert(typeof new Number(0));
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Objects Are Always Truthy</h2>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let zero = new Number(0);
+
+if(zero){
+alert("zero is truthy!?!");
+}
+</code></pre>
+
+</article>
+
+<div class="note-block">
+Objects are always truthy in JavaScript,
+even if they contain values like 0 or false.
+</div>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Type Conversion Using Constructors</h2>
+
+<article class="concept-block">
+<p class="concept-text">
+Using <code>String()</code>, <code>Number()</code>, and <code>Boolean()</code>
+without <code>new</code> is safe and commonly used for type conversion.
+</p>
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let num = Number("123");
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">null and undefined</h2>
+
+<article class="concept-block">
+<p class="concept-text">
+The primitives <code>null</code> and <code>undefined</code> do not have wrapper objects
+and do not support methods.
+</p>
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+alert(null.test);
+</code></pre>
+
+</article>
+
+<div class="note-block">
+Accessing properties on null or undefined results in an error.
+</div>
+
+</section>
+
+
+
+<section class="doc-section" id="summary">
+
+<h2 class="section-title">Summary</h2>
+
+<ul class="summary-list">
+
+<li>Primitives are lightweight values.</li>
+
+<li>JavaScript temporarily wraps primitives in objects to access methods.</li>
+
+<li>Wrapper objects include String, Number, Boolean, Symbol and BigInt.</li>
+
+<li>Using constructors with <code>new</code> creates objects and is discouraged.</li>
+
+<li>Using constructors without <code>new</code> converts values between types.</li>
+
+<li>null and undefined do not provide methods.</li>
+
+</ul>
+
+</section>
+
+</main>

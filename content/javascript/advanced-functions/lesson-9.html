@@ -1,0 +1,334 @@
+
+<main class="doc">
+
+<header class="doc-header">
+
+<h1 class="doc-title">Function Binding</h1>
+
+<p class="doc-description">
+When object methods are passed as callbacks (for example to <code>setTimeout</code>), the value of <code>this</code> can be lost.
+</p>
+
+<p class="doc-description">
+JavaScript provides ways to preserve the correct <code>this</code> context using wrappers and the <code>bind</code> method.
+</p>
+
+</header>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Losing "this"</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+When a method is separated from its object, the reference to <code>this</code> is lost.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = {
+  firstName: "John",
+  sayHi() {
+    alert(\`Hello, \${this.firstName}!\`);
+  }
+};
+
+setTimeout(user.sayHi, 1000);
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Here <code>setTimeout</code> receives the function without its object, so <code>this</code> becomes <code>undefined</code> (or <code>window</code> in browsers).
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Solution 1: Wrapper Function</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+We can wrap the method call inside another function.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+setTimeout(function() {
+  user.sayHi();
+}, 1000);
+</code></pre>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+setTimeout(() => user.sayHi(), 1000);
+</code></pre>
+</article>
+
+<article class="note-block">
+
+<p class="note-text">
+However, if the variable <code>user</code> changes before the timeout executes, it may call the wrong object.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Solution 2: bind</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+The <code>bind</code> method creates a new function with a fixed <code>this</code> context.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let boundFunc = func.bind(context);
+</code></pre>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = {
+  firstName: "John"
+};
+
+function func() {
+  alert(this.firstName);
+}
+
+let funcUser = func.bind(user);
+
+funcUser();
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Binding Object Methods</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = {
+  firstName: "John",
+  sayHi() {
+    alert(\`Hello, \${this.firstName}!\`);
+  }
+};
+
+let sayHi = user.sayHi.bind(user);
+
+sayHi();
+
+setTimeout(sayHi, 1000);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Binding Arguments</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+The <code>bind</code> method can also fix arguments along with <code>this</code>.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let bound = func.bind(context, arg1, arg2);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Partial Functions</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+When some arguments of a function are fixed, the new function is called a <b>partially applied function</b>.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function mul(a, b) {
+  return a * b;
+}
+
+let double = mul.bind(null, 2);
+
+alert(double(3));
+alert(double(4));
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Another Example</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let triple = mul.bind(null, 3);
+
+alert(triple(3));
+alert(triple(4));
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Binding Multiple Methods</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+If an object has many methods that will be passed around, we can bind them all.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+for (let key in user) {
+
+  if (typeof user[key] == "function") {
+
+    user[key] = user[key].bind(user);
+
+  }
+
+}
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Partial Without Changing Context</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Sometimes we want to fix arguments but keep the original <code>this</code> context.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function partial(func, ...argsBound) {
+
+  return function(...args) {
+
+    return func.call(this, ...argsBound, ...args);
+
+  }
+
+}
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Example of Partial Function</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = {
+
+  firstName: "John",
+
+  say(time, phrase) {
+
+    alert(\`[\${time}] \${this.firstName}: \${phrase}\`);
+
+  }
+
+};
+
+user.sayNow = partial(user.say, "10:00");
+
+user.sayNow("Hello");
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section" id="summary">
+
+<h2 class="section-title">Summary</h2>
+
+<ul class="summary-list">
+
+<li><code>bind</code> creates a new function with fixed <code>this</code>.</li>
+
+<li>It allows passing object methods safely as callbacks.</li>
+
+<li>It can also fix arguments for partial function application.</li>
+
+<li>Partials are useful when the same argument is used repeatedly.</li>
+
+<li>Custom partial helpers can preserve the original <code>this</code> context.</li>
+
+</ul>
+
+</section>
+
+</main>

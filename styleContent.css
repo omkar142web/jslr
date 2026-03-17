@@ -470,3 +470,35 @@ pre[class*="language-"] {
 .token.regex {
   color: #d16969;
 }
+
+/* ============================================================
+   Bookmark Button
+   ============================================================ */
+.lesson-bookmark-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--surface-raised);
+  border: 1px solid var(--surface-border);
+  color: var(--text-muted);
+  font-size: 16px;
+  cursor: pointer;
+  transition: all var(--t-fast);
+  margin-bottom: var(--sp-4);
+  align-self: flex-start;
+}
+
+.lesson-bookmark-btn:hover {
+  background: var(--surface-hover);
+  color: var(--text-primary);
+  border-color: var(--surface-hover);
+}
+
+.lesson-bookmark-btn.bookmarked {
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-color: var(--accent-glow);
+}

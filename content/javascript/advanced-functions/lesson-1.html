@@ -1,0 +1,423 @@
+
+<main class="doc">
+
+<header class="doc-header">
+<h1 class="doc-title">Rest Parameters and Spread Syntax</h1>
+
+<p class="doc-description">
+Many JavaScript built-in functions support an arbitrary number of arguments.
+</p>
+
+</header>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Functions with Many Arguments</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Some built-in functions accept any number of arguments.
+</p>
+
+<ul class="summary-list">
+<li><code>Math.max(arg1, arg2, ..., argN)</code> – returns the largest value.</li>
+<li><code>Object.assign(dest, src1, ..., srcN)</code> – copies properties.</li>
+</ul>
+
+<p class="concept-text">
+In this chapter we will learn how to create functions like these and how to pass arrays to them.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Rest Parameters ...</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+A function can be called with any number of arguments regardless of how many parameters it defines.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function sum(a, b) {
+  return a + b;
+}
+
+alert(sum(1, 2, 3, 4, 5));
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Extra arguments are ignored unless we capture them using rest parameters.
+</p>
+
+<p class="concept-text">
+Rest parameters use three dots <code>...</code> followed by a variable name.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Collecting Arguments into an Array</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function sumAll(...args) {
+  let sum = 0;
+
+  for (let arg of args) {
+    sum += arg;
+  }
+
+  return sum;
+}
+
+alert(sumAll(1));
+alert(sumAll(1, 2));
+alert(sumAll(1, 2, 3));
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Mixing Regular and Rest Parameters</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function showName(firstName, lastName, ...titles) {
+
+  alert(firstName + " " + lastName);
+
+  alert(titles[0]);
+  alert(titles[1]);
+  alert(titles.length);
+
+}
+
+showName("Julius", "Caesar", "Consul", "Imperator");
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Rest Parameters Must Be Last</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function f(arg1, ...rest, arg2) {
+  // Error
+}
+</code></pre>
+</article>
+
+<div class="note-block">
+Rest parameters must always appear at the end of the parameter list.
+</div>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">The arguments Object</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+JavaScript also provides a special array-like object called <code>arguments</code>.
+</p>
+
+<p class="concept-text">
+It contains all arguments passed to the function.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function showName() {
+
+  alert(arguments.length);
+  alert(arguments[0]);
+  alert(arguments[1]);
+
+}
+
+showName("Julius", "Caesar");
+showName("Ilya");
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+However, <code>arguments</code> is not a real array and does not support array methods like <code>map()</code>.
+</p>
+
+<p class="concept-text">
+Rest parameters are usually preferred in modern JavaScript.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Arrow Functions and arguments</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Arrow functions do not have their own <code>arguments</code> object.
+</p>
+
+<p class="concept-text">
+Instead, they use the arguments from the outer function.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function f() {
+  let showArg = () => alert(arguments[0]);
+  showArg();
+}
+
+f(1);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Spread Syntax</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Spread syntax also uses three dots <code>...</code>, but it performs the opposite operation.
+</p>
+
+<p class="concept-text">
+It expands an iterable into a list of arguments.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Example with Math.max</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let arr = [3, 5, 1];
+
+alert(Math.max(...arr));
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Using Multiple Arrays</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let arr1 = [1, -2, 3, 4];
+let arr2 = [8, 3, -8, 1];
+
+alert(Math.max(...arr1, ...arr2));
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Combining Values</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let arr1 = [1, -2, 3, 4];
+let arr2 = [8, 3, -8, 1];
+
+alert(Math.max(1, ...arr1, 2, ...arr2, 25));
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Merging Arrays</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let arr = [3, 5, 1];
+let arr2 = [8, 9, 15];
+
+let merged = [0, ...arr, 2, ...arr2];
+
+alert(merged);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Spread with Strings</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let str = "Hello";
+
+alert([...str]);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Array.from Alternative</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let str = "Hello";
+
+alert(Array.from(str));
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+<code>Array.from()</code> works with both array-like objects and iterables, while spread works only with iterables.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Copying Arrays</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let arr = [1, 2, 3];
+
+let arrCopy = [...arr];
+
+alert(arr === arrCopy);
+
+arr.push(4);
+
+alert(arr);
+alert(arrCopy);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Copying Objects</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let obj = { a: 1, b: 2, c: 3 };
+
+let objCopy = { ...obj };
+
+alert(obj === objCopy);
+
+obj.d = 4;
+
+alert(JSON.stringify(obj));
+alert(JSON.stringify(objCopy));
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section" id="summary">
+
+<h2 class="section-title">Summary</h2>
+
+<ul class="summary-list">
+
+<li><code>...</code> can represent rest parameters or spread syntax.</li>
+
+<li>Rest parameters gather arguments into an array.</li>
+
+<li>Spread syntax expands arrays or iterables into arguments.</li>
+
+<li>Rest parameters must appear at the end of parameters.</li>
+
+<li>The old <code>arguments</code> object is array-like but not a real array.</li>
+
+<li>Spread syntax is often used to merge arrays or copy arrays/objects.</li>
+
+</ul>
+
+</section>
+
+</main>

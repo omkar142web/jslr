@@ -1,0 +1,360 @@
+
+<main class="doc">
+
+<header class="doc-header">
+<h1 class="doc-title">The Old "var"</h1>
+
+<p class="doc-description">
+This chapter explains the old <code>var</code> keyword. It is mainly useful for understanding older JavaScript code.
+</p>
+
+<p class="doc-description">
+Modern JavaScript uses <code>let</code> and <code>const</code> instead.
+</p>
+
+</header>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Variable Declarations</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+JavaScript provides three ways to declare variables:
+</p>
+
+<ul class="summary-list">
+<li><code>let</code></li>
+<li><code>const</code></li>
+<li><code>var</code></li>
+</ul>
+
+<p class="concept-text">
+The <code>var</code> keyword is the oldest method. It behaves differently from modern declarations.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Basic Example</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+var message = "Hi";
+alert(message);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">No Block Scope</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Variables declared with <code>var</code> do not respect block scope.
+</p>
+
+<p class="concept-text">
+They are either function-scoped or global-scoped.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+if (true) {
+  var test = true;
+}
+
+alert(test); // true
+</code></pre>
+</article>
+
+<div class="note-block">
+If <code>let</code> were used instead, the variable would only exist inside the block.
+</div>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Example with let</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+if (true) {
+  let test = true;
+}
+
+alert(test); // Error
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Behavior in Loops</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+for (var i = 0; i < 10; i++) {
+  var one = 1;
+}
+
+alert(i);   // 10
+alert(one); // 1
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Function Scope</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+When declared inside a function, <code>var</code> becomes scoped to the function.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function sayHi() {
+
+  if (true) {
+    var phrase = "Hello";
+  }
+
+  alert(phrase);
+
+}
+
+sayHi();
+alert(phrase); // Error
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Redeclarations</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Variables declared with <code>var</code> can be redeclared without error.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+var user = "Pete";
+
+var user = "John";
+
+alert(user); // John
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Hoisting</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+<code>var</code> declarations are processed when the function begins executing.
+</p>
+
+<p class="concept-text">
+This behavior is called <strong>hoisting</strong>.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function sayHi() {
+
+  phrase = "Hello";
+
+  alert(phrase);
+
+  var phrase;
+
+}
+
+sayHi();
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">How Hoisting Works</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function sayHi() {
+
+  var phrase;
+
+  phrase = "Hello";
+
+  alert(phrase);
+
+}
+
+sayHi();
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Assignment is Not Hoisted</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function sayHi() {
+
+  alert(phrase);
+
+  var phrase = "Hello";
+
+}
+
+sayHi();
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+The declaration is hoisted, but the assignment happens where it appears in the code.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Immediately Invoked Function Expressions (IIFE)</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Before block scope existed, developers used a pattern called IIFE to create private variables.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+(function() {
+
+  var message = "Hello";
+
+  alert(message);
+
+})();
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Other IIFE Variations</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+(function() {
+  alert("Parentheses around function");
+})();
+
+(function() {
+  alert("Parentheses around whole expression");
+}());
+
+!function() {
+  alert("Bitwise NOT operator");
+}();
+
++function() {
+  alert("Unary plus operator");
+}();
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section" id="summary">
+
+<h2 class="section-title">Summary</h2>
+
+<ul class="summary-list">
+
+<li><code>var</code> is an older way to declare variables.</li>
+
+<li>It does not respect block scope.</li>
+
+<li>It is scoped to the current function or global scope.</li>
+
+<li>Variables declared with <code>var</code> can be redeclared.</li>
+
+<li><code>var</code> declarations are hoisted to the top of the function.</li>
+
+<li>IIFE was historically used to emulate block scope.</li>
+
+<li>Modern JavaScript prefers <code>let</code> and <code>const</code>.</li>
+
+</ul>
+
+</section>
+
+</main>

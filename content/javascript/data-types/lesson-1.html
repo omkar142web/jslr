@@ -1,0 +1,158 @@
+
+<main class="doc">
+
+  <header class="doc-header">
+    <h1 class="doc-title">JavaScript Numbers</h1>
+    <p class="doc-description">
+      In modern JavaScript there are two types of numbers: regular numbers stored in
+      64-bit IEEE-754 format, and BigInt for arbitrarily large integers.
+    </p>
+  </header>
+
+  <section class="doc-section" id="number-types">
+    <h2 class="section-title">Number Types</h2>
+    <article class="concept-block">
+      <h3 class="concept-title">Regular Numbers</h3>
+      <p class="concept-text">
+        JavaScript numbers are stored in <strong>64-bit IEEE-754 double precision format</strong>,
+        also known as "double precision floating point". This handles both integers and decimals.
+      </p>
+    </article>
+    <article class="concept-block">
+      <h3 class="concept-title">BigInt</h3>
+      <p class="concept-text">
+        <code>BigInt</code> represents integers of arbitrary length and is used when numbers
+        exceed the safe integer range of <code>±(2<sup>53</sup> - 1)</code>.
+      </p>
+    </article>
+  </section>
+
+  <section class="doc-section" id="large-numbers">
+    <h2 class="section-title">Writing Large Numbers</h2>
+    <article class="example-block">
+      <h3 class="example-title">Underscore Separator</h3>
+      <pre class="code-block"><code>let billion = 1_000_000_000;</code></pre>
+      <p class="example-note">Underscores improve readability and are ignored by JavaScript.</p>
+    </article>
+    <article class="example-block">
+      <h3 class="example-title">Scientific Notation</h3>
+      <pre class="code-block"><code>let billion = 1e9;
+let value   = 7.3e9;</code></pre>
+      <p class="example-note"><code>e</code> multiplies the number by powers of 10.</p>
+    </article>
+  </section>
+
+  <section class="doc-section" id="small-numbers">
+    <h2 class="section-title">Writing Small Numbers</h2>
+    <pre class="code-block"><code>let microSecond = 1e-6;  // 0.000001</code></pre>
+    <p class="section-note">Negative exponent divides the number by powers of 10.</p>
+  </section>
+
+  <section class="doc-section" id="numeral-systems">
+    <h2 class="section-title">Hex, Binary and Octal</h2>
+    <article class="example-block">
+      <pre class="code-block"><code>let hex    = 0xff;        // 255
+let binary = 0b11111111;  // 255
+let octal  = 0o377;       // 255</code></pre>
+    </article>
+  </section>
+
+  <section class="doc-section" id="base-conversion">
+    <h2 class="section-title">Number Base Conversion</h2>
+    <article class="example-block">
+      <pre class="code-block"><code>let num = 255;
+
+num.toString(16);  // "ff"
+num.toString(2);   // "11111111"
+num.toString(8);   // "377"</code></pre>
+    </article>
+    <div class="note-block">
+      <p>The base can range from <strong>2 to 36</strong>. Base 36 is useful for encoding long numeric identifiers as short strings.</p>
+    </div>
+  </section>
+
+  <section class="doc-section" id="rounding">
+    <h2 class="section-title">Rounding Methods</h2>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Method</th>
+          <th>Description</th>
+          <th>Example (3.6)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><code>Math.floor()</code></td><td>Rounds down</td><td>3</td></tr>
+        <tr><td><code>Math.ceil()</code></td><td>Rounds up</td><td>4</td></tr>
+        <tr><td><code>Math.round()</code></td><td>Nearest integer</td><td>4</td></tr>
+        <tr><td><code>Math.trunc()</code></td><td>Removes decimal part</td><td>3</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="doc-section" id="tofixed">
+    <h2 class="section-title">toFixed()</h2>
+    <pre class="code-block"><code>let num = 12.34;
+
+num.toFixed(1);  // "12.3"
+num.toFixed(5);  // "12.34000"</code></pre>
+    <p class="section-note">The result of <code>toFixed()</code> is a <strong>string</strong>, not a number.</p>
+  </section>
+
+  <section class="doc-section" id="precision">
+    <h2 class="section-title">Floating Point Precision</h2>
+    <pre class="code-block"><code>0.1 + 0.2 === 0.3  // false
+0.1 + 0.2          // 0.30000000000000004</code></pre>
+    <p class="section-note">
+      Decimal fractions cannot always be represented exactly in binary.
+      Use <code>toFixed()</code> or integer math to avoid precision issues.
+    </p>
+  </section>
+
+  <section class="doc-section" id="special-values">
+    <h2 class="section-title">NaN and Infinity</h2>
+    <pre class="code-block"><code>isNaN("text");         // true
+isFinite(123);         // true
+Number.isNaN(NaN);     // true
+Number.isFinite(10);   // true
+
+Infinity > 999999;     // true
+-Infinity < -999999;   // true</code></pre>
+  </section>
+
+  <section class="doc-section" id="parse-functions">
+    <h2 class="section-title">parseInt and parseFloat</h2>
+    <article class="example-block">
+      <pre class="code-block"><code>parseInt("100px");     // 100
+parseFloat("12.5em");  // 12.5</code></pre>
+    </article>
+    <article class="example-block">
+      <h3 class="example-title">parseInt with radix</h3>
+      <pre class="code-block"><code>parseInt("ff",   16);  // 255
+parseInt("2n9c", 36);  // 123456</code></pre>
+    </article>
+  </section>
+
+  <section class="doc-section" id="math-object">
+    <h2 class="section-title">Math Object</h2>
+    <pre class="code-block"><code>Math.random();       // 0 to 1 (exclusive)
+Math.max(3, 5, 10);  // 10
+Math.min(1, 2);      // 1
+Math.pow(2, 10);     // 1024
+Math.sqrt(16);       // 4
+Math.abs(-7);        // 7</code></pre>
+  </section>
+
+  <section class="doc-section" id="summary">
+    <h2 class="section-title">Summary</h2>
+    <ul class="summary-list">
+      <li>Use <code>e</code> notation for very large or very small numbers.</li>
+      <li>JavaScript supports hex <code>0x</code>, binary <code>0b</code>, and octal <code>0o</code> literals.</li>
+      <li>Use <code>toString(base)</code> to convert a number to a different base.</li>
+      <li>Use <code>Math.floor</code>, <code>ceil</code>, <code>round</code>, or <code>trunc</code> for rounding.</li>
+      <li>Floating point arithmetic can lose precision — use <code>toFixed()</code> when displaying.</li>
+      <li>Use <code>parseInt</code> and <code>parseFloat</code> to extract numbers from strings.</li>
+    </ul>
+  </section>
+
+</main>

@@ -1,0 +1,504 @@
+
+
+<main class="doc">
+
+<header class="doc-header">
+<h1 class="doc-title">JavaScript Strings</h1>
+<p class="doc-description">
+Strings represent textual data in JavaScript. Internally they use UTF-16 encoding and can be written using single quotes, double quotes, or backticks.
+</p>
+</header>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Strings</h2>
+
+<article class="concept-block">
+<h3 class="concept-title">What are Strings?</h3>
+<p class="concept-text">
+In JavaScript textual data is stored as <strong>strings</strong>. There is no separate type for a single character.
+</p>
+</article>
+
+<article class="concept-block">
+<h3 class="concept-title">Internal Encoding</h3>
+<p class="concept-text">
+The internal format for strings is always <strong>UTF-16</strong>. It is not tied to the page encoding.
+</p>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Quotes</h2>
+
+<article class="example-block">
+
+<h3 class="example-title">Different String Quotes</h3>
+
+<pre class="code-block"><code>
+let single = 'single-quoted';
+let double = "double-quoted";
+let backticks = \`backticks\`;
+</code></pre>
+
+<p class="example-note">
+Single and double quotes behave the same. Backticks have additional capabilities.
+</p>
+
+</article>
+
+
+
+<article class="example-block">
+
+<h3 class="example-title">Embedding Expressions</h3>
+
+<pre class="code-block"><code>
+function sum(a, b) {
+  return a + b;
+}
+
+alert(\`1 + 2 = \${sum(1, 2)}.\`);
+</code></pre>
+
+<p class="example-note">
+Backticks allow expressions inside <code>\${...}</code>.
+</p>
+
+</article>
+
+
+
+<article class="example-block">
+
+<h3 class="example-title">Multiline Strings</h3>
+
+<pre class="code-block"><code>
+let guestList = \`Guests:
+ * John
+ * Pete
+ * Mary
+\`;
+
+alert(guestList);
+</code></pre>
+
+</article>
+
+
+
+<article class="example-block">
+
+<h3 class="example-title">Single/Double Quotes Cannot Span Lines</h3>
+
+<pre class="code-block"><code>
+let guestList = "Guests:
+ * John";
+</code></pre>
+
+<p class="example-note">
+This produces an error because traditional quotes do not support multiline strings.
+</p>
+
+</article>
+
+<div class="note-block">
+Backticks appeared later in JavaScript and are more versatile. They also support <strong>tagged templates</strong> using the syntax: <code>func\`string\`</code>.
+</div>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Special Characters</h2>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let guestList = "Guests:\\n * John\\n * Pete\\n * Mary";
+</code></pre>
+
+<p class="example-note">
+The <code>\\n</code> character represents a newline.
+</p>
+
+</article>
+
+
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let str1 = "Hello\\nWorld";
+
+let str2 = \`Hello
+World\`;
+
+alert(str1 == str2); // true
+</code></pre>
+
+</article>
+
+
+
+<table class="data-table">
+
+<thead>
+<tr>
+<th>Character</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr><td>\\n</td><td>New line</td></tr>
+<tr><td>\\r</td><td>Carriage return</td></tr>
+<tr><td>\\'</td><td>Single quote</td></tr>
+<tr><td>\\"</td><td>Double quote</td></tr>
+<tr><td>\\\\</td><td>Backslash</td></tr>
+<tr><td>\\t</td><td>Tab</td></tr>
+<tr><td>\\b \\f \\v</td><td>Legacy control characters</td></tr>
+
+</tbody>
+
+</table>
+
+
+
+<div class="note-block">
+All special characters begin with a backslash <code>\\</code>, known as an <strong>escape character</strong>.
+</div>
+
+
+
+<article class="example-block">
+
+<h3 class="example-title">Escaping Characters</h3>
+
+<pre class="code-block"><code>
+alert(\`The backslash: \\\\\`);
+</code></pre>
+
+</article>
+
+
+
+<article class="example-block">
+
+<h3 class="example-title">Escaping Quotes</h3>
+
+<pre class="code-block"><code>
+alert('I\\'m the Walrus!');
+alert("I'm the Walrus!");
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">String Length</h2>
+
+<pre class="code-block"><code>
+alert(\`My\\n\`.length); // 3
+</code></pre>
+
+<p class="section-note">
+<code>length</code> is a property, not a function. Use <code>str.length</code>, not <code>str.length()</code>.
+</p>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Accessing Characters</h2>
+
+<pre class="code-block"><code>
+let str = \`Hello\`;
+
+str[0];
+str.at(0);
+
+str[str.length - 1];
+str.at(-1);
+</code></pre>
+
+
+
+<article class="example-block">
+
+<h3 class="example-title">Negative Index</h3>
+
+<pre class="code-block"><code>
+let str = \`Hello\`;
+
+alert(str[-2]); // undefined
+alert(str.at(-2)); // l
+</code></pre>
+
+</article>
+
+
+
+<article class="example-block">
+
+<h3 class="example-title">Iterating Characters</h3>
+
+<pre class="code-block"><code>
+for (let char of "Hello") {
+  alert(char);
+}
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Strings are Immutable</h2>
+
+<pre class="code-block"><code>
+let str = 'Hi';
+
+str[0] = 'h';
+</code></pre>
+
+<p class="section-note">
+Strings cannot be changed directly.
+</p>
+
+
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let str = 'Hi';
+
+str = 'h' + str[1];
+
+alert(str); // hi
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Changing Case</h2>
+
+<pre class="code-block"><code>
+'Interface'.toUpperCase();
+'Interface'.toLowerCase();
+
+'Interface'[0].toLowerCase();
+</code></pre>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Searching for Substrings</h2>
+
+<article class="example-block">
+
+<h3 class="example-title">indexOf()</h3>
+
+<pre class="code-block"><code>
+let str = 'Widget with id';
+
+str.indexOf('Widget');
+str.indexOf('widget');
+str.indexOf("id");
+</code></pre>
+
+</article>
+
+
+
+<article class="example-block">
+
+<h3 class="example-title">Searching Multiple Occurrences</h3>
+
+<pre class="code-block"><code>
+let str = 'As sly as a fox, as strong as an ox';
+let target = 'as';
+
+let pos = 0;
+
+while (true) {
+  let foundPos = str.indexOf(target, pos);
+
+  if (foundPos == -1) break;
+
+  pos = foundPos + 1;
+}
+</code></pre>
+
+</article>
+
+
+
+<article class="example-block">
+
+<h3 class="example-title">includes / startsWith / endsWith</h3>
+
+<pre class="code-block"><code>
+"Widget with id".includes("Widget");
+
+"Widget".startsWith("Wid");
+
+"Widget".endsWith("get");
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Getting a Substring</h2>
+
+<table class="data-table">
+
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td><code>slice(start,end)</code></td>
+<td>Selects from start to end</td>
+</tr>
+
+<tr>
+<td><code>substring(start,end)</code></td>
+<td>Selects between start and end</td>
+</tr>
+
+<tr>
+<td><code>substr(start,length)</code></td>
+<td>Selects length characters</td>
+</tr>
+
+</tbody>
+
+</table>
+
+
+
+<pre class="code-block"><code>
+let str = "stringify";
+
+str.slice(0,5);
+
+str.substring(2,6);
+
+str.substr(2,4);
+</code></pre>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Comparing Strings</h2>
+
+<pre class="code-block"><code>
+'a' > 'Z';
+'Österreich' > 'Zealand';
+</code></pre>
+
+
+
+<div class="note-block">
+Strings are compared using their UTF-16 character codes.
+</div>
+
+
+
+<article class="example-block">
+
+<h3 class="example-title">localeCompare()</h3>
+
+<pre class="code-block"><code>
+'Österreich'.localeCompare('Zealand');
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Character Codes</h2>
+
+<pre class="code-block"><code>
+"Z".codePointAt(0);
+"z".codePointAt(0);
+
+String.fromCodePoint(90);
+</code></pre>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Summary</h2>
+
+<ul class="summary-list">
+
+<li>Strings represent textual data using UTF-16 encoding.</li>
+
+<li>Strings can use single quotes, double quotes, or backticks.</li>
+
+<li>Backticks allow multiline strings and embedded expressions.</li>
+
+<li>Strings are immutable.</li>
+
+<li>Use slice or substring to extract substrings.</li>
+
+<li>Use indexOf, includes, startsWith and endsWith to search text.</li>
+
+<li>Use localeCompare for language-aware comparisons.</li>
+
+<li>Useful methods include <code>trim()</code> and <code>repeat()</code>.</li>
+
+</ul>
+
+</section>
+
+</main>
+

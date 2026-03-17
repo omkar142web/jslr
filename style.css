@@ -134,6 +134,14 @@ button {
   --t-base: 0.22s ease;
   --t-slow: 0.35s ease;
 
+  /* ── Breakpoints ── */
+  --bp-sm: 420px;
+  --bp-md: 665px;
+  --bp-lg: 765px;
+  --bp-xl: 975px;
+  --bp-2xl: 1090px;
+  --bp-3xl: 1215px;
+
   /* ── Shadows ── */
   --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.4);
   --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.5);
@@ -366,6 +374,35 @@ button {
 }
 
 /* Section switcher: 2-col grid of cards (scrolls with sidebar) */
+.sidebar-tabs {
+  display: flex;
+  padding: var(--sp-3) var(--sp-4) 0;
+  border-bottom: 1px solid var(--surface-border-dim);
+  gap: var(--sp-2);
+}
+
+.sidebar-tab {
+  flex: 1;
+  padding: var(--sp-2) 0;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: transparent;
+  border-bottom: 2px solid transparent;
+  transition: color var(--t-fast), border-color var(--t-fast);
+}
+
+.sidebar-tab.active {
+  color: var(--accent-text);
+  border-bottom-color: var(--accent);
+}
+
+.sidebar-tab:hover:not(.active) {
+  color: var(--text-primary);
+}
+
 .sidebar-section-switcher {
   padding: var(--sp-3) var(--sp-4);
   border-bottom: 1px solid var(--surface-border-dim);
@@ -565,7 +602,7 @@ button {
   color: var(--accent-text);
 }
 
-@media (min-width: 1100px) {
+@media (min-width: 1090px) {
   .lesson-toc.is-visible {
     display: flex;
     flex-direction: column;
@@ -792,7 +829,7 @@ button {
 /* ============================================================
    8. RESPONSIVE
    ============================================================ */
-@media (max-width: 900px) {
+@media (max-width: 975px) {
   :root {
     --sidebar-w: 240px;
   }
@@ -886,7 +923,7 @@ button {
 }
 
 .bookmark-item .star {
-  color: var(--accent-secondary-text);
+  color: var(--secondary-text);
 }
 
 /* Mobile TOC drawer toggle + backdrop */
@@ -1031,7 +1068,7 @@ button {
   }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 765px) {
   .sidebar-footer {
     display: block;
   }

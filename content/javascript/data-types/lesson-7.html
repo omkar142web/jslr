@@ -1,0 +1,355 @@
+
+<main class="doc">
+
+<header class="doc-header">
+<h1 class="doc-title">JavaScript WeakMap and WeakSet</h1>
+<p class="doc-description">
+WeakMap and WeakSet are special collections that store objects with
+<strong>weak references</strong>.  
+If an object becomes unreachable elsewhere in the program,
+JavaScript can automatically remove it from these collections
+during garbage collection.
+</p>
+</header>
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Garbage Collection Refresher</h2>
+
+<article class="concept-block">
+<h3 class="concept-title">Reachable Values</h3>
+<p class="concept-text">
+JavaScript keeps values in memory while they are <strong>reachable</strong>.
+If no references to an object exist, the garbage collector removes it from memory.
+</p>
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let john = { name: "John" };
+
+john = null;
+
+// the object will be removed from memory
+</code></pre>
+
+</article>
+
+</section>
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Objects Stored in Collections</h2>
+
+<article class="concept-block">
+<h3 class="concept-title">Objects Stay Alive in Collections</h3>
+<p class="concept-text">
+If an object is stored inside another structure (like an array or map),
+it remains in memory while that structure exists.
+</p>
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let john = { name: "John" };
+
+let array = [john];
+
+john = null;
+
+// object still exists in memory
+// accessible via array[0]
+</code></pre>
+
+</article>
+
+</section>
+
+
+<section class="doc-section">
+
+<h2 class="section-title">WeakMap</h2>
+
+<article class="concept-block">
+<h3 class="concept-title">What is WeakMap?</h3>
+<p class="concept-text">
+WeakMap is similar to Map but with one major difference:
+<strong>its keys must be objects</strong> and they are held
+with weak references.
+</p>
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let weakMap = new WeakMap();
+
+let obj = {};
+
+weakMap.set(obj,"ok");
+
+// Error
+weakMap.set("test","whoops");
+</code></pre>
+
+</article>
+
+<div class="note-block">
+Primitive values cannot be used as keys in WeakMap.
+</div>
+
+</section>
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Automatic Garbage Collection</h2>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let john = { name: "John" };
+
+let weakMap = new WeakMap();
+
+weakMap.set(john,"...");
+
+john = null;
+
+// object is automatically removed
+</code></pre>
+
+<p class="example-note">
+If the object has no other references, it disappears from memory
+and from the WeakMap.
+</p>
+
+</article>
+
+</section>
+
+
+<section class="doc-section">
+
+<h2 class="section-title">WeakMap Methods</h2>
+
+<table class="data-table">
+
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td><code>weakMap.set(key,value)</code></td>
+<td>Add key/value pair</td>
+</tr>
+
+<tr>
+<td><code>weakMap.get(key)</code></td>
+<td>Get value by key</td>
+</tr>
+
+<tr>
+<td><code>weakMap.has(key)</code></td>
+<td>Check if key exists</td>
+</tr>
+
+<tr>
+<td><code>weakMap.delete(key)</code></td>
+<td>Remove entry</td>
+</tr>
+
+</tbody>
+
+</table>
+
+<div class="note-block">
+WeakMap does not support iteration methods such as
+<code>keys()</code>, <code>values()</code>, or <code>entries()</code>.
+</div>
+
+</section>
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Use Case: Additional Data Storage</h2>
+
+<article class="concept-block">
+<h3 class="concept-title">Attach Data to Objects</h3>
+<p class="concept-text">
+WeakMap is useful when you want to associate additional data with
+an object that should disappear automatically once the object is gone.
+</p>
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let visitsCountMap = new WeakMap();
+
+function countUser(user){
+
+let count = visitsCountMap.get(user) || 0;
+
+visitsCountMap.set(user,count + 1);
+
+}
+</code></pre>
+
+</article>
+
+</section>
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Use Case: Caching</h2>
+
+<article class="concept-block">
+<h3 class="concept-title">Cache Results</h3>
+<p class="concept-text">
+WeakMap can store cached results for objects without worrying
+about memory leaks.
+</p>
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let cache = new WeakMap();
+
+function process(obj){
+
+if(!cache.has(obj)){
+
+let result = /* heavy calculation */ obj;
+
+cache.set(obj,result);
+
+return result;
+
+}
+
+return cache.get(obj);
+
+}
+</code></pre>
+
+</article>
+
+</section>
+
+
+<section class="doc-section">
+
+<h2 class="section-title">WeakSet</h2>
+
+<article class="concept-block">
+<h3 class="concept-title">What is WeakSet?</h3>
+<p class="concept-text">
+WeakSet works like Set but only stores objects
+and removes them automatically once they become unreachable.
+</p>
+</article>
+
+<table class="data-table">
+
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td><code>weakSet.add(value)</code></td>
+<td>Add object</td>
+</tr>
+
+<tr>
+<td><code>weakSet.has(value)</code></td>
+<td>Check membership</td>
+</tr>
+
+<tr>
+<td><code>weakSet.delete(value)</code></td>
+<td>Remove object</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</section>
+
+
+<section class="doc-section">
+
+<h2 class="section-title">WeakSet Example</h2>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let visitedSet = new WeakSet();
+
+let john = { name:"John" };
+let pete = { name:"Pete" };
+let mary = { name:"Mary" };
+
+visitedSet.add(john);
+visitedSet.add(pete);
+
+alert(visitedSet.has(john));
+
+john = null;
+
+// automatically removed later
+</code></pre>
+
+<p class="example-note">
+WeakSet is often used to track whether objects
+have already been processed.
+</p>
+
+</article>
+
+</section>
+
+
+<section class="doc-section" id="summary">
+
+<h2 class="section-title">Summary</h2>
+
+<ul class="summary-list">
+
+<li><strong>WeakMap</strong> stores key/value pairs where keys must be objects.</li>
+
+<li>If an object key becomes unreachable, it is automatically removed.</li>
+
+<li>WeakMap supports only <code>set</code>, <code>get</code>, <code>has</code>, and <code>delete</code>.</li>
+
+<li>WeakMap cannot be iterated and has no <code>size</code> property.</li>
+
+<li><strong>WeakSet</strong> stores unique objects with weak references.</li>
+
+<li>Objects disappear from WeakSet automatically after garbage collection.</li>
+
+<li>WeakMap and WeakSet are mainly used as <strong>secondary storage</strong> attached to objects.</li>
+
+</ul>
+
+</section>
+
+</main>

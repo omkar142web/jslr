@@ -1,0 +1,383 @@
+
+<main class="doc">
+
+<header class="doc-header">
+
+<h1 class="doc-title">Decorators and Forwarding, call/apply</h1>
+
+<p class="doc-description">
+JavaScript provides powerful flexibility when working with functions.
+</p>
+
+<p class="doc-description">
+Functions can be passed around, wrapped, modified, and extended without changing the original function. This concept is called a <b>decorator</b>.
+</p>
+
+</header>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Transparent Caching</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Imagine we have a CPU-heavy function whose result always stays the same for the same input.
+</p>
+
+<p class="concept-text">
+Instead of recalculating the result every time, we can cache it using a decorator.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function slow(x) {
+  alert("Called with " + x);
+  return x;
+}
+
+function cachingDecorator(func) {
+
+  let cache = new Map();
+
+  return function(x) {
+
+    if (cache.has(x)) {
+      return cache.get(x);
+    }
+
+    let result = func(x);
+
+    cache.set(x, result);
+
+    return result;
+
+  };
+
+}
+
+slow = cachingDecorator(slow);
+
+alert(slow(1));
+alert("Again: " + slow(1));
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">What is a Decorator?</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+A decorator is a function that takes another function and modifies its behavior.
+</p>
+
+<p class="concept-text">
+It wraps the original function with additional functionality like caching, logging, validation, or timing.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Problem with Object Methods</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Decorators may break methods that rely on <code>this</code>.
+</p>
+
+<p class="concept-text">
+This happens because the wrapper calls the function without the original context.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let worker = {
+
+  someMethod() {
+    return 1;
+  },
+
+  slow(x) {
+    return x * this.someMethod();
+  }
+
+};
+
+let func = worker.slow;
+
+func(2); // this becomes undefined
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Using func.call</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+The <code>call</code> method allows us to explicitly set the value of <code>this</code>.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+func.call(context, arg1, arg2, ...);
+</code></pre>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function sayHi() {
+  alert(this.name);
+}
+
+let user = { name: "John" };
+let admin = { name: "Admin" };
+
+sayHi.call(user);
+sayHi.call(admin);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Fixing the Decorator</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function cachingDecorator(func) {
+
+  let cache = new Map();
+
+  return function(x) {
+
+    if (cache.has(x)) {
+      return cache.get(x);
+    }
+
+    let result = func.call(this, x);
+
+    cache.set(x, result);
+
+    return result;
+
+  };
+
+}
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Handling Multiple Arguments</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+If a function has multiple parameters, we need to create a unique cache key for the combination of arguments.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function cachingDecorator(func, hash) {
+
+  let cache = new Map();
+
+  return function() {
+
+    let key = hash(arguments);
+
+    if (cache.has(key)) {
+      return cache.get(key);
+    }
+
+    let result = func.call(this, ...arguments);
+
+    cache.set(key, result);
+
+    return result;
+
+  };
+
+}
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">func.apply</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+The <code>apply</code> method works similarly to <code>call</code>, but accepts arguments as an array-like object.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+func.apply(context, args);
+</code></pre>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+func.call(context, ...args);
+func.apply(context, args);
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Both perform the same task, but <code>apply</code> receives arguments as an array-like structure.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Call Forwarding</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Passing all arguments and context to another function is called <b>call forwarding</b>.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let wrapper = function() {
+  return func.apply(this, arguments);
+};
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Method Borrowing</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Sometimes we borrow a method from one object and use it on another object.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function hash() {
+  return [].join.call(arguments);
+}
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Here we borrow the <code>join</code> method from arrays and use it with the <code>arguments</code> object.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Decorators and Function Properties</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+When we decorate a function, the wrapper replaces the original function.
+</p>
+
+<p class="concept-text">
+This means properties on the original function are not automatically preserved.
+</p>
+
+<p class="concept-text">
+More advanced decorators can preserve properties using <code>Proxy</code>.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section" id="summary">
+
+<h2 class="section-title">Summary</h2>
+
+<ul class="summary-list">
+
+<li>A decorator wraps a function to modify its behavior.</li>
+
+<li>Decorators allow adding features without changing original code.</li>
+
+<li><code>func.call(context, ...args)</code> calls a function with a specified <code>this</code>.</li>
+
+<li><code>func.apply(context, args)</code> works similarly but uses an array-like argument list.</li>
+
+<li>Call forwarding passes arguments and context to another function.</li>
+
+<li>Method borrowing allows using methods from one object on another.</li>
+
+</ul>
+
+</section>
+
+</main>

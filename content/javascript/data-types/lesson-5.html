@@ -1,0 +1,379 @@
+
+<main class="doc">
+
+<header class="doc-header">
+<h1 class="doc-title">JavaScript Iterables</h1>
+<p class="doc-description">
+Iterable objects are a generalization of arrays. They allow any object to be used
+in a <code>for..of</code> loop if it implements the proper iteration protocol.
+</p>
+</header>
+
+
+<section class="doc-section">
+
+<h2 class="section-title">What are Iterables?</h2>
+
+<article class="concept-block">
+<h3 class="concept-title">General Idea</h3>
+<p class="concept-text">
+Iterable objects are objects that can be looped over with <code>for..of</code>.
+Arrays are iterable by default, but many other built-in objects such as strings
+are iterable as well.
+</p>
+</article>
+
+<article class="concept-block">
+<h3 class="concept-title">Why Iterables?</h3>
+<p class="concept-text">
+Sometimes an object represents a collection of values (for example a list or set),
+but it is not technically an array. Making it iterable allows us to loop through
+its values easily using <code>for..of</code>.
+</p>
+</article>
+
+</section>
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Symbol.iterator</h2>
+
+<article class="concept-block">
+<h3 class="concept-title">Iteration Protocol</h3>
+<p class="concept-text">
+To make an object iterable, it must implement the special method
+<code>Symbol.iterator</code>. When a <code>for..of</code> loop starts,
+JavaScript calls this method to obtain an iterator object.
+</p>
+</article>
+
+<article class="example-block">
+
+<h3 class="example-title">Range Object Example</h3>
+
+<pre class="code-block"><code>
+let range = {
+  from: 1,
+  to: 5
+};
+
+range[Symbol.iterator] = function() {
+  return {
+    current: this.from,
+    last: this.to,
+
+    next() {
+      if (this.current <= this.last) {
+        return { done: false, value: this.current++ };
+      } else {
+        return { done: true };
+      }
+    }
+  };
+};
+
+for (let num of range) {
+  alert(num);
+}
+</code></pre>
+
+<p class="example-note">
+The <code>next()</code> method returns objects like
+<code>{done:false, value:...}</code>.
+</p>
+
+</article>
+
+</section>
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Iterator vs Iterable</h2>
+
+<article class="concept-block">
+<h3 class="concept-title">Separation of Concerns</h3>
+<p class="concept-text">
+The iterable object itself does not generate values directly.
+Instead, calling <code>obj[Symbol.iterator]() </code> returns an
+iterator object that produces values through its <code>next()</code> method.
+</p>
+</article>
+
+<article class="example-block">
+
+<h3 class="example-title">Combined Iterator and Iterable</h3>
+
+<pre class="code-block"><code>
+let range = {
+  from: 1,
+  to: 5,
+
+  [Symbol.iterator]() {
+    this.current = this.from;
+    return this;
+  },
+
+  next() {
+    if (this.current <= this.to) {
+      return { done:false, value:this.current++ };
+    } else {
+      return { done:true };
+    }
+  }
+};
+
+for (let num of range) {
+  alert(num);
+}
+</code></pre>
+
+<p class="example-note">
+Here the object itself acts as the iterator.
+</p>
+
+</article>
+
+</section>
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Infinite Iterators</h2>
+
+<article class="concept-block">
+<h3 class="concept-title">Endless Sequences</h3>
+<p class="concept-text">
+Iterators can generate infinite sequences. For example,
+a range may extend to <code>Infinity</code>, or an iterator may
+produce endless random numbers.
+</p>
+</article>
+
+<div class="note-block">
+Such loops would run forever unless manually stopped
+using <code>break</code>.
+</div>
+
+</section>
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Strings Are Iterable</h2>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+for (let char of "test") {
+  alert(char);
+}
+</code></pre>
+
+</article>
+
+<article class="example-block">
+
+<h3 class="example-title">Surrogate Pairs</h3>
+
+<pre class="code-block"><code>
+let str = "𝒳😂";
+
+for (let char of str) {
+  alert(char);
+}
+</code></pre>
+
+<p class="example-note">
+Each character is correctly iterated even for complex Unicode symbols.
+</p>
+
+</article>
+
+</section>
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Calling Iterator Manually</h2>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let str = "Hello";
+
+let iterator = str[Symbol.iterator]();
+
+while(true) {
+  let result = iterator.next();
+
+  if(result.done) break;
+
+  alert(result.value);
+}
+</code></pre>
+
+<p class="example-note">
+This is rarely needed but provides more control than <code>for..of</code>.
+</p>
+
+</article>
+
+</section>
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Iterables vs Array-Like</h2>
+
+<article class="concept-block">
+<h3 class="concept-title">Iterables</h3>
+<p class="concept-text">
+Objects implementing <code>Symbol.iterator</code>.
+</p>
+</article>
+
+<article class="concept-block">
+<h3 class="concept-title">Array-Like</h3>
+<p class="concept-text">
+Objects with numeric indexes and a <code>length</code> property
+that resemble arrays.
+</p>
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let arrayLike = {
+  0: "Hello",
+  1: "World",
+  length: 2
+};
+</code></pre>
+
+<p class="example-note">
+This object is array-like but not iterable.
+</p>
+
+</article>
+
+</section>
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Array.from</h2>
+
+<article class="concept-block">
+<h3 class="concept-title">Convert to Real Array</h3>
+<p class="concept-text">
+The method <code>Array.from()</code> converts iterable or
+array-like objects into real arrays so that array methods
+like <code>push</code>, <code>pop</code>, etc. can be used.
+</p>
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let arrayLike = {
+  0: "Hello",
+  1: "World",
+  length: 2
+};
+
+let arr = Array.from(arrayLike);
+
+alert(arr.pop());
+</code></pre>
+
+</article>
+
+<article class="example-block">
+
+<h3 class="example-title">Convert Iterable</h3>
+
+<pre class="code-block"><code>
+let arr = Array.from(range);
+
+alert(arr);
+</code></pre>
+
+</article>
+
+<article class="example-block">
+
+<h3 class="example-title">Mapping Function</h3>
+
+<pre class="code-block"><code>
+let arr = Array.from(range, num => num * num);
+
+alert(arr);
+</code></pre>
+
+</article>
+
+</section>
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Array.from with Strings</h2>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let str = "𝒳😂";
+
+let chars = Array.from(str);
+
+alert(chars[0]);
+alert(chars[1]);
+alert(chars.length);
+</code></pre>
+
+</article>
+
+<article class="example-block">
+
+<h3 class="example-title">Manual Equivalent</h3>
+
+<pre class="code-block"><code>
+let chars = [];
+
+for (let char of str) {
+  chars.push(char);
+}
+</code></pre>
+
+</article>
+
+</section>
+
+
+<section class="doc-section" id="summary">
+
+<h2 class="section-title">Summary</h2>
+
+<ul class="summary-list">
+
+<li>Objects that can be used in <code>for..of</code> are called iterable.</li>
+
+<li>Iterable objects implement the <code>Symbol.iterator</code> method.</li>
+
+<li>The iterator returned by it must implement <code>next()</code>.</li>
+
+<li><code>next()</code> returns objects of form <code>{done,value}</code>.</li>
+
+<li>Strings and arrays are built-in iterable objects.</li>
+
+<li>Objects with numeric indexes and length are called array-like.</li>
+
+<li><code>Array.from()</code> converts iterables or array-likes into real arrays.</li>
+
+</ul>
+
+</section>
+
+</main>

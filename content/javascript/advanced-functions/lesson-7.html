@@ -1,0 +1,355 @@
+
+<main class="doc">
+
+<header class="doc-header">
+<h1 class="doc-title">Scheduling: setTimeout and setInterval</h1>
+
+<p class="doc-description">
+Sometimes we want a function to run later instead of immediately. This is called <b>scheduling a call</b>.
+</p>
+
+<p class="doc-description">
+JavaScript environments such as browsers and Node.js provide two methods for scheduling:
+</p>
+
+<ul class="summary-list">
+<li><code>setTimeout</code> – run a function once after a delay.</li>
+<li><code>setInterval</code> – run a function repeatedly at fixed intervals.</li>
+</ul>
+
+</header>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">setTimeout</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+The <code>setTimeout</code> function schedules a function to run once after a specified delay.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let timerId = setTimeout(func|code, delay, arg1, arg2, ...);
+</code></pre>
+</article>
+
+<ul class="summary-list">
+
+<li><b>func|code</b> – function (or code string) to execute.</li>
+<li><b>delay</b> – delay in milliseconds (1000ms = 1 second).</li>
+<li><b>arg1, arg2...</b> – arguments passed to the function.</li>
+
+</ul>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Basic Example</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function sayHi() {
+  alert("Hello");
+}
+
+setTimeout(sayHi, 1000);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Passing Arguments</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function sayHi(phrase, who) {
+  alert(phrase + ", " + who);
+}
+
+setTimeout(sayHi, 1000, "Hello", "John");
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Using Arrow Functions</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Instead of passing code as a string (which is not recommended), use arrow functions.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+setTimeout(() => alert("Hello"), 1000);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Common Mistake</h2>
+
+<article class="note-block">
+
+<p class="note-text">
+Do not call the function when passing it to <code>setTimeout</code>.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+// ❌ wrong
+setTimeout(sayHi(), 1000);
+
+// ✔ correct
+setTimeout(sayHi, 1000);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Canceling a Timeout</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+The function returns a timer identifier that can be used to cancel the scheduled execution.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let timerId = setTimeout(() => alert("never happens"), 1000);
+
+clearTimeout(timerId);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">setInterval</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+The <code>setInterval</code> function repeatedly executes a function after a fixed delay.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let timerId = setInterval(func, delay);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">setInterval Example</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let timerId = setInterval(() => alert("tick"), 2000);
+
+setTimeout(() => {
+  clearInterval(timerId);
+  alert("stop");
+}, 5000);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Nested setTimeout</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Another way to repeat actions is using nested <code>setTimeout</code>.
+</p>
+
+<p class="concept-text">
+It allows better control over scheduling compared to <code>setInterval</code>.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let timerId = setTimeout(function tick() {
+
+  alert("tick");
+
+  timerId = setTimeout(tick, 2000);
+
+}, 2000);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Example: Dynamic Delay</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Nested timeouts allow dynamic delays depending on the result of previous executions.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let delay = 5000;
+
+let timerId = setTimeout(function request() {
+
+  // send request
+
+  if (serverOverloaded) {
+    delay *= 2;
+  }
+
+  timerId = setTimeout(request, delay);
+
+}, delay);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Zero Delay Timeout</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Calling <code>setTimeout(func, 0)</code> schedules a function to run after the current script finishes.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+setTimeout(() => alert("World"));
+
+alert("Hello");
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Important Notes</h2>
+
+<ul class="summary-list">
+
+<li>Timers may not run exactly on time.</li>
+
+<li>Heavy CPU usage can delay timers.</li>
+
+<li>Inactive browser tabs may slow timers.</li>
+
+<li>Battery saving modes can increase timer delays.</li>
+
+</ul>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Garbage Collection</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Functions passed to timers remain in memory until they run or are canceled.
+</p>
+
+<p class="concept-text">
+This also keeps their outer variables alive in memory.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section" id="summary">
+
+<h2 class="section-title">Summary</h2>
+
+<ul class="summary-list">
+
+<li><code>setTimeout</code> runs a function once after a delay.</li>
+
+<li><code>setInterval</code> runs a function repeatedly at fixed intervals.</li>
+
+<li>Use <code>clearTimeout</code> and <code>clearInterval</code> to cancel timers.</li>
+
+<li>Nested <code>setTimeout</code> can replace <code>setInterval</code> for more control.</li>
+
+<li><code>setTimeout(func, 0)</code> runs a function after the current script finishes.</li>
+
+<li>Timer delays are not always exact.</li>
+
+</ul>
+
+</section>
+
+</main>

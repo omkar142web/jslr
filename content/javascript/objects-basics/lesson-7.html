@@ -1,0 +1,388 @@
+
+<main class="doc">
+
+<header class="doc-header">
+<h1 class="doc-title">Object to Primitive Conversion</h1>
+
+<p class="doc-description">
+What happens when objects are added <code>obj1 + obj2</code>, subtracted <code>obj1 - obj2</code> or printed using <code>alert(obj)</code>?
+</p>
+
+<p class="doc-description">
+In such situations JavaScript automatically converts objects to primitive values before performing the operation.
+</p>
+
+</header>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Automatic Conversion</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+JavaScript does not allow developers to customize how operators work on objects.
+</p>
+
+<p class="concept-text">
+Unlike languages like Ruby or C++, JavaScript does not allow implementing special methods to handle operators like addition.
+</p>
+
+<p class="concept-text">
+When operations are applied to objects, JavaScript automatically converts them to primitive values first.
+</p>
+
+<p class="concept-text">
+After conversion, the operation is performed using the resulting primitive values.
+</p>
+
+</article>
+
+<div class="note-block">
+The result of operations like <code>obj1 + obj2</code> will always be a primitive value, not another object.
+</div>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Why This Matters</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Because of this limitation, mathematical operations with objects are rarely used in real projects.
+</p>
+
+<p class="concept-text">
+If they appear in code, it is usually because of a programming mistake.
+</p>
+
+<p class="concept-text">
+However, there are rare exceptions where such conversions are useful. For example subtracting two <code>Date</code> objects returns the time difference.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Conversion Rules</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Objects can only be converted to numeric or string values.
+</p>
+
+<p class="concept-text">
+There is no conversion to boolean because all objects are considered <code>true</code> in boolean contexts.
+</p>
+
+<p class="concept-text">
+Numeric conversion happens during mathematical operations such as subtraction or multiplication.
+</p>
+
+<p class="concept-text">
+String conversion happens when objects are displayed or concatenated with strings.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Hints</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+JavaScript uses conversion hints to decide which type of primitive value is expected.
+</p>
+
+<p class="concept-text">
+There are three possible hints defined in the specification.
+</p>
+
+<ul class="summary-list">
+<li><strong>"string"</strong> – used when a string is expected.</li>
+<li><strong>"number"</strong> – used when a numeric value is expected.</li>
+<li><strong>"default"</strong> – used when JavaScript is unsure which type to use.</li>
+</ul>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">String Hint</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+alert(obj);
+
+anotherObj[obj] = 123;
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Number Hint</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let num = Number(obj);
+
+let n = +obj;
+
+let delta = date1 - date2;
+
+let greater = user1 > user2;
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Default Hint</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let total = obj1 + obj2;
+
+if (user == 1) {
+  // comparison
+}
+</code></pre>
+</article>
+
+<article class="concept-block">
+<p class="concept-text">
+Most built-in objects treat the <code>"default"</code> hint the same as the <code>"number"</code> hint.
+</p>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Conversion Algorithm</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+To convert an object to a primitive value JavaScript checks for specific methods in the following order:
+</p>
+
+<ul class="summary-list">
+
+<li>Call <code>obj[Symbol.toPrimitive](hint)</code> if it exists.</li>
+
+<li>If hint is <code>"string"</code>, try <code>obj.toString()</code> then <code>obj.valueOf()</code>.</li>
+
+<li>If hint is <code>"number"</code> or <code>"default"</code>, try <code>obj.valueOf()</code> then <code>obj.toString()</code>.</li>
+
+</ul>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Symbol.toPrimitive</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+The modern way to control conversion is by implementing a method using the <code>Symbol.toPrimitive</code> symbol.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = {
+  name: "John",
+  money: 1000,
+
+  [Symbol.toPrimitive](hint) {
+    return hint == "string"
+      ? "{name: \\"John\\"}"
+      : this.money;
+  }
+};
+
+alert(user);
+alert(+user);
+alert(user + 500);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">toString and valueOf</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Before symbols existed JavaScript used two methods for conversion: <code>toString()</code> and <code>valueOf()</code>.
+</p>
+
+<p class="concept-text">
+They still work today and provide a fallback conversion mechanism.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = {
+  name: "John",
+  money: 1000,
+
+  toString() {
+    return "{name: \\"John\\"}";
+  },
+
+  valueOf() {
+    return this.money;
+  }
+};
+
+alert(user);
+alert(+user);
+alert(user + 500);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Simple Catch-All Conversion</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = {
+  name: "John",
+
+  toString() {
+    return this.name;
+  }
+};
+
+alert(user);
+alert(user + 500);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Conversion Can Return Any Primitive</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Conversion methods do not have to return the exact hinted type.
+</p>
+
+<p class="concept-text">
+The only requirement is that the returned value must be a primitive.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Further Conversions</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let obj = {
+  toString() {
+    return "2";
+  }
+};
+
+alert(obj * 2);
+</code></pre>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let obj = {
+  toString() {
+    return "2";
+  }
+};
+
+alert(obj + 2);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section" id="summary">
+
+<h2 class="section-title">Summary</h2>
+
+<ul class="summary-list">
+
+<li>Objects are automatically converted to primitives when needed.</li>
+
+<li>There are three conversion hints: <code>"string"</code>, <code>"number"</code>, and <code>"default"</code>.</li>
+
+<li>JavaScript first checks <code>Symbol.toPrimitive</code>.</li>
+
+<li>If not present it tries <code>valueOf()</code> and <code>toString()</code>.</li>
+
+<li>All conversion methods must return primitive values.</li>
+
+<li>Often implementing only <code>toString()</code> is enough for debugging and logging purposes.</li>
+
+</ul>
+
+</section>
+
+</main>

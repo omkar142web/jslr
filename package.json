@@ -1,0 +1,25 @@
+{
+  "name": "jslr",
+  "version": "1.0.0",
+  "description": "",
+  "main": "extract.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/omkar142web/jslr.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/omkar142web/jslr/issues"
+  },
+  "homepage": "https://github.com/omkar142web/jslr#readme",
+  "dependencies": {
+    "acorn": "^8.16.0",
+    "astring": "^1.9.0"
+  }
+}

@@ -1,0 +1,635 @@
+
+<main class="doc">
+
+<header class="doc-header">
+<h1 class="doc-title">Objects</h1>
+<p class="doc-description">
+As we know from the chapter Data types, there are eight data types in JavaScript.
+Seven of them are called “primitive”, because their values contain only a single thing
+(be it a string or a number or whatever).
+</p>
+
+<p class="doc-description">
+In contrast, objects are used to store keyed collections of various data and more complex entities.
+In JavaScript, objects penetrate almost every aspect of the language. So we must understand them
+first before going in-depth anywhere else.
+</p>
+
+<p class="doc-description">
+An object can be created with curly braces {…} with an optional list of properties.
+A property is a “key: value” pair, where key is a string (also called a “property name”),
+and value can be anything.
+</p>
+
+<p class="doc-description">
+We can imagine an object as a cabinet with signed files. Every piece of data is stored
+in its file by the key. It’s easy to find a file by its name or add/remove a file.
+</p>
+
+</header>
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Creating Objects</h2>
+
+<article class="concept-block">
+<p class="concept-text">
+An empty object (“empty cabinet”) can be created using one of two syntaxes:
+</p>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = new Object(); // "object constructor" syntax
+let user = {};  // "object literal" syntax
+</code></pre>
+</article>
+
+<article class="concept-block">
+<p class="concept-text">
+Usually, the curly braces {...} are used. That declaration is called an object literal.
+</p>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Literals and Properties</h2>
+
+<article class="concept-block">
+<p class="concept-text">
+We can immediately put some properties into {...} as “key: value” pairs:
+</p>
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let user = {     // an object
+  name: "John",  // by key "name" store value "John"
+  age: 30        // by key "age" store value 30
+};
+</code></pre>
+
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+A property has a key (also known as “name” or “identifier”) before the colon ":"
+and a value to the right of it.
+</p>
+
+<p class="concept-text">
+In the user object, there are two properties:
+</p>
+
+<ul>
+<li>The first property has the name "name" and the value "John".</li>
+<li>The second one has the name "age" and the value 30.</li>
+</ul>
+
+<p class="concept-text">
+The resulting user object can be imagined as a cabinet with two signed files labeled
+“name” and “age”.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Accessing Properties</h2>
+
+<article class="concept-block">
+<p class="concept-text">
+We can add, remove and read files from it at any time.
+</p>
+
+<p class="concept-text">
+Property values are accessible using the dot notation:
+</p>
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+// get property values of the object:
+alert( user.name ); // John
+alert( user.age ); // 30
+</code></pre>
+
+</article>
+
+<article class="concept-block">
+<p class="concept-text">
+The value can be of any type. Let’s add a boolean one:
+</p>
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+user.isAdmin = true;
+</code></pre>
+
+</article>
+
+<article class="concept-block">
+<p class="concept-text">
+To remove a property, we can use the delete operator:
+</p>
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+delete user.age;
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Multiword Property Names</h2>
+
+<article class="concept-block">
+<p class="concept-text">
+We can also use multiword property names, but then they must be quoted:
+</p>
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let user = {
+  name: "John",
+  age: 30,
+  "likes birds": true  // multiword property name must be quoted
+};
+</code></pre>
+
+</article>
+
+<article class="concept-block">
+<p class="concept-text">
+The last property in the list may end with a comma:
+</p>
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let user = {
+  name: "John",
+  age: 30,
+}
+</code></pre>
+
+</article>
+
+<div class="note-block">
+That is called a “trailing” or “hanging” comma. Makes it easier to add/remove/move
+around properties, because all lines become alike.
+</div>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Square Brackets</h2>
+
+<article class="concept-block">
+<p class="concept-text">
+For multiword properties, the dot access doesn’t work:
+</p>
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+// this would give a syntax error
+user.likes birds = true
+</code></pre>
+
+</article>
+
+<article class="concept-block">
+<p class="concept-text">
+JavaScript doesn’t understand that. It thinks that we address user.likes,
+and then gives a syntax error when comes across unexpected birds.
+</p>
+
+<p class="concept-text">
+The dot requires the key to be a valid variable identifier.
+That implies: contains no spaces, doesn’t start with a digit and
+doesn’t include special characters ($ and _ are allowed).
+</p>
+
+<p class="concept-text">
+There’s an alternative “square bracket notation” that works with any string:
+</p>
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let user = {};
+
+// set
+user["likes birds"] = true;
+
+// get
+alert(user["likes birds"]); // true
+
+// delete
+delete user["likes birds"];
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Using Variables as Keys</h2>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let key = "likes birds";
+
+// same as user["likes birds"] = true;
+user[key] = true;
+</code></pre>
+
+</article>
+
+<article class="concept-block">
+<p class="concept-text">
+Here, the variable key may be calculated at run-time or depend on the user input.
+And then we use it to access the property.
+</p>
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let user = {
+  name: "John",
+  age: 30
+};
+
+let key = prompt("What do you want to know about the user?", "name");
+
+// access by variable
+alert( user[key] ); // John (if enter "name")
+</code></pre>
+
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let user = {
+  name: "John",
+  age: 30
+};
+
+let key = "name";
+alert( user.key ) // undefined
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Computed Properties</h2>
+
+<article class="concept-block">
+<p class="concept-text">
+We can use square brackets in an object literal when creating an object.
+That’s called computed properties.
+</p>
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let fruit = prompt("Which fruit to buy?", "apple");
+
+let bag = {
+  [fruit]: 5,
+};
+
+alert( bag.apple ); // 5 if fruit="apple"
+</code></pre>
+
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let fruit = prompt("Which fruit to buy?", "apple");
+let bag = {};
+
+// take property name from the fruit variable
+bag[fruit] = 5;
+</code></pre>
+
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let fruit = 'apple';
+let bag = {
+  [fruit + 'Computers']: 5
+};
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Property Value Shorthand</h2>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+function makeUser(name, age) {
+  return {
+    name: name,
+    age: age,
+  };
+}
+
+let user = makeUser("John", 30);
+alert(user.name); // John
+</code></pre>
+
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+function makeUser(name, age) {
+  return {
+    name,
+    age,
+  };
+}
+</code></pre>
+
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let user = {
+  name,
+  age: 30
+};
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Property Names Limitations</h2>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let obj = {
+  for: 1,
+  let: 2,
+  return: 3
+};
+
+alert( obj.for + obj.let + obj.return );
+</code></pre>
+
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let obj = {
+  0: "test"
+};
+
+alert( obj["0"] );
+alert( obj[0] );
+</code></pre>
+
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let obj = {};
+obj.__proto__ = 5;
+alert(obj.__proto__);
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Property Existence Test</h2>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let user = {};
+
+alert( user.noSuchProperty === undefined );
+</code></pre>
+
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let user = { name: "John", age: 30 };
+
+alert( "age" in user );
+alert( "blabla" in user );
+</code></pre>
+
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let user = { age: 30 };
+
+let key = "age";
+alert( key in user );
+</code></pre>
+
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let obj = {
+  test: undefined
+};
+
+alert( obj.test );
+alert( "test" in obj );
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">The for..in Loop</h2>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let user = {
+  name: "John",
+  age: 30,
+  isAdmin: true
+};
+
+for (let key in user) {
+  alert( key );
+  alert( user[key] );
+}
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Object Ordering</h2>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let codes = {
+  "49": "Germany",
+  "41": "Switzerland",
+  "44": "Great Britain",
+  "1": "USA"
+};
+
+for (let code in codes) {
+  alert(code); // 1, 41, 44, 49
+}
+</code></pre>
+
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let user = {
+  name: "John",
+  surname: "Smith"
+};
+user.age = 25;
+
+for (let prop in user) {
+  alert( prop );
+}
+</code></pre>
+
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let codes = {
+  "+49": "Germany",
+  "+41": "Switzerland",
+  "+44": "Great Britain",
+  "+1": "USA"
+};
+
+for (let code in codes) {
+  alert( +code );
+}
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section" id="summary">
+
+<h2 class="section-title">Summary</h2>
+
+<ul class="summary-list">
+
+<li>Objects are associative arrays with several special features.</li>
+
+<li>They store properties as key-value pairs.</li>
+
+<li>Property keys must be strings or symbols.</li>
+
+<li>Values can be of any type.</li>
+
+<li>Properties can be accessed using dot notation or square brackets.</li>
+
+<li>Use delete to remove properties.</li>
+
+<li>Use "key" in object to check if a property exists.</li>
+
+<li>Use for..in loop to iterate over properties.</li>
+
+<li>Arrays, Date, Error and many other structures are also objects in JavaScript.</li>
+
+<li>Objects are extremely powerful and this chapter only introduces the basics.</li>
+
+</ul>
+
+</section>
+
+</main>

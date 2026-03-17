@@ -1,0 +1,300 @@
+
+<main class="doc">
+
+<header class="doc-header">
+
+<h1 class="doc-title">Arrow Functions Revisited</h1>
+
+<p class="doc-description">
+Arrow functions are not just a shorter syntax for writing functions. They have several special behaviors that make them very useful in many JavaScript situations.
+</p>
+
+<p class="doc-description">
+They are especially helpful when we want to create small functions that run in another place but keep the current context.
+</p>
+
+</header>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Where Arrow Functions Are Commonly Used</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+JavaScript often requires small functions that are passed somewhere else to be executed later.
+</p>
+
+</article>
+
+<ul class="summary-list">
+
+<li><code>arr.forEach(func)</code> – executes the function for every array item.</li>
+
+<li><code>setTimeout(func)</code> – executes the function later using the scheduler.</li>
+
+<li>Many JavaScript APIs use callback functions.</li>
+
+</ul>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Arrow Functions Have No "this"</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Arrow functions do not have their own <code>this</code>.
+</p>
+
+<p class="concept-text">
+Instead, they use the <code>this</code> value from the surrounding (outer) scope.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let group = {
+
+  title: "Our Group",
+
+  students: ["John", "Pete", "Alice"],
+
+  showList() {
+
+    this.students.forEach(
+
+      student => alert(this.title + ": " + student)
+
+    );
+
+  }
+
+};
+
+group.showList();
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Regular Function Problem</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+If we used a regular function instead of an arrow function, the context would be lost.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let group = {
+
+  title: "Our Group",
+
+  students: ["John", "Pete", "Alice"],
+
+  showList() {
+
+    this.students.forEach(function(student) {
+
+      alert(this.title + ": " + student);
+
+    });
+
+  }
+
+};
+</code></pre>
+</article>
+
+<article class="note-block">
+
+<p class="note-text">
+The error occurs because <code>forEach</code> calls the function with <code>this = undefined</code>.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Arrow Functions Cannot Be Constructors</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Arrow functions do not have their own <code>this</code>, so they cannot be used with <code>new</code>.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let func = () => {};
+
+new func(); // Error
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Arrow Functions vs bind</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+There is an important difference between arrow functions and using <code>.bind(this)</code>.
+</p>
+
+</article>
+
+<ul class="summary-list">
+
+<li><code>.bind(this)</code> creates a new function with fixed context.</li>
+
+<li>Arrow functions do not bind anything; they simply inherit <code>this</code> from the outer scope.</li>
+
+</ul>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Arrow Functions Have No arguments</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Arrow functions also do not have their own <code>arguments</code> object.
+</p>
+
+<p class="concept-text">
+They inherit it from the outer function if needed.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Example: Delaying Function Calls</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Arrow functions are very useful when forwarding calls and preserving the current context.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function defer(f, ms) {
+
+  return function() {
+
+    setTimeout(() => f.apply(this, arguments), ms);
+
+  };
+
+}
+
+function sayHi(who) {
+
+  alert("Hello, " + who);
+
+}
+
+let sayHiDeferred = defer(sayHi, 2000);
+
+sayHiDeferred("John");
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Without Arrow Functions</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Without arrow functions, we would need extra variables to store <code>this</code> and arguments.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function defer(f, ms) {
+
+  return function(...args) {
+
+    let ctx = this;
+
+    setTimeout(function() {
+
+      return f.apply(ctx, args);
+
+    }, ms);
+
+  };
+
+}
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section" id="summary">
+
+<h2 class="section-title">Summary</h2>
+
+<ul class="summary-list">
+
+<li>Arrow functions do not have their own <code>this</code>.</li>
+
+<li>They inherit <code>this</code> from the outer scope.</li>
+
+<li>Arrow functions do not have an <code>arguments</code> object.</li>
+
+<li>They cannot be used as constructors with <code>new</code>.</li>
+
+<li>They are best used for small functions that should use the surrounding context.</li>
+
+</ul>
+
+</section>
+
+</main>

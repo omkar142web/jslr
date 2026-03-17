@@ -1,0 +1,486 @@
+
+<main class="doc">
+
+<header class="doc-header">
+<h1 class="doc-title">JSON Methods and toJSON</h1>
+<p class="doc-description">
+JSON (JavaScript Object Notation) is a standard format used to convert
+JavaScript objects into strings for storage or transmission and
+convert them back into objects.
+</p>
+</header>
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Why JSON Exists</h2>
+
+<article class="concept-block">
+<h3 class="concept-title">Object Serialization</h3>
+<p class="concept-text">
+Sometimes we need to convert a complex object into a string,
+for example to send it over a network, save it to a database,
+or print it in logs.
+</p>
+</article>
+
+<article class="concept-block">
+<h3 class="concept-title">Manual Conversion Problem</h3>
+<p class="concept-text">
+We could manually implement a method like <code>toString()</code>,
+but that becomes difficult if objects become large or contain nested objects.
+JSON provides a built-in solution for this problem.
+</p>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">JSON.stringify()</h2>
+
+<article class="concept-block">
+<p class="concept-text">
+<code>JSON.stringify()</code> converts a JavaScript object into a JSON string.
+</p>
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let student = {
+name: "John",
+age: 30,
+isAdmin: false,
+courses: ["html","css","js"],
+spouse: null
+};
+
+let json = JSON.stringify(student);
+
+alert(typeof json);
+alert(json);
+</code></pre>
+
+</article>
+
+<div class="note-block">
+The result is a string called a JSON-encoded or serialized object.
+</div>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">JSON Format Rules</h2>
+
+<table class="data-table">
+
+<thead>
+<tr>
+<th>Rule</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>Strings</td>
+<td>Must use double quotes</td>
+</tr>
+
+<tr>
+<td>Keys</td>
+<td>Property names must also use double quotes</td>
+</tr>
+
+<tr>
+<td>Allowed Types</td>
+<td>Objects, Arrays, Strings, Numbers, Booleans, null</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">JSON.stringify with Primitives</h2>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+JSON.stringify(1);
+JSON.stringify("test");
+JSON.stringify(true);
+JSON.stringify([1,2,3]);
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Values Ignored by JSON</h2>
+
+<article class="concept-block">
+<p class="concept-text">
+Some JavaScript values are skipped during JSON conversion.
+</p>
+</article>
+
+<table class="data-table">
+
+<thead>
+<tr>
+<th>Ignored Value</th>
+<th>Example</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>Functions</td>
+<td>object methods</td>
+</tr>
+
+<tr>
+<td>Symbol keys</td>
+<td>Symbol("id")</td>
+</tr>
+
+<tr>
+<td>undefined</td>
+<td>properties storing undefined</td>
+</tr>
+
+</tbody>
+
+</table>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let user = {
+sayHi(){
+alert("Hello");
+},
+[Symbol("id")]:123,
+something: undefined
+};
+
+JSON.stringify(user);
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Nested Objects</h2>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let meetup = {
+title:"Conference",
+room:{
+number:23,
+participants:["john","ann"]
+}
+};
+
+JSON.stringify(meetup);
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Circular References</h2>
+
+<article class="concept-block">
+<p class="concept-text">
+JSON cannot convert objects that reference themselves.
+</p>
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let room = {number:23};
+
+let meetup = {
+title:"Conference",
+participants:["john","ann"]
+};
+
+meetup.place = room;
+room.occupiedBy = meetup;
+
+JSON.stringify(meetup);
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">JSON.stringify Options</h2>
+
+<pre class="code-block"><code>
+JSON.stringify(value, replacer, space)
+</code></pre>
+
+<table class="data-table">
+
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>value</td>
+<td>Value to encode</td>
+</tr>
+
+<tr>
+<td>replacer</td>
+<td>Filter properties or transform values</td>
+</tr>
+
+<tr>
+<td>space</td>
+<td>Pretty formatting indentation</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Replacer Example</h2>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+JSON.stringify(meetup,
+["title","participants","place","name","number"]);
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Replacer Function</h2>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+JSON.stringify(meetup,function(key,value){
+
+if(key == "occupiedBy") return undefined;
+
+return value;
+
+});
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Formatting JSON</h2>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+JSON.stringify(user,null,2);
+</code></pre>
+
+</article>
+
+<div class="note-block">
+The third parameter controls indentation for readable output.
+</div>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Custom toJSON()</h2>
+
+<article class="concept-block">
+<p class="concept-text">
+Objects may define a <code>toJSON()</code> method.
+JSON.stringify automatically calls it.
+</p>
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let room = {
+number:23,
+toJSON(){
+return this.number;
+}
+};
+
+JSON.stringify(room);
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">JSON.parse()</h2>
+
+<article class="concept-block">
+<p class="concept-text">
+<code>JSON.parse()</code> converts a JSON string back into a JavaScript object.
+</p>
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let numbers = "[0,1,2,3]";
+
+numbers = JSON.parse(numbers);
+
+alert(numbers[1]);
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Parsing Complex JSON</h2>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let userData = '{ "name":"John","age":35,"friends":[0,1,2] }';
+
+let user = JSON.parse(userData);
+
+alert(user.friends[1]);
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Using reviver</h2>
+
+<article class="concept-block">
+<p class="concept-text">
+The reviver function transforms values during parsing.
+</p>
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let str = '{"title":"Conference",
+"date":"2017-11-30T12:00:00.000Z"}';
+
+let meetup = JSON.parse(str,function(key,value){
+
+if(key=="date") return new Date(value);
+
+return value;
+
+});
+
+alert(meetup.date.getDate());
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section" id="summary">
+
+<h2 class="section-title">Summary</h2>
+
+<ul class="summary-list">
+
+<li>JSON is a universal format for representing data.</li>
+
+<li><code>JSON.stringify()</code> converts objects to JSON strings.</li>
+
+<li><code>JSON.parse()</code> converts JSON strings back to objects.</li>
+
+<li>JSON supports objects, arrays, strings, numbers, booleans and null.</li>
+
+<li>Functions, symbols and undefined values are ignored.</li>
+
+<li>The replacer argument customizes serialization.</li>
+
+<li>The reviver argument customizes parsing.</li>
+
+<li>If an object has <code>toJSON()</code>, it is used during serialization.</li>
+
+</ul>
+
+</section>
+
+</main>

@@ -1,0 +1,408 @@
+
+<main class="doc">
+
+<header class="doc-header">
+<h1 class="doc-title">Optional Chaining '?.'</h1>
+
+<p class="doc-description">
+The optional chaining <code>?.</code> is a safe way to access nested object properties, even if an intermediate property doesn’t exist.
+</p>
+
+<div class="note-block">
+This is a recent addition to the language. Old browsers may need polyfills.
+</div>
+
+</header>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">The “Non-Existing Property” Problem</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+If you’ve just started to learn JavaScript, maybe this problem hasn’t appeared yet, but it’s very common.
+</p>
+
+<p class="concept-text">
+Imagine we have user objects that hold information about our users.
+</p>
+
+<p class="concept-text">
+Most users have addresses in <code>user.address</code> with the street stored in <code>user.address.street</code>, but some users did not provide an address.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = {}; // a user without "address" property
+
+alert(user.address.street); // Error!
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+JavaScript throws an error because <code>user.address</code> is undefined, and accessing <code>.street</code> on undefined fails.
+</p>
+
+<p class="concept-text">
+In many real cases we would prefer to receive <code>undefined</code> instead of an error.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Another Example from Web Development</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+In web development we often get elements from the DOM using methods like <code>document.querySelector()</code>.
+</p>
+
+<p class="concept-text">
+If the element does not exist, the method returns <code>null</code>.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let html = document.querySelector('.elem').innerHTML;
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+If the element does not exist, accessing <code>.innerHTML</code> of null throws an error.
+</p>
+
+<p class="concept-text">
+In some cases we would prefer the result to simply be <code>null</code> or <code>undefined</code>.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Traditional Solution Using Conditional Checks</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = {};
+
+alert(user.address ? user.address.street : undefined);
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+This works but it’s not elegant because <code>user.address</code> appears twice.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let html = document.querySelector('.elem')
+  ? document.querySelector('.elem').innerHTML
+  : null;
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+The element search is performed twice, which is inefficient.
+</p>
+
+<p class="concept-text">
+With deeper nesting, the code becomes even harder to read.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = {};
+
+alert(
+  user.address
+    ? user.address.street
+      ? user.address.street.name
+      : null
+    : null
+);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Using the && Operator</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = {};
+
+alert(user.address &&
+      user.address.street &&
+      user.address.street.name);
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+This avoids errors but still duplicates property names.
+</p>
+
+<p class="concept-text">
+For example, <code>user.address</code> appears multiple times.
+</p>
+
+<p class="concept-text">
+That’s why the optional chaining operator <code>?.</code> was introduced.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Optional Chaining</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+The optional chaining <code>?.</code> stops evaluation if the value before it is <code>null</code> or <code>undefined</code>.
+</p>
+
+<p class="concept-text">
+It then returns <code>undefined</code> instead of throwing an error.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = {};
+
+alert(user?.address?.street);
+</code></pre>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let html = document.querySelector('.elem')?.innerHTML;
+</code></pre>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = null;
+
+alert(user?.address);
+alert(user?.address.street);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Do Not Overuse Optional Chaining</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Use <code>?.</code> only where the absence of a value is acceptable.
+</p>
+
+<p class="concept-text">
+For example, if the user object must exist but the address may not:
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+user.address?.street
+</code></pre>
+</article>
+
+<article class="concept-block">
+<p class="concept-text">
+Overusing optional chaining may hide programming errors.
+</p>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Declared Variables Requirement</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+The variable before <code>?.</code> must exist.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+// ReferenceError
+user?.address;
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Short-Circuiting</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = null;
+let x = 0;
+
+user?.sayHi(x++);
+
+alert(x); // 0
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+If the left side is null or undefined, evaluation stops immediately.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Other Variants: ?.() and ?.[]</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let userAdmin = {
+  admin() {
+    alert("I am admin");
+  }
+};
+
+let userGuest = {};
+
+userAdmin.admin?.();
+userGuest.admin?.();
+</code></pre>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let key = "firstName";
+
+let user1 = {
+  firstName: "John"
+};
+
+let user2 = null;
+
+alert(user1?.[key]);
+alert(user2?.[key]);
+</code></pre>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+delete user?.name;
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Cannot Be Used for Assignment</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = null;
+
+user?.name = "John"; // Error
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Optional chaining works only for reading or deleting properties, not writing them.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section" id="summary">
+
+<h2 class="section-title">Summary</h2>
+
+<ul class="summary-list">
+
+<li><code>obj?.prop</code> – returns property if object exists.</li>
+
+<li><code>obj?.[prop]</code> – safe access using bracket notation.</li>
+
+<li><code>obj.method?.()</code> – safely calls a method if it exists.</li>
+
+<li>Optional chaining stops evaluation if the left side is null or undefined.</li>
+
+<li>It allows safe access to nested properties.</li>
+
+<li>Use it carefully so it does not hide programming errors.</li>
+
+</ul>
+
+</section>
+
+</main>

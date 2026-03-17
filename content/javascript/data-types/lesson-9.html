@@ -1,0 +1,498 @@
+
+<main class="doc">
+
+<header class="doc-header">
+<h1 class="doc-title">Destructuring Assignment</h1>
+<p class="doc-description">
+Destructuring assignment is a special JavaScript syntax that allows us to
+<strong>unpack arrays or objects into multiple variables</strong>.
+It is extremely useful when working with objects, arrays, and function parameters.
+</p>
+</header>
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Why Destructuring Exists</h2>
+
+<article class="concept-block">
+<h3 class="concept-title">Two Core Data Structures</h3>
+<p class="concept-text">
+The two most used data structures in JavaScript are <strong>Object</strong> and <strong>Array</strong>.
+Objects store data by keys and arrays store ordered collections.
+</p>
+</article>
+
+<article class="concept-block">
+<h3 class="concept-title">Selective Data Extraction</h3>
+<p class="concept-text">
+Often a function receives an object or array but only needs a few properties or elements.
+Destructuring allows us to extract only what we need directly into variables.
+</p>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Array Destructuring</h2>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let arr = ["John","Smith"];
+
+let [firstName,surname] = arr;
+
+alert(firstName);
+alert(surname);
+</code></pre>
+
+<p class="example-note">
+The first element of the array goes into the first variable,
+the second element goes into the second variable.
+</p>
+
+</article>
+
+<article class="example-block">
+
+<h3 class="example-title">Using with split()</h3>
+
+<pre class="code-block"><code>
+let [firstName,surname] = "John Smith".split(" ");
+
+alert(firstName);
+alert(surname);
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Destructuring Is Not Destructive</h2>
+
+<article class="concept-block">
+<p class="concept-text">
+Destructuring does not modify the array.  
+It simply copies the values into variables.
+</p>
+</article>
+
+<pre class="code-block"><code>
+let firstName = arr[0];
+let surname = arr[1];
+</code></pre>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Ignoring Elements</h2>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let [firstName, , title] =
+["Julius","Caesar","Consul","of the Roman Republic"];
+
+alert(title);
+</code></pre>
+
+<p class="example-note">
+Extra commas allow skipping unwanted elements.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Works with Any Iterable</h2>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let [a,b,c] = "abc";
+
+let [one,two,three] = new Set([1,2,3]);
+</code></pre>
+
+</article>
+
+<article class="concept-block">
+<p class="concept-text">
+Destructuring internally uses iteration similar to <code>for..of</code>.
+</p>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Assigning to Existing Objects</h2>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let user = {};
+
+[user.name,user.surname] =
+"John Smith".split(" ");
+
+alert(user.name);
+alert(user.surname);
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Looping with Object.entries()</h2>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let user = {
+name:"John",
+age:30
+};
+
+for(let [key,value] of Object.entries(user)){
+alert(\`\${key}:\${value}\`);
+}
+</code></pre>
+
+</article>
+
+<article class="example-block">
+
+<h3 class="example-title">With Map</h3>
+
+<pre class="code-block"><code>
+let user = new Map();
+
+user.set("name","John");
+user.set("age","30");
+
+for(let [key,value] of user){
+alert(\`\${key}:\${value}\`);
+}
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Swapping Variables</h2>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let guest="Jane";
+let admin="Pete";
+
+[guest,admin] = [admin,guest];
+
+alert(\`\${guest} \${admin}\`);
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Rest Operator</h2>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let [name1,name2,...rest] =
+["Julius","Caesar","Consul","of the Roman Republic"];
+
+alert(rest[0]);
+alert(rest[1]);
+alert(rest.length);
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Default Values</h2>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let [name="Guest",surname="Anonymous"]=["Julius"];
+
+alert(name);
+alert(surname);
+</code></pre>
+
+</article>
+
+<article class="example-block">
+
+<h3 class="example-title">Using Functions as Defaults</h3>
+
+<pre class="code-block"><code>
+let [name=prompt("name?"),
+surname=prompt("surname?")]
+=["Julius"];
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Object Destructuring</h2>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let options={
+title:"Menu",
+width:100,
+height:200
+};
+
+let {title,width,height}=options;
+
+alert(title);
+alert(width);
+alert(height);
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Renaming Variables</h2>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let options={
+title:"Menu",
+width:100,
+height:200
+};
+
+let {width:w,height:h,title}=options;
+
+alert(title);
+alert(w);
+alert(h);
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Default Values for Objects</h2>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let options={title:"Menu"};
+
+let {width=100,height=200,title}=options;
+
+alert(title);
+alert(width);
+alert(height);
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Rest Pattern with Objects</h2>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let options={
+title:"Menu",
+height:200,
+width:100
+};
+
+let {title,...rest}=options;
+
+alert(rest.height);
+alert(rest.width);
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Destructuring Without let</h2>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let title,width,height;
+
+({title,width,height}=
+{title:"Menu",width:200,height:100});
+</code></pre>
+
+</article>
+
+<div class="note-block">
+Parentheses are required because otherwise JavaScript interprets
+the braces as a code block.
+</div>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Nested Destructuring</h2>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let options={
+size:{width:100,height:200},
+items:["Cake","Donut"],
+extra:true
+};
+
+let{
+size:{width,height},
+items:[item1,item2],
+title="Menu"
+}=options;
+
+alert(title);
+alert(width);
+alert(height);
+alert(item1);
+alert(item2);
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Smart Function Parameters</h2>
+
+<article class="concept-block">
+<p class="concept-text">
+Destructuring is extremely useful when functions have many optional parameters.
+Instead of remembering argument order, we can pass an object.
+</p>
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+function showMenu(
+{title="Untitled",width=200,height=100,items=[]}
+){
+alert(\`\${title} \${width} \${height}\`);
+alert(items);
+}
+</code></pre>
+
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+function showMenu(
+{title="Menu",width=100,height=200}={}
+){
+alert(\`\${title} \${width} \${height}\`);
+}
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section" id="summary">
+
+<h2 class="section-title">Summary</h2>
+
+<ul class="summary-list">
+
+<li>Destructuring extracts values from arrays or objects into variables.</li>
+
+<li>Array syntax: <code>[item1,item2,...rest]</code></li>
+
+<li>Object syntax: <code>{prop:varName=defaultValue,...rest}</code></li>
+
+<li>Works with nested structures.</li>
+
+<li>Supports default values.</li>
+
+<li>Useful for swapping variables.</li>
+
+<li>Very helpful for function parameters.</li>
+
+</ul>
+
+</section>
+
+</main>

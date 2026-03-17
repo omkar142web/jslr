@@ -1,0 +1,422 @@
+
+<main class="doc">
+
+<header class="doc-header">
+<h1 class="doc-title">Symbol Type</h1>
+
+<p class="doc-description">
+By specification, only two primitive types may serve as object property keys.
+</p>
+
+</header>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Allowed Property Key Types</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Only two primitive types may serve as object property keys:
+</p>
+
+<ul class="summary-list">
+<li>string type</li>
+<li>symbol type</li>
+</ul>
+
+<p class="concept-text">
+Otherwise, if another type such as number is used, it is automatically converted to a string.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+obj[1] === obj["1"]
+obj[true] === obj["true"]
+</code></pre>
+</article>
+
+<article class="concept-block">
+<p class="concept-text">
+Until now we have used only strings. Now we will explore symbols and what they can do.
+</p>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Symbols</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+A symbol represents a unique identifier.
+</p>
+
+<p class="concept-text">
+Symbols are created using the <code>Symbol()</code> function.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let id = Symbol();
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+When creating a symbol, we can optionally give it a description which is useful for debugging.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let id = Symbol("id");
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Symbols are always unique. Even if two symbols have the same description, they are different values.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let id1 = Symbol("id");
+let id2 = Symbol("id");
+
+alert(id1 == id2); // false
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Symbols Do Not Auto-Convert to String</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Most JavaScript values can automatically convert to a string. Symbols are special and do not auto-convert.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let id = Symbol("id");
+
+alert(id); // TypeError
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+If we want to display a symbol, we must convert it explicitly.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let id = Symbol("id");
+
+alert(id.toString());
+</code></pre>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let id = Symbol("id");
+
+alert(id.description);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Hidden Object Properties</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Symbols allow us to create hidden properties inside objects.
+</p>
+
+<p class="concept-text">
+These properties cannot be accidentally accessed or overwritten by other code.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = {
+  name: "John"
+};
+
+let id = Symbol("id");
+
+user[id] = 1;
+
+alert(user[id]);
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+The advantage is that other scripts using the same property name will not conflict.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let id = Symbol("id");
+
+user[id] = "Their id value";
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Symbols in Object Literals</h2>
+
+<article class="concept-block">
+<p class="concept-text">
+To use a symbol inside an object literal we must wrap it in square brackets.
+</p>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let id = Symbol("id");
+
+let user = {
+  name: "John",
+  [id]: 123
+};
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Symbols Are Skipped in for...in</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let id = Symbol("id");
+
+let user = {
+  name: "John",
+  age: 30,
+  [id]: 123
+};
+
+for (let key in user) {
+  alert(key);
+}
+
+alert(user[id]);
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Symbol properties are ignored by <code>for...in</code> loops and also by <code>Object.keys()</code>.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let clone = Object.assign({}, user);
+
+alert(clone[id]);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Global Symbols</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Normally symbols are always unique. But sometimes we want symbols with the same name to represent the same identifier.
+</p>
+
+<p class="concept-text">
+JavaScript provides a global symbol registry for this purpose.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let id = Symbol.for("id");
+
+let idAgain = Symbol.for("id");
+
+alert(id === idAgain);
+</code></pre>
+</article>
+
+<article class="concept-block">
+<p class="concept-text">
+Symbols created using <code>Symbol.for()</code> are called global symbols.
+</p>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Symbol.keyFor</h2>
+
+<article class="concept-block">
+<p class="concept-text">
+To get the name of a global symbol we can use <code>Symbol.keyFor()</code>.
+</p>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let sym = Symbol.for("name");
+
+alert(Symbol.keyFor(sym));
+</code></pre>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let globalSymbol = Symbol.for("name");
+let localSymbol = Symbol("name");
+
+alert(Symbol.keyFor(globalSymbol));
+alert(Symbol.keyFor(localSymbol));
+
+alert(localSymbol.description);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">System Symbols</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+JavaScript also has built-in system symbols used internally.
+</p>
+
+<ul class="summary-list">
+<li>Symbol.hasInstance</li>
+<li>Symbol.isConcatSpreadable</li>
+<li>Symbol.iterator</li>
+<li>Symbol.toPrimitive</li>
+</ul>
+
+<p class="concept-text">
+These allow developers to customize behavior of built-in operations.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section" id="summary">
+
+<h2 class="section-title">Summary</h2>
+
+<ul class="summary-list">
+
+<li>Symbol is a primitive type used for unique identifiers.</li>
+
+<li>Symbols are created using <code>Symbol()</code>.</li>
+
+<li>Symbols with the same description are still unique.</li>
+
+<li>Symbols can be used as object property keys.</li>
+
+<li>Symbol properties are ignored by <code>for...in</code> loops.</li>
+
+<li>Global symbols can be created with <code>Symbol.for()</code>.</li>
+
+<li>Symbol.keyFor retrieves the key of a global symbol.</li>
+
+<li>JavaScript provides system symbols such as <code>Symbol.iterator</code>.</li>
+
+</ul>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Important Note</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Technically symbols are not completely hidden.
+</p>
+
+<p class="concept-text">
+Methods like <code>Object.getOwnPropertySymbols(obj)</code> and <code>Reflect.ownKeys(obj)</code> can retrieve them.
+</p>
+
+<p class="concept-text">
+However most JavaScript syntax and libraries do not use these methods, which keeps symbol properties effectively hidden in normal usage.
+</p>
+
+</article>
+
+</section>
+
+</main>

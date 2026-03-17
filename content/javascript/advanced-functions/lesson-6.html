@@ -1,0 +1,293 @@
+
+<main class="doc">
+
+<header class="doc-header">
+<h1 class="doc-title">The "new Function" Syntax</h1>
+
+<p class="doc-description">
+JavaScript provides another way to create functions using the <code>new Function</code> constructor.
+</p>
+
+<p class="doc-description">
+It is rarely used in normal development, but sometimes there is no alternative.
+</p>
+
+</header>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Syntax</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+The syntax for creating a function dynamically is:
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let func = new Function([arg1, arg2, ...argN], functionBody);
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+The function is created with parameters <code>arg1...argN</code> and the body defined by <code>functionBody</code>.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Example with Parameters</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let sum = new Function('a', 'b', 'return a + b');
+
+alert(sum(1, 2)); // 3
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Example Without Parameters</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let sayHi = new Function('alert("Hello")');
+
+sayHi(); // Hello
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Functions Created from Strings</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+The main difference from other function creation methods is that the function code is provided as a string and evaluated at runtime.
+</p>
+
+<p class="concept-text">
+Other methods require writing the function code directly inside the script.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Dynamic Code Execution</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+The <code>new Function</code> syntax allows converting strings into executable functions.
+</p>
+
+<p class="concept-text">
+This can be useful when code is received dynamically, for example from a server.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let str = "...code received from server...";
+
+let func = new Function(str);
+
+func();
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Closures and new Function</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Normally, functions remember the environment in which they were created using the internal property <code>[[Environment]]</code>.
+</p>
+
+<p class="concept-text">
+However, functions created with <code>new Function</code> always reference the global environment instead.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Example: No Access to Outer Variables</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function getFunc() {
+
+  let value = "test";
+
+  let func = new Function('alert(value)');
+
+  return func;
+
+}
+
+getFunc()(); // Error: value is not defined
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Regular Function Behavior</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function getFunc() {
+
+  let value = "test";
+
+  let func = function() {
+    alert(value);
+  };
+
+  return func;
+
+}
+
+getFunc()(); // "test"
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Why It Works This Way</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Before code is deployed, it is often compressed using minifiers.
+</p>
+
+<p class="concept-text">
+Minifiers rename local variables to shorter names to reduce file size.
+</p>
+
+<p class="concept-text">
+If functions created with <code>new Function</code> could access outer variables, those renamed variables might break the code.
+</p>
+
+<p class="concept-text">
+Therefore, <code>new Function</code> only accesses global variables.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Passing Data to new Function</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+To provide data to functions created with <code>new Function</code>, we should use parameters instead of relying on outer variables.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Alternative Syntax Forms</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+new Function('a', 'b', 'return a + b');
+
+new Function('a,b', 'return a + b');
+
+new Function('a , b', 'return a + b');
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+All of these forms create the same function.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section" id="summary">
+
+<h2 class="section-title">Summary</h2>
+
+<ul class="summary-list">
+
+<li><code>new Function</code> allows creating functions dynamically from strings.</li>
+
+<li>The syntax is <code>new Function(arg1, arg2, ..., functionBody)</code>.</li>
+
+<li>Functions created this way use the global environment.</li>
+
+<li>They cannot access outer variables from where they were created.</li>
+
+<li>This design prevents problems with minified code.</li>
+
+<li>Parameters should be used to pass values to these functions.</li>
+
+</ul>
+
+</section>
+
+</main>

@@ -1,0 +1,406 @@
+
+<main class="doc">
+
+<header class="doc-header">
+<h1 class="doc-title">Constructor, Operator "new"</h1>
+
+<p class="doc-description">
+The regular <code>{...}</code> syntax allows us to create one object. But often we need to create many similar objects, like multiple users or menu items and so on.
+</p>
+
+<p class="doc-description">
+That can be done using constructor functions and the <code>new</code> operator.
+</p>
+
+</header>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Constructor Function</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Constructor functions technically are regular functions. There are two conventions though:
+</p>
+
+<ul class="summary-list">
+<li>They are named with capital letter first.</li>
+<li>They should be executed only with the <code>new</code> operator.</li>
+</ul>
+
+<p class="concept-text">
+For instance:
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function User(name) {
+  this.name = name;
+  this.isAdmin = false;
+}
+
+let user = new User("Jack");
+
+alert(user.name); 
+alert(user.isAdmin);
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+When a function is executed with <code>new</code>, it performs the following steps:
+</p>
+
+<ul class="summary-list">
+<li>A new empty object is created and assigned to <code>this</code>.</li>
+<li>The function body executes and usually modifies <code>this</code>.</li>
+<li>The value of <code>this</code> is returned.</li>
+</ul>
+
+<p class="concept-text">
+In other words, <code>new User(...)</code> does something like this internally:
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function User(name) {
+
+  // this = {};
+
+  this.name = name;
+  this.isAdmin = false;
+
+  // return this;
+}
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+So <code>let user = new User("Jack")</code> gives the same result as:
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = {
+  name: "Jack",
+  isAdmin: false
+};
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Now if we want to create other users, we can call <code>new User("Ann")</code>, <code>new User("Alice")</code> and so on.
+</p>
+
+<p class="concept-text">
+That’s the main purpose of constructors – to implement reusable object creation code.
+</p>
+
+<p class="concept-text">
+Technically, any function (except arrow functions, because they don’t have <code>this</code>) can be used as a constructor.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">new function() { … }</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+If we have many lines of code related to creation of a single complex object, we can wrap them in an immediately called constructor function.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = new function() {
+  this.name = "John";
+  this.isAdmin = false;
+
+  // other code for creation
+};
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+This constructor cannot be called again because it is not saved anywhere.
+</p>
+
+<p class="concept-text">
+This trick encapsulates code that constructs a single object without future reuse.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Constructor Mode Test: new.target</h2>
+
+<div class="note-block">
+Advanced topic. This syntax is rarely used but useful for understanding how constructors work internally.
+</div>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Inside a function we can check whether it was called with <code>new</code> or without it using <code>new.target</code>.
+</p>
+
+<p class="concept-text">
+It is undefined for regular calls and equals the function if called with <code>new</code>.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function User() {
+  alert(new.target);
+}
+
+User();      // undefined
+new User();  // function User
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+We can also ensure the function works correctly whether called with or without <code>new</code>.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function User(name) {
+
+  if (!new.target) {
+    return new User(name);
+  }
+
+  this.name = name;
+}
+
+let john = User("John");
+alert(john.name);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Return from Constructors</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Usually constructors do not use a <code>return</code> statement.
+</p>
+
+<p class="concept-text">
+But if a return statement exists, the rules are:
+</p>
+
+<ul class="summary-list">
+<li>If <code>return</code> returns an object, that object becomes the result.</li>
+<li>If <code>return</code> returns a primitive, it is ignored.</li>
+</ul>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function BigUser() {
+
+  this.name = "John";
+
+  return { name: "Godzilla" };
+}
+
+alert(new BigUser().name);
+</code></pre>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function SmallUser() {
+
+  this.name = "John";
+
+  return;
+}
+
+alert(new SmallUser().name);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Omitting Parentheses</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Parentheses after <code>new</code> may be omitted.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = new User;
+
+// same as
+let user = new User();
+</code></pre>
+</article>
+
+<article class="concept-block">
+<p class="concept-text">
+Although this syntax is allowed, omitting parentheses is generally not considered good style.
+</p>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Methods in Constructor</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Constructor functions can also define methods.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function User(name) {
+
+  this.name = name;
+
+  this.sayHi = function() {
+    alert("My name is: " + this.name);
+  };
+
+}
+
+let john = new User("John");
+
+john.sayHi();
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+The created object looks like this:
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+john = {
+  name: "John",
+  sayHi: function() { ... }
+};
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+To create complex objects there is a more advanced syntax called classes, which we will study later.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section" id="summary">
+
+<h2 class="section-title">Summary</h2>
+
+<ul class="summary-list">
+
+<li>Constructor functions are regular functions but named with a capital letter by convention.</li>
+
+<li>They should be called using the <code>new</code> operator.</li>
+
+<li>Calling with <code>new</code> creates a new object, assigns it to <code>this</code>, and returns it.</li>
+
+<li>Constructor functions allow creation of multiple similar objects.</li>
+
+<li>JavaScript also provides built-in constructors such as <code>Date</code> and <code>Set</code>.</li>
+
+</ul>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Objects, We'll Be Back</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+In this chapter we only covered the basics of objects and constructors.
+</p>
+
+<p class="concept-text">
+They are essential for learning more about data types and functions in later chapters.
+</p>
+
+<p class="concept-text">
+Later we will return to objects again and explore them more deeply in the chapters about prototypes, inheritance and classes.
+</p>
+
+</article>
+
+</section>
+
+</main>

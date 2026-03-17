@@ -336,6 +336,10 @@ import { courseRegistry } from '../data/registry.js';
   const contentWrapEl =
     document.getElementById("contentWrap") || contentEl.parentElement;
   const contentMainEl = document.getElementById("contentMain");
+  const lessonBreadcrumbs = document.getElementById("lessonBreadcrumbs");
+  const lessonTagsEl = document.getElementById("lessonTags");
+  const relatedLessonsEl = document.getElementById("relatedLessons");
+  const relatedLessonsGrid = document.getElementById("relatedLessonsGrid");
 
   if (!navEl || !contentEl) {
     console.error("App: Required DOM elements not found.");
@@ -443,6 +447,28 @@ import { courseRegistry } from '../data/registry.js';
         if (lessonSearchEl) lessonSearchEl.value = "";
         buildLessonList();
         selectLesson(resumeIndex);
+      });
+      card.addEventListener("keydown", function (e) {
+        var items = sectionSwitcherEl.querySelectorAll(".section-card");
+        var numItems = items.length;
+        if (!numItems) return;
+        var cols = 2; // Grid has 2 columns
+        if (e.key === "ArrowRight" && idx < numItems - 1) {
+          e.preventDefault();
+          items[idx + 1].focus();
+        } else if (e.key === "ArrowLeft" && idx > 0) {
+          e.preventDefault();
+          items[idx - 1].focus();
+        } else if (e.key === "ArrowDown" && idx + cols < numItems) {
+          e.preventDefault();
+          items[idx + cols].focus();
+        } else if (e.key === "ArrowUp" && idx - cols >= 0) {
+          e.preventDefault();
+          items[idx - cols].focus();
+        } else if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          card.click();
+        }
       });
       sectionSwitcherEl.appendChild(card);
     });
@@ -976,7 +1002,89 @@ import { courseRegistry } from '../data/registry.js';
     injectCopyButtons();
     injectBookmarkHeaderButton();
     applyHighlighting();
+    renderBreadcrumbs(lesson);
+    renderTagsAndRelatedLessons(lesson, currentSectionIndex, currentLessonIndex);
     buildLessonToc();
+  }
+
+  function renderBreadcrumbs(lesson) {
+    if (!lessonBreadcrumbs) return;
+    var courseTitle = currentCourse.title || "Course";
+    var section = getSection();
+    var sectionTitle = section ? section.title : "Chapter";
+    var lessonTitle = lesson.title || "Lesson";
+
+    lessonBreadcrumbs.innerHTML =
+      '<span class="breadcrumb-item">' + escapeHtml(courseTitle) + '</span>' +
+      '<span class="breadcrumb-sep"><i class="fa-solid fa-chevron-right"></i></span>' +
+      '<span class="breadcrumb-item">' + escapeHtml(sectionTitle) + '</span>' +
+      '<span class="breadcrumb-sep"><i class="fa-solid fa-chevron-right"></i></span>' +
+      '<span class="breadcrumb-item active">' + escapeHtml(lessonTitle) + '</span>';
+  }
+
+  function renderTagsAndRelatedLessons(lesson, sIndex, lIndex) {
+    // 1. Tags
+    if (lessonTagsEl) {
+      if (lesson.tags && lesson.tags.length > 0) {
+        lessonTagsEl.innerHTML = lesson.tags.map(function(t) {
+          return '<span class="lesson-tag">#' + escapeHtml(t) + '</span>';
+        }).join('');
+        lessonTagsEl.style.display = "flex";
+      } else {
+        lessonTagsEl.style.display = "none";
+        lessonTagsEl.innerHTML = "";
+      }
+    }
+
+    // 2. Related Lessons
+    if (relatedLessonsEl && relatedLessonsGrid) {
+      var allLessons = [];
+      
+      currentCourse.sections.forEach(function(sec, secIdx) {
+        var secLessons = getLessons(sec);
+        secLessons.forEach(function(les, lesIdx) {
+          if (secIdx === sIndex && lesIdx === lIndex) return; // skip current
+          if (!les.tags || !les.tags.length) return;
+          
+          var overlapCount = 0;
+          if (lesson.tags) {
+            les.tags.forEach(function(t) {
+              if (lesson.tags.indexOf(t) !== -1) overlapCount++;
+            });
+          }
+          if (overlapCount > 0) {
+             allLessons.push({
+               section: sec,
+               lesson: les,
+               overlap: overlapCount
+             });
+          }
+        });
+      });
+
+      // Sort by overlap descending, then by title predictability
+      allLessons.sort(function(a, b) {
+        if (b.overlap !== a.overlap) {
+          return b.overlap - a.overlap;
+        }
+        return a.lesson.title.localeCompare(b.lesson.title);
+      });
+
+      var topRelated = allLessons.slice(0, 3);
+      if (topRelated.length > 0) {
+        relatedLessonsEl.style.display = "block";
+        relatedLessonsGrid.innerHTML = topRelated.map(function(item) {
+          var hash = "#" + (item.section.id || "") + "/" + getLessonSlug(item.lesson);
+          return '<a href="' + hash + '" class="related-lesson-card">' +
+            '<span class="related-lesson-section">' + escapeHtml(item.section.title) + '</span>' +
+            '<span class="related-lesson-title">' + escapeHtml(item.lesson.title) + '</span>' +
+          '</a>';
+        }).join('');
+      } else {
+        relatedLessonsEl.style.display = "none";
+        relatedLessonsGrid.innerHTML = "";
+      }
+    }
   }
 
   function injectBookmarkHeaderButton() {

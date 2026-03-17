@@ -15,25 +15,45 @@ export const javascriptCourse = {
           "slug": "introduction-to-javascript",
           "difficulty": "beginner",
           "duration": "10 min",
-          "completed": false
+          "completed": false,
+          "tags": [
+            "javascript",
+            "introduction",
+            "intro"
+          ]
         },
         {
           "title": "Manuals and specifications",
           "slug": "manuals-and-specifications",
           "difficulty": "beginner",
-          "completed": false
+          "completed": false,
+          "tags": [
+            "manuals",
+            "intro",
+            "specifications"
+          ]
         },
         {
           "title": "Code editors",
           "slug": "code-editors",
           "difficulty": "beginner",
-          "completed": false
+          "completed": false,
+          "tags": [
+            "editors",
+            "intro",
+            "code"
+          ]
         },
         {
           "title": "Developer console",
           "slug": "developer-console",
           "difficulty": "beginner",
-          "completed": false
+          "completed": false,
+          "tags": [
+            "developer",
+            "intro",
+            "console"
+          ]
         }
       ]
     },
@@ -45,87 +65,164 @@ export const javascriptCourse = {
         {
           "title": "Hello, world!",
           "slug": "hello-world",
-          "completed": false
+          "completed": false,
+          "tags": [
+            "fundamentals",
+            "hello",
+            "world"
+          ]
         },
         {
           "title": "Code structure",
           "slug": "code-structure",
-          "completed": false
+          "completed": false,
+          "tags": [
+            "fundamentals",
+            "structure",
+            "code"
+          ]
         },
         {
           "title": "The modern mode, \"use strict\"",
           "slug": "use-strict",
-          "completed": false
+          "completed": false,
+          "tags": [
+            "fundamentals",
+            "strict"
+          ]
         },
         {
           "title": "Variables",
           "slug": "variables",
-          "completed": false
+          "completed": false,
+          "tags": [
+            "fundamentals",
+            "variables"
+          ]
         },
         {
           "title": "Data types",
           "slug": "data-types",
-          "completed": false
+          "completed": false,
+          "tags": [
+            "fundamentals",
+            "types",
+            "data"
+          ]
         },
         {
           "title": "Interaction: alert, prompt, confirm",
           "slug": "interaction",
-          "completed": false
+          "completed": false,
+          "tags": [
+            "fundamentals",
+            "interaction"
+          ]
         },
         {
           "title": "Type Conversions",
           "slug": "type-conversion",
-          "completed": false
+          "completed": false,
+          "tags": [
+            "fundamentals",
+            "type",
+            "conversion"
+          ]
         },
         {
           "title": "Basic operators, maths",
           "slug": "operators",
-          "completed": false
+          "completed": false,
+          "tags": [
+            "fundamentals",
+            "operators"
+          ]
         },
         {
           "title": "Comparisons",
           "slug": "comparisons",
-          "completed": false
+          "completed": false,
+          "tags": [
+            "fundamentals",
+            "comparisons"
+          ]
         },
         {
           "title": "Conditional branching: if, '?'",
           "slug": "if-else",
-          "completed": false
+          "completed": false,
+          "tags": [
+            "fundamentals",
+            "else"
+          ]
         },
         {
           "title": "Logical operators",
           "slug": "logical-operators",
-          "completed": false
+          "completed": false,
+          "tags": [
+            "fundamentals",
+            "logical",
+            "operators"
+          ]
         },
         {
           "title": "Nullish coalescing operator '??'",
           "slug": "nullish-coalescing",
-          "completed": false
+          "completed": false,
+          "tags": [
+            "fundamentals",
+            "nullish",
+            "coalescing"
+          ]
         },
         {
           "title": "Loops: while and for",
           "slug": "loops",
-          "completed": false
+          "completed": false,
+          "tags": [
+            "fundamentals",
+            "loops"
+          ]
         },
         {
           "title": "The switch statement",
           "slug": "switch",
-          "completed": false
+          "completed": false,
+          "tags": [
+            "fundamentals",
+            "switch"
+          ]
         },
         {
           "title": "Functions",
           "slug": "functions",
-          "completed": false
+          "completed": false,
+          "tags": [
+            "fundamentals",
+            "functions"
+          ]
         },
         {
           "title": "Function expressions",
           "slug": "function-expressions",
-          "completed": false
+          "completed": false,
+          "tags": [
+            "fundamentals",
+            "function",
+            "expressions",
+            "functions"
+          ]
         },
         {
           "title": "Arrow functions",
           "slug": "arrow-functions",
-          "completed": false
+          "completed": false,
+          "tags": [
+            "fundamentals",
+            "arrow",
+            "functions"
+          ]
         }
       ]
     },
@@ -135,25 +232,46 @@ export const javascriptCourse = {
       "description": "Best practices and debugging techniques.",
       "lessons": [
         {
-          "title": "Code quality"
+          "title": "Code quality",
+          "tags": [
+            "code-quality"
+          ]
         },
         {
-          "title": "Debugging in the browser"
+          "title": "Debugging in the browser",
+          "tags": [
+            "code-quality"
+          ]
         },
         {
-          "title": "Coding Style"
+          "title": "Coding Style",
+          "tags": [
+            "code-quality"
+          ]
         },
         {
-          "title": "Comments"
+          "title": "Comments",
+          "tags": [
+            "code-quality"
+          ]
         },
         {
-          "title": "Ninja code"
+          "title": "Ninja code",
+          "tags": [
+            "code-quality"
+          ]
         },
         {
-          "title": "Automated testing with Mocha"
+          "title": "Automated testing with Mocha",
+          "tags": [
+            "code-quality"
+          ]
         },
         {
-          "title": "Polyfills and transpilers"
+          "title": "Polyfills and transpilers",
+          "tags": [
+            "code-quality"
+          ]
         }
       ]
     },
@@ -163,35 +281,59 @@ export const javascriptCourse = {
       "lessons": [
         {
           "title": "Objects",
-          "contentUrl": "content/javascript/objects-basics/lesson-0.html"
+          "contentUrl": "content/javascript/objects-basics/lesson-0.html",
+          "tags": [
+            "objects-basics"
+          ]
         },
         {
           "title": "Object references and copying",
-          "contentUrl": "content/javascript/objects-basics/lesson-1.html"
+          "contentUrl": "content/javascript/objects-basics/lesson-1.html",
+          "tags": [
+            "objects-basics"
+          ]
         },
         {
           "title": "Garbage collection",
-          "contentUrl": "content/javascript/objects-basics/lesson-2.html"
+          "contentUrl": "content/javascript/objects-basics/lesson-2.html",
+          "tags": [
+            "objects-basics"
+          ]
         },
         {
           "title": "Object methods, \"this\"",
-          "contentUrl": "content/javascript/objects-basics/lesson-3.html"
+          "contentUrl": "content/javascript/objects-basics/lesson-3.html",
+          "tags": [
+            "objects-basics"
+          ]
         },
         {
           "title": "Constructor, operator \"new\"",
-          "contentUrl": "content/javascript/objects-basics/lesson-4.html"
+          "contentUrl": "content/javascript/objects-basics/lesson-4.html",
+          "tags": [
+            "objects-basics"
+          ]
         },
         {
           "title": "Optional chaining '?.'",
-          "contentUrl": "content/javascript/objects-basics/lesson-5.html"
+          "contentUrl": "content/javascript/objects-basics/lesson-5.html",
+          "tags": [
+            "objects-basics"
+          ]
         },
         {
           "title": "Symbol type",
-          "contentUrl": "content/javascript/objects-basics/lesson-6.html"
+          "contentUrl": "content/javascript/objects-basics/lesson-6.html",
+          "tags": [
+            "objects-basics"
+          ]
         },
         {
           "title": "Object to primitive conversion",
-          "contentUrl": "content/javascript/objects-basics/lesson-7.html"
+          "contentUrl": "content/javascript/objects-basics/lesson-7.html",
+          "tags": [
+            "objects-basics"
+          ]
         }
       ]
     },
@@ -201,51 +343,87 @@ export const javascriptCourse = {
       "lessons": [
         {
           "title": "Methods of primitives",
-          "contentUrl": "content/javascript/data-types/lesson-0.html"
+          "contentUrl": "content/javascript/data-types/lesson-0.html",
+          "tags": [
+            "data-types"
+          ]
         },
         {
           "title": "Numbers",
-          "contentUrl": "content/javascript/data-types/lesson-1.html"
+          "contentUrl": "content/javascript/data-types/lesson-1.html",
+          "tags": [
+            "data-types"
+          ]
         },
         {
           "title": "Strings",
-          "contentUrl": "content/javascript/data-types/lesson-2.html"
+          "contentUrl": "content/javascript/data-types/lesson-2.html",
+          "tags": [
+            "data-types"
+          ]
         },
         {
           "title": "Arrays",
-          "contentUrl": "content/javascript/data-types/lesson-3.html"
+          "contentUrl": "content/javascript/data-types/lesson-3.html",
+          "tags": [
+            "data-types"
+          ]
         },
         {
           "title": "Array methods",
-          "contentUrl": "content/javascript/data-types/lesson-4.html"
+          "contentUrl": "content/javascript/data-types/lesson-4.html",
+          "tags": [
+            "data-types"
+          ]
         },
         {
           "title": "Iterables",
-          "contentUrl": "content/javascript/data-types/lesson-5.html"
+          "contentUrl": "content/javascript/data-types/lesson-5.html",
+          "tags": [
+            "data-types"
+          ]
         },
         {
           "title": "Map and Set",
-          "contentUrl": "content/javascript/data-types/lesson-6.html"
+          "contentUrl": "content/javascript/data-types/lesson-6.html",
+          "tags": [
+            "data-types"
+          ]
         },
         {
           "title": "WeakMap and WeakSet",
-          "contentUrl": "content/javascript/data-types/lesson-7.html"
+          "contentUrl": "content/javascript/data-types/lesson-7.html",
+          "tags": [
+            "data-types"
+          ]
         },
         {
           "title": "Object.keys, values, entries",
-          "contentUrl": "content/javascript/data-types/lesson-8.html"
+          "contentUrl": "content/javascript/data-types/lesson-8.html",
+          "tags": [
+            "data-types"
+          ]
         },
         {
           "title": "Destructuring assignment",
-          "contentUrl": "content/javascript/data-types/lesson-9.html"
+          "contentUrl": "content/javascript/data-types/lesson-9.html",
+          "tags": [
+            "data-types"
+          ]
         },
         {
           "title": "Date and time",
-          "contentUrl": "content/javascript/data-types/lesson-10.html"
+          "contentUrl": "content/javascript/data-types/lesson-10.html",
+          "tags": [
+            "data-types"
+          ]
         },
         {
           "title": "JSON methods, toJSON",
-          "contentUrl": "content/javascript/data-types/lesson-11.html"
+          "contentUrl": "content/javascript/data-types/lesson-11.html",
+          "tags": [
+            "data-types"
+          ]
         }
       ]
     },
@@ -255,47 +433,80 @@ export const javascriptCourse = {
       "lessons": [
         {
           "title": "Recursion and stack",
-          "contentUrl": "content/javascript/advanced-functions/lesson-0.html"
+          "contentUrl": "content/javascript/advanced-functions/lesson-0.html",
+          "tags": [
+            "advanced-functions"
+          ]
         },
         {
           "title": "Rest parameters and spread syntax",
-          "contentUrl": "content/javascript/advanced-functions/lesson-1.html"
+          "contentUrl": "content/javascript/advanced-functions/lesson-1.html",
+          "tags": [
+            "advanced-functions"
+          ]
         },
         {
           "title": "Variable scope, closure",
-          "contentUrl": "content/javascript/advanced-functions/lesson-2.html"
+          "contentUrl": "content/javascript/advanced-functions/lesson-2.html",
+          "tags": [
+            "advanced-functions"
+          ]
         },
         {
           "title": "The old \"var\"",
-          "contentUrl": "content/javascript/advanced-functions/lesson-3.html"
+          "contentUrl": "content/javascript/advanced-functions/lesson-3.html",
+          "tags": [
+            "advanced-functions"
+          ]
         },
         {
           "title": "Global object",
-          "contentUrl": "content/javascript/advanced-functions/lesson-4.html"
+          "contentUrl": "content/javascript/advanced-functions/lesson-4.html",
+          "tags": [
+            "advanced-functions"
+          ]
         },
         {
           "title": "Function object, NFE",
-          "contentUrl": "content/javascript/advanced-functions/lesson-5.html"
+          "contentUrl": "content/javascript/advanced-functions/lesson-5.html",
+          "tags": [
+            "advanced-functions"
+          ]
         },
         {
           "title": "The \"new Function\" syntax",
-          "contentUrl": "content/javascript/advanced-functions/lesson-6.html"
+          "contentUrl": "content/javascript/advanced-functions/lesson-6.html",
+          "tags": [
+            "advanced-functions"
+          ]
         },
         {
           "title": "Scheduling: setTimeout and setInterval",
-          "contentUrl": "content/javascript/advanced-functions/lesson-7.html"
+          "contentUrl": "content/javascript/advanced-functions/lesson-7.html",
+          "tags": [
+            "advanced-functions"
+          ]
         },
         {
           "title": "Decorators and forwarding, call/apply",
-          "contentUrl": "content/javascript/advanced-functions/lesson-8.html"
+          "contentUrl": "content/javascript/advanced-functions/lesson-8.html",
+          "tags": [
+            "advanced-functions"
+          ]
         },
         {
           "title": "Function binding",
-          "contentUrl": "content/javascript/advanced-functions/lesson-9.html"
+          "contentUrl": "content/javascript/advanced-functions/lesson-9.html",
+          "tags": [
+            "advanced-functions"
+          ]
         },
         {
           "title": "Arrow functions revisited",
-          "contentUrl": "content/javascript/advanced-functions/lesson-10.html"
+          "contentUrl": "content/javascript/advanced-functions/lesson-10.html",
+          "tags": [
+            "advanced-functions"
+          ]
         }
       ]
     },
@@ -304,16 +515,28 @@ export const javascriptCourse = {
       "title": "Prototypes & Inheritance",
       "lessons": [
         {
-          "title": "Prototypal inheritance"
+          "title": "Prototypal inheritance",
+          "tags": [
+            "prototypes"
+          ]
         },
         {
-          "title": "F.prototype"
+          "title": "F.prototype",
+          "tags": [
+            "prototypes"
+          ]
         },
         {
-          "title": "Native prototypes"
+          "title": "Native prototypes",
+          "tags": [
+            "prototypes"
+          ]
         },
         {
-          "title": "Prototype methods"
+          "title": "Prototype methods",
+          "tags": [
+            "prototypes"
+          ]
         }
       ]
     },
@@ -322,25 +545,46 @@ export const javascriptCourse = {
       "title": "Classes",
       "lessons": [
         {
-          "title": "Class basic syntax"
+          "title": "Class basic syntax",
+          "tags": [
+            "classes"
+          ]
         },
         {
-          "title": "Class inheritance"
+          "title": "Class inheritance",
+          "tags": [
+            "classes"
+          ]
         },
         {
-          "title": "Static properties and methods"
+          "title": "Static properties and methods",
+          "tags": [
+            "classes"
+          ]
         },
         {
-          "title": "Private and protected properties"
+          "title": "Private and protected properties",
+          "tags": [
+            "classes"
+          ]
         },
         {
-          "title": "Extending built-in classes"
+          "title": "Extending built-in classes",
+          "tags": [
+            "classes"
+          ]
         },
         {
-          "title": "Class checking: \"instanceof\""
+          "title": "Class checking: \"instanceof\"",
+          "tags": [
+            "classes"
+          ]
         },
         {
-          "title": "Mixins"
+          "title": "Mixins",
+          "tags": [
+            "classes"
+          ]
         }
       ]
     },
@@ -349,28 +593,52 @@ export const javascriptCourse = {
       "title": "Promises, Async/Await",
       "lessons": [
         {
-          "title": "Introduction: callbacks"
+          "title": "Introduction: callbacks",
+          "tags": [
+            "async"
+          ]
         },
         {
-          "title": "Promise"
+          "title": "Promise",
+          "tags": [
+            "async"
+          ]
         },
         {
-          "title": "Promises chaining"
+          "title": "Promises chaining",
+          "tags": [
+            "async"
+          ]
         },
         {
-          "title": "Error handling with promises"
+          "title": "Error handling with promises",
+          "tags": [
+            "async"
+          ]
         },
         {
-          "title": "Promise API"
+          "title": "Promise API",
+          "tags": [
+            "async"
+          ]
         },
         {
-          "title": "Promisification"
+          "title": "Promisification",
+          "tags": [
+            "async"
+          ]
         },
         {
-          "title": "Microtasks"
+          "title": "Microtasks",
+          "tags": [
+            "async"
+          ]
         },
         {
-          "title": "Async/await"
+          "title": "Async/await",
+          "tags": [
+            "async"
+          ]
         }
       ]
     },
@@ -379,13 +647,22 @@ export const javascriptCourse = {
       "title": "Modules",
       "lessons": [
         {
-          "title": "Modules introduction"
+          "title": "Modules introduction",
+          "tags": [
+            "modules"
+          ]
         },
         {
-          "title": "Export and Import"
+          "title": "Export and Import",
+          "tags": [
+            "modules"
+          ]
         },
         {
-          "title": "Dynamic imports"
+          "title": "Dynamic imports",
+          "tags": [
+            "modules"
+          ]
         }
       ]
     },

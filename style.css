@@ -441,6 +441,12 @@ button {
   border-color: var(--surface-hover);
 }
 
+.sidebar-section-switcher .section-card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+  background: var(--surface-hover);
+}
+
 .sidebar-section-switcher .section-card.active {
   color: var(--accent-text);
   background: var(--accent-soft);
@@ -566,6 +572,34 @@ button {
   flex: 1;
   min-width: 0;
   max-width: var(--content-max);
+}
+
+/* Breadcrumbs */
+.lesson-breadcrumbs {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-6);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.lesson-breadcrumbs .breadcrumb-item {
+  transition: color var(--t-fast);
+}
+
+.lesson-breadcrumbs .breadcrumb-item.active {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.lesson-breadcrumbs .breadcrumb-sep {
+  font-size: 10px;
+  color: var(--surface-border);
+  display: flex;
+  align-items: center;
 }
 
 .lesson-toc {
@@ -1126,4 +1160,70 @@ button {
   top: 50%;
   transform: translate(-50%, -50%);
   font-size: 14px;
+}
+
+/* Lesson Tags */
+.lesson-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  margin-top: var(--sp-12);
+}
+
+.lesson-tag {
+  display: inline-block;
+  padding: 4px 10px;
+  background: var(--surface-raised);
+  color: var(--text-muted);
+  border-radius: var(--r-md);
+  font-size: 11px;
+  font-weight: 500;
+  border: 1px solid var(--surface-border);
+}
+
+/* Related Lessons */
+.related-lessons {
+  margin-top: var(--sp-12);
+  padding-top: var(--sp-8);
+  border-top: 1px solid var(--surface-border);
+}
+
+.related-lessons h3 {
+  font-size: 16px;
+  margin-bottom: var(--sp-6);
+  color: var(--text-primary);
+}
+
+.related-lessons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--sp-4);
+}
+
+.related-lesson-card {
+  display: flex;
+  flex-direction: column;
+  padding: var(--sp-4);
+  background: var(--surface-raised);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--r-md);
+  text-decoration: none;
+  color: var(--text-primary);
+  transition: transform var(--t-fast), border-color var(--t-fast);
+}
+
+.related-lesson-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+}
+
+.related-lesson-section {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: var(--sp-1);
+}
+
+.related-lesson-title {
+  font-size: 14px;
+  font-weight: 500;
 }

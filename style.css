@@ -293,6 +293,111 @@ button {
   flex: 1;
 }
 
+.lesson-item .lesson-completed-icon {
+  margin-left: auto;
+  font-size: 11px;
+  color: var(--color-success);
+  opacity: 0;
+  transition: opacity var(--t-fast);
+}
+
+.lesson-item.completed .lesson-completed-icon {
+  opacity: 1;
+}
+
+/* Sidebar search */
+.sidebar-search-wrap {
+  position: relative;
+  padding: var(--sp-3) var(--sp-5);
+  border-bottom: 1px solid var(--surface-border-dim);
+}
+
+.sidebar-search-icon {
+  position: absolute;
+  left: calc(var(--sp-5) + 12px);
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.sidebar-search {
+  width: 100%;
+  padding: var(--sp-2) var(--sp-3) var(--sp-2) 28px;
+  font-size: 13px;
+  font-family: inherit;
+  color: var(--text-primary);
+  background: var(--surface-overlay);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--r-md);
+  outline: none;
+  transition: border-color var(--t-fast);
+}
+
+.sidebar-search::placeholder {
+  color: var(--text-muted);
+}
+
+.sidebar-search:focus {
+  border-color: var(--accent);
+}
+
+/* Section switcher */
+.sidebar-section-switcher {
+  padding: var(--sp-3) var(--sp-5);
+  border-bottom: 1px solid var(--surface-border-dim);
+  max-height: 160px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+}
+
+.sidebar-section-switcher .section-tab {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  width: 100%;
+  padding: var(--sp-2) var(--sp-3);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: transparent;
+  border: none;
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  text-align: left;
+  transition: color var(--t-fast), background var(--t-fast);
+}
+
+.sidebar-section-switcher .section-tab:hover {
+  color: var(--text-primary);
+  background: var(--surface-hover);
+}
+
+.sidebar-section-switcher .section-tab.active {
+  color: var(--accent-text);
+  background: var(--accent-soft);
+}
+
+.sidebar-section-switcher .section-tab .section-tab-num {
+  font-size: 10px;
+  font-family: var(--font-code);
+  color: var(--text-muted);
+  min-width: 18px;
+}
+
+.sidebar-section-switcher .section-tab.active .section-tab-num {
+  color: var(--accent);
+}
+
+.sidebar-no-results {
+  padding: var(--sp-4) var(--sp-5);
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
 /* Progress Bar */
 .sidebar-footer {
   padding: var(--sp-4) var(--sp-5);
@@ -364,271 +469,93 @@ button {
   animation: contentFadeIn var(--t-slow) ease forwards;
 }
 
-
-/* ============================================================
-   6. DOC PAGE COMPONENTS
-   (Styles for HTML injected from lesson Text)
-   ============================================================ */
-
-/* ── Doc Container ── */
-.doc {
-  width: 100%;
-}
-
-/* ── Doc Header ── */
-.doc-header {
-  margin-bottom: var(--sp-5);
-  padding-bottom: var(--sp-8);
-  border-bottom: 1px solid var(--surface-border);
-}
-
-.doc-title {
-  font-size: clamp(26px, 3.5vw, 38px);
-  font-weight: 700;
-  color: var(--text-primary);
-  line-height: 1.2;
-  margin-bottom: var(--sp-3);
-  letter-spacing: -0.5px;
-}
-
-.doc-description {
-  font-size: 16px;
-  color: var(--text-secondary);
-  line-height: 1.7;
-  max-width: 580px;
-}
-
-/* ── Sections ── */
-.doc-section {
-  margin-bottom: var(--sp-12);
-  scroll-margin-top: var(--sp-8);
-}
-
-.section-title {
-  font-size: 21px;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: var(--sp-5);
-  letter-spacing: -0.3px;
+/* Lesson prev/next footer */
+.lesson-nav-footer {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: var(--sp-3);
-  padding-bottom: var(--sp-3);
-  border-bottom: 1px solid var(--surface-border-dim);
+  gap: var(--sp-4);
+  margin-top: var(--sp-10);
+  padding-top: var(--sp-6);
+  border-top: 1px solid var(--surface-border);
+  flex-wrap: wrap;
 }
 
-.section-title::before {
-  content: '';
-  display: inline-block;
-  width: 3px;
-  height: 24px;
-  background: var(--accent);
-  border-radius: 2px;
-  flex-shrink: 0;
-}
-
-.section-note {
-  margin-top: var(--sp-4);
-  font-size: 13.5px;
-  color: var(--color-warn);
-  padding: var(--sp-3) var(--sp-4);
-  background: var(--color-warn-bg);
-  border-left: 3px solid var(--color-warn);
-  border-radius: 0 var(--r-md) var(--r-md) 0;
-}
-
-/* ── Concept Blocks ── */
-.concept-block {
-  margin-bottom: var(--sp-5);
-  padding: var(--sp-5);
-  background: var(--surface-overlay);
-  border: 1px solid var(--surface-border);
-  border-radius: var(--r-lg);
-  transition: border-color var(--t-fast);
-}
-
-.concept-block:hover {
-  border-color: var(--surface-hover);
-}
-
-.concept-title {
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: var(--sp-2);
-}
-
-.concept-text {
-  font-size: 14.5px;
-  color: var(--text-secondary);
-  line-height: 1.7;
-}
-
-/* ── Code Blocks ── */
-.code-block {
-  background: var(--surface-overlay);
-  border: 1px solid var(--surface-border);
-  border-radius: var(--r-lg);
-  padding: var(--sp-5) var(--sp-6);
-  overflow-x: auto;
-  font-size: 13px;
-  line-height: 1.75;
-  margin: var(--sp-4) 0;
-  position: relative;
-  scrollbar-width: thin;
-  scrollbar-color: var(--surface-border) transparent;
-}
-
-.code-block::-webkit-scrollbar {
-  height: 4px;
-}
-.code-block::-webkit-scrollbar-track {
-  background: transparent;
-}
-.code-block::-webkit-scrollbar-thumb {
-  background: var(--surface-border);
-  border-radius: 2px;
-}
-
-.code-block code,
-code {
-  font-family: var(--font-code);
-  font-size: inherit;
-  color: var(--text-code);
-  background: none;
-  border: none;
-  padding: 0;
-}
-
-/* Inline code */
-p code,
-li code {
-  background: var(--surface-overlay);
-  border: 1px solid var(--surface-border);
-  color: var(--text-code);
-  padding: 1px 6px 2px;
-  border-radius: var(--r-sm);
-  font-size: 87%;
-  font-family: var(--font-code);
-}
-
-/* ── Example Blocks ── */
-.example-block {
-  margin-bottom: var(--sp-8);
-}
-
-.example-title {
-  font-size: 14.5px;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: var(--sp-3);
-  display: flex;
+.lesson-nav-footer .btn-prev,
+.lesson-nav-footer .btn-next {
+  display: inline-flex;
   align-items: center;
   gap: var(--sp-2);
-}
-
-.example-title::before {
-  content: '›';
-  color: var(--accent);
-  font-size: 16px;
-  font-weight: 700;
-}
-
-.example-note {
-  font-size: 13px;
-  color: var(--text-muted);
-  margin-top: var(--sp-2);
-  padding: var(--sp-2) var(--sp-3);
-  border-left: 2px solid var(--surface-border);
-}
-
-/* ── Note Block ── */
-.note-block {
-  background: var(--color-note-bg);
-  border: 1px solid var(--color-note-bd);
-  border-left: 3px solid var(--color-note);
-  padding: var(--sp-4) var(--sp-5);
-  border-radius: 0 var(--r-md) var(--r-md) 0;
+  padding: var(--sp-3) var(--sp-4);
   font-size: 14px;
+  font-weight: 500;
+  color: var(--accent-text);
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-glow);
+  border-radius: var(--r-md);
+  cursor: pointer;
+  transition: background var(--t-fast), border-color var(--t-fast);
+}
+
+.lesson-nav-footer .btn-prev:hover:not(:disabled),
+.lesson-nav-footer .btn-next:hover:not(:disabled) {
+  background: var(--surface-hover);
+  border-color: var(--accent);
+}
+
+.lesson-nav-footer .btn-prev:disabled,
+.lesson-nav-footer .btn-next:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.lesson-nav-footer .btn-next {
+  margin-left: auto;
+}
+
+.lesson-nav-footer .mark-complete-wrap {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  margin-top: 0;
+}
+
+.mark-complete-wrap {
+  margin-top: var(--sp-4);
+}
+
+.mark-complete-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-2) var(--sp-4);
+  font-size: 13px;
+  font-weight: 500;
   color: var(--text-secondary);
-  margin: var(--sp-4) 0;
-  line-height: 1.6;
-}
-
-/* ── Data Table ── */
-.data-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 13.5px;
-  margin: var(--sp-5) 0;
-  border-radius: var(--r-lg);
-  overflow: hidden;
-  border: 1px solid var(--surface-border);
-}
-
-.data-table th {
-  text-align: left;
-  padding: var(--sp-3) var(--sp-4);
   background: var(--surface-overlay);
-  font-weight: 600;
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--text-muted);
-  border-bottom: 1px solid var(--surface-border);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--r-md);
+  cursor: pointer;
+  transition: color var(--t-fast), background var(--t-fast), border-color var(--t-fast);
 }
 
-.data-table td {
-  padding: var(--sp-3) var(--sp-4);
-  border-bottom: 1px solid var(--surface-border-dim);
-  color: var(--text-secondary);
-  vertical-align: top;
-}
-
-.data-table tbody tr:last-child td {
-  border-bottom: none;
-}
-
-.data-table tbody tr:hover td {
+.mark-complete-btn:hover {
+  color: var(--text-primary);
   background: var(--surface-hover);
 }
 
-/* ── Summary List ── */
-.summary-list {
-  padding-left: var(--sp-5);
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-3);
-  list-style: disc;
+.mark-complete-btn.completed {
+  color: var(--color-success);
+  border-color: var(--color-success);
 }
 
-.summary-list li {
-  font-size: 14.5px;
-  color: var(--text-secondary);
-  line-height: 1.65;
-  padding-left: var(--sp-2);
-}
-
-.summary-list li::marker {
-  color: var(--accent);
-}
-
-/* ── General Paragraph Spacing ── */
-.doc p {
-  font-size: 15px;
-  color: var(--text-secondary);
-  line-height: 1.75;
-  /* margin-bottom: var(--sp-4); */
-}
-
-.doc strong {
-  color: var(--text-primary);
-  font-weight: 600;
+.mark-complete-btn .fa-check-circle {
+  color: var(--color-success);
 }
 
 
 /* ============================================================
-   7. PLACEHOLDER (for lessons without content)
+   6. PLACEHOLDER (for lessons without content)
    ============================================================ */
 .placeholder-content {
   display: flex;
@@ -685,7 +612,7 @@ li code {
 
 
 /* ============================================================
-   8. PLAIN TEXT RENDERER
+   7. PLAIN TEXT RENDERER
    (for lessons with raw text content)
    ============================================================ */
 .rendered-text {
@@ -740,7 +667,7 @@ li code {
 
 
 /* ============================================================
-   9. RESPONSIVE
+   8. RESPONSIVE
    ============================================================ */
 @media (max-width: 900px) {
   :root {
@@ -752,50 +679,91 @@ li code {
   }
 }
 
-@media (max-width: 700px) {
-  .app {
-    flex-direction: column;
+/* Mobile: sidebar as drawer */
+.sidebar-toggle {
+  display: none;
+  position: fixed;
+  top: var(--sp-4);
+  left: var(--sp-4);
+  z-index: 100;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: var(--text-primary);
+  background: var(--surface-raised);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--r-md);
+  cursor: pointer;
+  transition: background var(--t-fast);
+}
+
+.sidebar-toggle:hover {
+  background: var(--surface-hover);
+}
+
+.sidebar-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 98;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transition: opacity var(--t-base);
+}
+
+.sidebar-backdrop.is-visible {
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .sidebar-toggle {
+    display: flex;
+  }
+
+  .sidebar-backdrop {
+    display: block;
+    pointer-events: none;
+  }
+
+  .sidebar-backdrop.is-visible {
+    pointer-events: auto;
   }
 
   .sidebar {
-    width: 100%;
-    height: auto;
-    position: relative;
-    border-right: none;
-    border-bottom: 1px solid var(--surface-border);
-    overflow: visible;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: var(--sidebar-w);
+    max-width: 85vw;
+    z-index: 99;
+    transform: translateX(-100%);
+    transition: transform var(--t-base);
+    box-shadow: none;
+  }
+
+  .sidebar.is-open {
+    transform: translateX(0);
+    box-shadow: var(--shadow-md);
   }
 
   .sidebar-nav {
     display: flex;
-    flex-wrap: wrap;
-    padding: var(--sp-3);
-    gap: var(--sp-2);
-    overflow: visible;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    overflow-y: auto;
   }
 
   .lesson-item {
-    flex: 0 1 auto;
-    border: 1px solid var(--surface-border);
     border-left: 2px solid transparent;
-    border-radius: var(--r-md);
-    padding: var(--sp-2) var(--sp-4);
-    font-size: 12.5px;
-    min-height: unset;
+    border-radius: 0;
   }
 
   .lesson-item.active {
-    border-color: var(--accent-glow);
     border-left-color: var(--accent);
     background: var(--accent-soft);
-  }
-
-  .lesson-num {
-    display: none;
-  }
-
-  .sidebar-footer {
-    display: none;
   }
 
   .content-wrap {
@@ -811,6 +779,12 @@ li code {
   }
 }
 
+@media (max-width: 700px) {
+  .sidebar-footer {
+    display: block;
+  }
+}
+
 @media (max-width: 420px) {
   .content-wrap {
     padding: var(--sp-5) var(--sp-4) var(--sp-8);
@@ -823,14 +797,33 @@ li code {
   bottom: 70px;
   right: 40px;
   z-index: 10;
-  background-color: #1d1d34;
-  height: 35px;
-  width: 35px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
+  background: var(--surface-raised);
+  border: 1px solid var(--surface-border);
+  color: var(--text-primary);
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: opacity var(--t-base), visibility var(--t-base), transform var(--t-base);
+}
+
+.outer.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.outer:hover {
+  background: var(--surface-hover);
 }
 
 .inner {
-  position: relative;
-  left: 10px;
-  top: 4px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 14px;
 }

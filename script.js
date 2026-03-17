@@ -5812,162 +5812,408 @@ alert(meetup.date.getDate());
 
 /* ============================================================
    SECTION 3: APP INITIALIZATION
-   Builds sidebar + handles lesson selection
+   Section switcher, hash routing, completion, search, prev/next
    ============================================================ */
 (function initApp() {
 
-  // ── Config ──
-  const ACTIVE_SECTION_INDEX = 4; // "Data Types"
-  const lessons = javascriptCourse.sections[ACTIVE_SECTION_INDEX].lessons;
+  const COMPLETION_STORAGE_KEY = 'jslr-completed';
+
+  function getLessonSlug(lesson) {
+    if (lesson.slug) return lesson.slug;
+    return String(lesson.title).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'lesson';
+  }
+
+  function getLessons(section) {
+    if (section.lessons) return section.lessons;
+    if (section.subsections) return section.subsections.flatMap(function (sub) { return sub.lessons || []; });
+    return [];
+  }
+
+  function getCompletionKey(sectionId, lessonIndex) {
+    return sectionId + '/' + lessonIndex;
+  }
+
+  function loadCompletion() {
+    try {
+      const raw = localStorage.getItem(COMPLETION_STORAGE_KEY);
+      return raw ? JSON.parse(raw) : {};
+    } catch (_) {
+      return {};
+    }
+  }
+
+  function saveCompletion(state) {
+    try {
+      localStorage.setItem(COMPLETION_STORAGE_KEY, JSON.stringify(state));
+    } catch (_) {}
+  }
+
+  function isCompleted(sectionId, lessonIndex) {
+    return !!completionState[getCompletionKey(sectionId, lessonIndex)];
+  }
+
+  function setCompleted(sectionId, lessonIndex, completed) {
+    var key = getCompletionKey(sectionId, lessonIndex);
+    completionState[key] = !!completed;
+    saveCompletion(completionState);
+  }
+
+  let completionState = loadCompletion();
+
+  // Sync in-memory lesson.completed from persisted state
+  javascriptCourse.sections.forEach(function (section) {
+    var sectionId = section.id || '';
+    getLessons(section).forEach(function (lesson, i) {
+      if (lesson.completed !== undefined) {
+        lesson.completed = !!completionState[getCompletionKey(sectionId, i)];
+      }
+    });
+  });
 
   // ── DOM references ──
-  const navEl      = document.getElementById('lessonNav');
-  const contentEl  = document.getElementById('lessonContent');
-  const progressFill    = document.getElementById('progressFill');
+  const navEl = document.getElementById('lessonNav');
+  const contentEl = document.getElementById('lessonContent');
+  const progressFill = document.getElementById('progressFill');
   const progressPercent = document.getElementById('progressPercent');
+  const sectionSwitcherEl = document.getElementById('sectionSwitcher');
+  const sectionBadge = document.getElementById('sectionBadge');
+  const sectionHeading = document.getElementById('sectionHeading');
+  const sectionSubtext = document.getElementById('sectionSubtext');
+  const lessonSearchEl = document.getElementById('lessonSearch');
+  const lessonNavFooter = document.getElementById('lessonNavFooter');
+  const mainEl = document.getElementById('mainContent');
+  const sidebarEl = document.getElementById('sidebar');
+  const sidebarToggle = document.getElementById('sidebarToggle');
+  const sidebarBackdrop = document.getElementById('sidebarBackdrop');
+  const scrollBtn = document.querySelector('.outer');
 
   if (!navEl || !contentEl) {
     console.error('App: Required DOM elements not found.');
     return;
   }
 
-  // ── Build sidebar items ──
-  lessons.forEach((lesson, index) => {
-    const btn = document.createElement('button');
-    btn.className = 'lesson-item';
-    btn.setAttribute('data-index', index);
-    btn.setAttribute('aria-label', `Lesson ${index + 1}: ${lesson.title}`);
+  let currentSectionIndex = 4;
+  let currentLessonIndex = 0;
+  let lessons = getLessons(javascriptCourse.sections[currentSectionIndex]);
 
-    const numSpan   = document.createElement('span');
-    numSpan.className = 'lesson-num';
-    numSpan.textContent = String(index + 1).padStart(2, '0');
-    numSpan.setAttribute('aria-hidden', 'true');
+  function getSection() {
+    return javascriptCourse.sections[currentSectionIndex];
+  }
 
-    const titleSpan = document.createElement('span');
-    titleSpan.className = 'lesson-title-text';
-    titleSpan.textContent = lesson.title;
+  function getSectionId() {
+    return getSection().id || String(currentSectionIndex);
+  }
 
-    btn.appendChild(numSpan);
-    btn.appendChild(titleSpan);
-    navEl.appendChild(btn);
+  // ── Hash routing ──
+  function getHash() {
+    const section = getSection();
+    const lesson = lessons[currentLessonIndex];
+    if (!section || !lesson) return '';
+    return (section.id || currentSectionIndex) + '/' + getLessonSlug(lesson);
+  }
 
-    btn.addEventListener('click', () => selectLesson(index));
-  });
+  function setHash(sectionId, lessonSlug) {
+    const hash = (sectionId || getSectionId()) + '/' + (lessonSlug || getLessonSlug(lessons[currentLessonIndex]));
+    if (window.location.hash !== '#' + hash) {
+      window.location.hash = hash;
+    }
+  }
+
+  function parseHash() {
+    const hash = (window.location.hash || '').replace(/^#/, '');
+    const [sectionId, lessonSlug] = hash.split('/');
+    return { sectionId: sectionId || null, lessonSlug: lessonSlug || null };
+  }
+
+  function applyHash() {
+    const { sectionId, lessonSlug } = parseHash();
+    if (!sectionId) return false;
+    const sectionIndex = javascriptCourse.sections.findIndex(function (s) { return (s.id || '') === sectionId; });
+    if (sectionIndex === -1) return false;
+    const section = javascriptCourse.sections[sectionIndex];
+    const sectionLessons = getLessons(section);
+    const lessonIndex = sectionLessons.findIndex(function (l) { return getLessonSlug(l) === lessonSlug; });
+    if (lessonIndex === -1) return false;
+    currentSectionIndex = sectionIndex;
+    currentLessonIndex = lessonIndex;
+    lessons = sectionLessons;
+    return true;
+  }
+
+  // ── Section switcher ──
+  function buildSectionSwitcher() {
+    if (!sectionSwitcherEl) return;
+    sectionSwitcherEl.innerHTML = '';
+    javascriptCourse.sections.forEach(function (section, idx) {
+      var isActive = idx === currentSectionIndex;
+      const tab = document.createElement('button');
+      tab.type = 'button';
+      tab.role = 'tab';
+      tab.className = 'section-tab' + (isActive ? ' active' : '');
+      tab.setAttribute('aria-selected', isActive);
+      tab.setAttribute('data-section-index', idx);
+      const num = document.createElement('span');
+      num.className = 'section-tab-num';
+      num.textContent = String(idx + 1);
+      tab.appendChild(num);
+      tab.appendChild(document.createTextNode(section.title));
+      tab.addEventListener('click', function () {
+        currentSectionIndex = idx;
+        lessons = getLessons(section);
+        currentLessonIndex = 0;
+        setHash(section.id || idx, getLessonSlug(lessons[0]));
+        updateSectionInfo();
+        buildLessonList();
+        selectLesson(0);
+      });
+      sectionSwitcherEl.appendChild(tab);
+    });
+  }
+
+  function updateSectionInfo() {
+    const section = getSection();
+    if (!section) return;
+    if (sectionBadge) sectionBadge.textContent = 'Chapter ' + (currentSectionIndex + 1);
+    if (sectionHeading) sectionHeading.textContent = section.title;
+    if (sectionSubtext) sectionSubtext.textContent = section.description || '';
+  }
+
+  function buildLessonList() {
+    navEl.innerHTML = '';
+    const query = (lessonSearchEl && lessonSearchEl.value || '').trim().toLowerCase();
+    const filtered = query
+      ? lessons.filter(function (l) { return (l.title || '').toLowerCase().includes(query); })
+      : lessons;
+
+    if (filtered.length === 0) {
+      const msg = document.createElement('p');
+      msg.className = 'sidebar-no-results';
+      msg.textContent = query ? 'No lessons match your search.' : 'No lessons.';
+      navEl.appendChild(msg);
+      return;
+    }
+
+    filtered.forEach(function (_, listIndex) {
+      const lessonIndex = lessons.indexOf(filtered[listIndex]);
+      const lesson = lessons[lessonIndex];
+      const btn = document.createElement('button');
+      btn.className = 'lesson-item' + (lessonIndex === currentLessonIndex ? ' active' : '') + (isCompleted(getSectionId(), lessonIndex) ? ' completed' : '');
+      btn.setAttribute('data-lesson-index', lessonIndex);
+      btn.setAttribute('aria-label', 'Lesson ' + (lessonIndex + 1) + ': ' + lesson.title);
+
+      const numSpan = document.createElement('span');
+      numSpan.className = 'lesson-num';
+      numSpan.textContent = String(lessonIndex + 1).padStart(2, '0');
+      numSpan.setAttribute('aria-hidden', 'true');
+
+      const titleSpan = document.createElement('span');
+      titleSpan.className = 'lesson-title-text';
+      titleSpan.textContent = lesson.title;
+
+      const iconSpan = document.createElement('span');
+      iconSpan.className = 'lesson-completed-icon';
+      iconSpan.setAttribute('aria-hidden', 'true');
+      iconSpan.innerHTML = '<i class="fa-solid fa-circle-check"></i>';
+
+      btn.appendChild(numSpan);
+      btn.appendChild(titleSpan);
+      btn.appendChild(iconSpan);
+      navEl.appendChild(btn);
+
+      btn.addEventListener('click', function () {
+        selectLesson(lessonIndex);
+        if (window.innerWidth <= 768 && sidebarEl) {
+          sidebarEl.classList.remove('is-open');
+          if (sidebarBackdrop) sidebarBackdrop.classList.remove('is-visible');
+          if (sidebarToggle) sidebarToggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+  }
 
   // ── Render lesson content ──
   function renderContent(lesson) {
     if (!lesson.Text) {
-      // No content yet — show a placeholder
-      return `
-        <div class="placeholder-content">
-          <div class="placeholder-icon">🚧</div>
-          <h2 class="placeholder-title">${escapeHtml(lesson.title)}</h2>
-          <p class="placeholder-text">
-            This lesson is currently being written.
-            Check back soon for the full content.
-          </p>
-          <span class="placeholder-tag">Coming Soon</span>
-        </div>
-      `;
+      return (
+        '<div class="placeholder-content">' +
+        '<div class="placeholder-icon">🚧</div>' +
+        '<h2 class="placeholder-title">' + escapeHtml(lesson.title) + '</h2>' +
+        '<p class="placeholder-text">This lesson is currently being written. Check back soon for the full content.</p>' +
+        '<span class="placeholder-tag">Coming Soon</span>' +
+        '</div>'
+      );
     }
-
     const text = lesson.Text.trim();
-
-    // If content starts with an HTML tag, inject it directly
-    if (text.startsWith('<')) {
-      return text;
-    }
-
-    // Otherwise, render plain text with formatting
+    if (text.startsWith('<')) return text;
     return renderPlainText(text);
   }
 
-  // ── Plain text renderer ──
-  // Converts `•` bullet lines and `>` blockquote lines into styled HTML
   function renderPlainText(text) {
     const lines = text.split('\n');
     const blocks = [];
     const bullets = [];
 
-    const flushBullets = () => {
+    function flushBullets() {
       if (bullets.length > 0) {
-        const items = bullets
-          .map(b => `<li class="bullet-item"><span class="bullet-dot" aria-hidden="true"></span><span>${escapeHtml(b)}</span></li>`)
-          .join('\n');
-        blocks.push(`<ul class="bullet-list">${items}</ul>`);
+        const items = bullets.map(function (b) {
+          return '<li class="bullet-item"><span class="bullet-dot" aria-hidden="true"></span><span>' + escapeHtml(b) + '</span></li>';
+        }).join('\n');
+        blocks.push('<ul class="bullet-list">' + items + '</ul>');
         bullets.length = 0;
-      }
-    };
-
-    for (const line of lines) {
-      const trimmed = line.trim();
-      if (!trimmed) continue;
-
-      if (trimmed.startsWith('• ')) {
-        bullets.push(trimmed.slice(2));
-      } else if (trimmed.startsWith('> ')) {
-        flushBullets();
-        blocks.push(`<blockquote>${escapeHtml(trimmed.slice(2))}</blockquote>`);
-      } else {
-        flushBullets();
-        blocks.push(`<p>${escapeHtml(trimmed)}</p>`);
       }
     }
 
+    for (var i = 0; i < lines.length; i++) {
+      var trimmed = lines[i].trim();
+      if (!trimmed) continue;
+      if (trimmed.indexOf('• ') === 0) {
+        bullets.push(trimmed.slice(2));
+      } else if (trimmed.indexOf('> ') === 0) {
+        flushBullets();
+        blocks.push('<blockquote>' + escapeHtml(trimmed.slice(2)) + '</blockquote>');
+      } else {
+        flushBullets();
+        blocks.push('<p>' + escapeHtml(trimmed) + '</p>');
+      }
+    }
     flushBullets();
-
-    return `<div class="rendered-text">${blocks.join('\n')}</div>`;
+    return '<div class="rendered-text">' + blocks.join('\n') + '</div>';
   }
 
-  // ── Sanitize user/data strings ──
   function escapeHtml(str) {
-    return str
+    return String(str)
       .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;');
   }
 
-  // ── Update progress bar ──
-  function updateProgress(activeIndex) {
-    const pct = Math.round(((activeIndex + 1) / lessons.length) * 100);
-    if (progressFill)    progressFill.style.width = pct + '%';
+  function updateProgress() {
+    var completedCount = lessons.filter(function (_, i) { return isCompleted(getSectionId(), i); }).length;
+    const pct = lessons.length ? Math.round((completedCount / lessons.length) * 100) : 0;
+    if (progressFill) progressFill.style.width = pct + '%';
     if (progressPercent) progressPercent.textContent = pct + '%';
   }
 
-  // ── Select and display a lesson ──
+  function updatePrevNext() {
+    if (!lessonNavFooter) return;
+    const prevIndex = currentLessonIndex - 1;
+    const nextIndex = currentLessonIndex + 1;
+    const prevLesson = prevIndex >= 0 ? lessons[prevIndex] : null;
+    const nextLesson = nextIndex < lessons.length ? lessons[nextIndex] : null;
+
+    var completed = isCompleted(getSectionId(), currentLessonIndex);
+    lessonNavFooter.innerHTML =
+      '<div class="lesson-nav-prev">' +
+      (prevLesson
+        ? '<button type="button" class="btn-prev" aria-label="Previous lesson">' +
+          '<i class="fa-solid fa-arrow-left"></i> ' + escapeHtml(prevLesson.title) + '</button>'
+        : '<button type="button" class="btn-prev" disabled>Previous</button>') +
+      '</div>' +
+      '<div class="mark-complete-wrap">' +
+      '<button type="button" class="mark-complete-btn' + (completed ? ' completed' : '') + '" id="markCompleteBtn" aria-pressed="' + completed + '">' +
+      (completed ? '<i class="fa-solid fa-check-circle"></i> Completed' : '<i class="fa-regular fa-circle"></i> Mark as complete') +
+      '</button>' +
+      '</div>' +
+      '<div class="lesson-nav-next">' +
+      (nextLesson
+        ? '<button type="button" class="btn-next" aria-label="Next lesson">' +
+          escapeHtml(nextLesson.title) + ' <i class="fa-solid fa-arrow-right"></i></button>'
+        : '<button type="button" class="btn-next" disabled>Next</button>') +
+      '</div>';
+
+    var prevBtn = lessonNavFooter.querySelector('.btn-prev');
+    var nextBtn = lessonNavFooter.querySelector('.btn-next');
+    var markBtn = document.getElementById('markCompleteBtn');
+    if (prevBtn && prevLesson) prevBtn.addEventListener('click', function () { selectLesson(prevIndex); });
+    if (nextBtn && nextLesson) nextBtn.addEventListener('click', function () { selectLesson(nextIndex); });
+    if (markBtn) {
+      markBtn.addEventListener('click', function () {
+        var completedNew = !isCompleted(getSectionId(), currentLessonIndex);
+        setCompleted(getSectionId(), currentLessonIndex, completedNew);
+        if (lessons[currentLessonIndex].completed !== undefined) lessons[currentLessonIndex].completed = completedNew;
+        markBtn.classList.toggle('completed', completedNew);
+        markBtn.setAttribute('aria-pressed', completedNew);
+        markBtn.innerHTML = completedNew ? '<i class="fa-solid fa-check-circle"></i> Completed' : '<i class="fa-regular fa-circle"></i> Mark as complete';
+        updateProgress();
+        buildLessonList();
+      });
+    }
+  }
+
   function selectLesson(index) {
-    const lesson = lessons[index];
-    if (!lesson) return;
+    if (index < 0 || index >= lessons.length) return;
+    currentLessonIndex = index;
+    var lesson = lessons[currentLessonIndex];
 
-    // Update active sidebar state
-    navEl.querySelectorAll('.lesson-item').forEach((el, i) => {
-      const isActive = i === index;
-      el.classList.toggle('active', isActive);
-      el.setAttribute('aria-current', isActive ? 'true' : 'false');
-    });
+    setHash(getSectionId(), getLessonSlug(lesson));
 
-    // Render content
+    buildLessonList();
+
     contentEl.innerHTML = renderContent(lesson);
-
-    // Trigger fade-in animation
     contentEl.classList.remove('animating');
-    // Use requestAnimationFrame to force reflow before re-adding class
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
         contentEl.classList.add('animating');
       });
     });
 
-    // Scroll main area to top
-    const mainEl = document.getElementById('mainContent');
     if (mainEl) mainEl.scrollTo({ top: 0, behavior: 'smooth' });
 
-    // Update progress
-    updateProgress(index);
+    updateProgress();
+    updatePrevNext();
   }
 
-  // ── Init with first lesson ──
-  selectLesson(0);
+  // ── Search ──
+  if (lessonSearchEl) {
+    lessonSearchEl.addEventListener('input', function () {
+      buildLessonList();
+    });
+  }
 
+  // ── Scroll-to-top button ──
+  if (scrollBtn && mainEl) {
+    mainEl.addEventListener('scroll', function () {
+      scrollBtn.classList.toggle('is-visible', mainEl.scrollTop > 300);
+    });
+    scrollBtn.addEventListener('click', function () {
+      mainEl.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  // ── Mobile sidebar ──
+  if (sidebarToggle && sidebarEl && sidebarBackdrop) {
+    function openSidebar() {
+      sidebarEl.classList.add('is-open');
+      sidebarBackdrop.classList.add('is-visible');
+      sidebarToggle.setAttribute('aria-expanded', 'true');
+    }
+    function closeSidebar() {
+      sidebarEl.classList.remove('is-open');
+      sidebarBackdrop.classList.remove('is-visible');
+      sidebarToggle.setAttribute('aria-expanded', 'false');
+    }
+    sidebarToggle.addEventListener('click', function () {
+      if (sidebarEl.classList.contains('is-open')) closeSidebar(); else openSidebar();
+    });
+    sidebarBackdrop.addEventListener('click', closeSidebar);
+  }
+
+  // ── Init: apply hash or defaults ──
+  if (!applyHash()) {
+    setHash(getSectionId(), getLessonSlug(lessons[0]));
+  }
+  buildSectionSwitcher();
+  updateSectionInfo();
+  buildLessonList();
+  selectLesson(currentLessonIndex);
+
+  window.addEventListener('hashchange', function () {
+    if (applyHash()) {
+      updateSectionInfo();
+      buildSectionSwitcher();
+      buildLessonList();
+      selectLesson(currentLessonIndex);
+    }
+  });
 })();

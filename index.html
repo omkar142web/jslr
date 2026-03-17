@@ -16,10 +16,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <link rel="stylesheet" href="style.css" />
-    <script type="module" src="script.js" defer></script>
+    <link rel="stylesheet" href="styleContent.css" />
+    <script src="script.js" defer></script>
   </head>
 
   <body>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle menu" aria-expanded="false">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+    <div class="sidebar-backdrop" id="sidebarBackdrop" aria-hidden="true"></div>
+
     <div class="app">
 
       <!-- ===== SIDEBAR ===== -->
@@ -31,10 +37,19 @@
           </a>
         </div>
 
-        <div class="sidebar-section-info">
-          <span class="section-badge">Chapter 5</span>
-          <h2 class="section-heading">Data Types</h2>
-          <p class="section-subtext">Core data structures in JavaScript</p>
+        <div class="sidebar-search-wrap">
+          <i class="fa-solid fa-search sidebar-search-icon" aria-hidden="true"></i>
+          <input type="search" class="sidebar-search" id="lessonSearch" placeholder="Search lessons…" aria-label="Search lessons" autocomplete="off" />
+        </div>
+
+        <div class="sidebar-section-switcher" id="sectionSwitcher" role="tablist" aria-label="Sections">
+          <!-- Dynamically populated by script.js -->
+        </div>
+
+        <div class="sidebar-section-info" id="sidebarSectionInfo">
+          <span class="section-badge" id="sectionBadge">Chapter 5</span>
+          <h2 class="section-heading" id="sectionHeading">Data Types</h2>
+          <p class="section-subtext" id="sectionSubtext">Core data structures in JavaScript</p>
         </div>
 
         <nav class="sidebar-nav" id="lessonNav" aria-label="Lesson list">
@@ -56,8 +71,13 @@
 
       <!-- ===== MAIN CONTENT ===== -->
       <main class="main" id="mainContent">
-        <div class="content-wrap" id="lessonContent" role="region" aria-live="polite">
-          <!-- Dynamically populated by script.js -->
+        <div class="content-wrap">
+          <div id="lessonContent" role="region" aria-live="polite">
+            <!-- Dynamically populated by script.js -->
+          </div>
+          <footer class="lesson-nav-footer" id="lessonNavFooter" aria-label="Lesson navigation">
+            <!-- Prev/next buttons populated by script.js -->
+          </footer>
         </div>
       </main>
 

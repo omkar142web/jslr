@@ -45,6 +45,7 @@
   gap: var(--sp-3);
   padding-bottom: var(--sp-3);
   border-bottom: 1px solid var(--surface-border-dim);
+  scroll-margin-top: var(--sp-8);
 }
 
 .section-title::before {

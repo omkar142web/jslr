@@ -5926,7 +5926,7 @@ alert(meetup.date.getDate());
     return (section.id || currentSectionIndex) + '/' + getLessonSlug(lesson);
   }
 
-  var _isInternalHashChange = false;
+  let _isInternalHashChange = false;
   function setHash(sectionId, lessonSlug) {
     var hash = (sectionId || getSectionId()) + '/' + (lessonSlug || getLessonSlug(lessons[currentLessonIndex]));
     if (window.location.hash !== '#' + hash) {
@@ -5978,7 +5978,7 @@ alert(meetup.date.getDate());
       var progress = getSectionProgress(idx);
       var card = document.createElement('button');
       card.type = 'button';
-      card.role = 'tab';
+      card.setAttribute('role', 'tab');
       card.className = 'section-card' + (isActive ? ' active' : '');
       card.setAttribute('aria-selected', isActive);
       card.setAttribute('data-section-index', idx);
@@ -5993,6 +5993,7 @@ alert(meetup.date.getDate());
         currentLessonIndex = 0;
         setHash(section.id || idx, getLessonSlug(lessons[0]));
         updateSectionInfo();
+        if (lessonSearchEl) lessonSearchEl.value = '';
         buildLessonList();
         selectLesson(0);
       });
@@ -6042,10 +6043,6 @@ alert(meetup.date.getDate());
       titleSpan.className = 'lesson-title-text';
       titleSpan.textContent = lesson.title;
 
-      const iconSpan = document.createElement('span');
-      iconSpan.className = 'lesson-completed-icon';
-      iconSpan.setAttribute('aria-hidden', 'true');
-      iconSpan.innerHTML = '<i class="fa-solid fa-circle-check"></i>';
       if (!hasContent) {
         var soonSpan = document.createElement('span');
         soonSpan.className = 'lesson-soon';
@@ -6054,8 +6051,11 @@ alert(meetup.date.getDate());
         btn.appendChild(numSpan);
         btn.appendChild(titleSpan);
         btn.appendChild(soonSpan);
-        btn.appendChild(iconSpan);
       } else {
+        var iconSpan = document.createElement('span');
+        iconSpan.className = 'lesson-completed-icon';
+        iconSpan.setAttribute('aria-hidden', 'true');
+        iconSpan.innerHTML = '<i class="fa-solid fa-circle-check"></i>';
         btn.appendChild(numSpan);
         btn.appendChild(titleSpan);
         btn.appendChild(iconSpan);
@@ -6194,6 +6194,7 @@ alert(meetup.date.getDate());
         markBtn.innerHTML = completedNew ? '<i class="fa-solid fa-check-circle"></i> Completed' : '<i class="fa-regular fa-circle"></i> Mark as complete';
         updateProgress();
         buildLessonList();
+        buildSectionSwitcher();
       });
     }
   }
@@ -6268,17 +6269,16 @@ alert(meetup.date.getDate());
       return;
     }
     titles.forEach(function (h2, i) {
-      var id = 'section-' + i;
-      if (!h2.id) h2.id = id;
-      var a = document.createElement('a');
-      a.href = '#' + id;
-      a.className = 'toc-link';
-      a.textContent = h2.textContent;
-      a.addEventListener('click', function (e) {
-        e.preventDefault();
+      var id = 'doc-toc-h2-' + i;
+      h2.id = id;
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'toc-link';
+      btn.textContent = h2.textContent;
+      btn.addEventListener('click', function () {
         h2.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
-      tocEl.appendChild(a);
+      tocEl.appendChild(btn);
     });
     tocEl.classList.add('is-visible');
   }

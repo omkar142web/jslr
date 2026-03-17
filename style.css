@@ -417,6 +417,7 @@ button {
 .lesson-item.no-content {
   opacity: 0.6;
   pointer-events: auto;
+  cursor: default;
 }
 
 .lesson-item.no-content .lesson-soon {
@@ -480,17 +481,24 @@ button {
   flex: 1;
   min-width: 0;
   display: flex;
-  overflow: hidden;
   background: var(--surface-base);
+  height: 100vh;
 }
 
 .content-wrap {
   flex: 1;
   min-width: 0;
-  max-width: var(--content-max);
-  margin: 0 auto;
+  display: flex;
+  gap: var(--sp-8);
   padding: var(--sp-12) var(--sp-10) var(--sp-16);
   overflow-y: auto;
+}
+
+.content-main {
+  flex: 1;
+  min-width: 0;
+  max-width: var(--content-max);
+  margin: 0 auto;
 }
 
 .lesson-toc {
@@ -500,24 +508,26 @@ button {
   padding: var(--sp-6) var(--sp-4);
   align-self: flex-start;
   position: sticky;
-  top: var(--sp-4);
+  top: var(--sp-8);
+  height: fit-content;
   font-size: 12px;
   border-left: 1px solid var(--surface-border-dim);
 }
 
-.lesson-toc.is-visible {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-2);
-}
-
 .lesson-toc .toc-link {
-  color: var(--text-muted);
-  text-decoration: none;
-  padding: var(--sp-1) 0;
-  line-height: 1.4;
   display: block;
+  width: 100%;
+  padding: var(--sp-1) 0;
+  font: inherit;
+  font-size: 12px;
+  color: var(--text-muted);
+  text-align: left;
+  text-decoration: none;
+  background: none;
+  border: none;
   border-radius: var(--r-sm);
+  cursor: pointer;
+  line-height: 1.4;
   transition: color var(--t-fast);
 }
 
@@ -528,6 +538,8 @@ button {
 @media (min-width: 1100px) {
   .lesson-toc.is-visible {
     display: flex;
+    flex-direction: column;
+    gap: var(--sp-2);
   }
 }
 

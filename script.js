@@ -5865,6 +5865,3559 @@ alert(meetup.date.getDate());
 </main>
 `;
 
+
+// object starts --------------------------------
+
+javascriptCourse.sections[3].lessons[0].Text = `
+<main class="doc">
+
+<header class="doc-header">
+<h1 class="doc-title">Objects</h1>
+<p class="doc-description">
+As we know from the chapter Data types, there are eight data types in JavaScript.
+Seven of them are called “primitive”, because their values contain only a single thing
+(be it a string or a number or whatever).
+</p>
+
+<p class="doc-description">
+In contrast, objects are used to store keyed collections of various data and more complex entities.
+In JavaScript, objects penetrate almost every aspect of the language. So we must understand them
+first before going in-depth anywhere else.
+</p>
+
+<p class="doc-description">
+An object can be created with curly braces {…} with an optional list of properties.
+A property is a “key: value” pair, where key is a string (also called a “property name”),
+and value can be anything.
+</p>
+
+<p class="doc-description">
+We can imagine an object as a cabinet with signed files. Every piece of data is stored
+in its file by the key. It’s easy to find a file by its name or add/remove a file.
+</p>
+
+</header>
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Creating Objects</h2>
+
+<article class="concept-block">
+<p class="concept-text">
+An empty object (“empty cabinet”) can be created using one of two syntaxes:
+</p>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = new Object(); // "object constructor" syntax
+let user = {};  // "object literal" syntax
+</code></pre>
+</article>
+
+<article class="concept-block">
+<p class="concept-text">
+Usually, the curly braces {...} are used. That declaration is called an object literal.
+</p>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Literals and Properties</h2>
+
+<article class="concept-block">
+<p class="concept-text">
+We can immediately put some properties into {...} as “key: value” pairs:
+</p>
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let user = {     // an object
+  name: "John",  // by key "name" store value "John"
+  age: 30        // by key "age" store value 30
+};
+</code></pre>
+
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+A property has a key (also known as “name” or “identifier”) before the colon ":"
+and a value to the right of it.
+</p>
+
+<p class="concept-text">
+In the user object, there are two properties:
+</p>
+
+<ul>
+<li>The first property has the name "name" and the value "John".</li>
+<li>The second one has the name "age" and the value 30.</li>
+</ul>
+
+<p class="concept-text">
+The resulting user object can be imagined as a cabinet with two signed files labeled
+“name” and “age”.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Accessing Properties</h2>
+
+<article class="concept-block">
+<p class="concept-text">
+We can add, remove and read files from it at any time.
+</p>
+
+<p class="concept-text">
+Property values are accessible using the dot notation:
+</p>
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+// get property values of the object:
+alert( user.name ); // John
+alert( user.age ); // 30
+</code></pre>
+
+</article>
+
+<article class="concept-block">
+<p class="concept-text">
+The value can be of any type. Let’s add a boolean one:
+</p>
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+user.isAdmin = true;
+</code></pre>
+
+</article>
+
+<article class="concept-block">
+<p class="concept-text">
+To remove a property, we can use the delete operator:
+</p>
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+delete user.age;
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Multiword Property Names</h2>
+
+<article class="concept-block">
+<p class="concept-text">
+We can also use multiword property names, but then they must be quoted:
+</p>
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let user = {
+  name: "John",
+  age: 30,
+  "likes birds": true  // multiword property name must be quoted
+};
+</code></pre>
+
+</article>
+
+<article class="concept-block">
+<p class="concept-text">
+The last property in the list may end with a comma:
+</p>
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let user = {
+  name: "John",
+  age: 30,
+}
+</code></pre>
+
+</article>
+
+<div class="note-block">
+That is called a “trailing” or “hanging” comma. Makes it easier to add/remove/move
+around properties, because all lines become alike.
+</div>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Square Brackets</h2>
+
+<article class="concept-block">
+<p class="concept-text">
+For multiword properties, the dot access doesn’t work:
+</p>
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+// this would give a syntax error
+user.likes birds = true
+</code></pre>
+
+</article>
+
+<article class="concept-block">
+<p class="concept-text">
+JavaScript doesn’t understand that. It thinks that we address user.likes,
+and then gives a syntax error when comes across unexpected birds.
+</p>
+
+<p class="concept-text">
+The dot requires the key to be a valid variable identifier.
+That implies: contains no spaces, doesn’t start with a digit and
+doesn’t include special characters ($ and _ are allowed).
+</p>
+
+<p class="concept-text">
+There’s an alternative “square bracket notation” that works with any string:
+</p>
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let user = {};
+
+// set
+user["likes birds"] = true;
+
+// get
+alert(user["likes birds"]); // true
+
+// delete
+delete user["likes birds"];
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Using Variables as Keys</h2>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let key = "likes birds";
+
+// same as user["likes birds"] = true;
+user[key] = true;
+</code></pre>
+
+</article>
+
+<article class="concept-block">
+<p class="concept-text">
+Here, the variable key may be calculated at run-time or depend on the user input.
+And then we use it to access the property.
+</p>
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let user = {
+  name: "John",
+  age: 30
+};
+
+let key = prompt("What do you want to know about the user?", "name");
+
+// access by variable
+alert( user[key] ); // John (if enter "name")
+</code></pre>
+
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let user = {
+  name: "John",
+  age: 30
+};
+
+let key = "name";
+alert( user.key ) // undefined
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Computed Properties</h2>
+
+<article class="concept-block">
+<p class="concept-text">
+We can use square brackets in an object literal when creating an object.
+That’s called computed properties.
+</p>
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let fruit = prompt("Which fruit to buy?", "apple");
+
+let bag = {
+  [fruit]: 5,
+};
+
+alert( bag.apple ); // 5 if fruit="apple"
+</code></pre>
+
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let fruit = prompt("Which fruit to buy?", "apple");
+let bag = {};
+
+// take property name from the fruit variable
+bag[fruit] = 5;
+</code></pre>
+
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let fruit = 'apple';
+let bag = {
+  [fruit + 'Computers']: 5
+};
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Property Value Shorthand</h2>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+function makeUser(name, age) {
+  return {
+    name: name,
+    age: age,
+  };
+}
+
+let user = makeUser("John", 30);
+alert(user.name); // John
+</code></pre>
+
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+function makeUser(name, age) {
+  return {
+    name,
+    age,
+  };
+}
+</code></pre>
+
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let user = {
+  name,
+  age: 30
+};
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Property Names Limitations</h2>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let obj = {
+  for: 1,
+  let: 2,
+  return: 3
+};
+
+alert( obj.for + obj.let + obj.return );
+</code></pre>
+
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let obj = {
+  0: "test"
+};
+
+alert( obj["0"] );
+alert( obj[0] );
+</code></pre>
+
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let obj = {};
+obj.__proto__ = 5;
+alert(obj.__proto__);
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Property Existence Test</h2>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let user = {};
+
+alert( user.noSuchProperty === undefined );
+</code></pre>
+
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let user = { name: "John", age: 30 };
+
+alert( "age" in user );
+alert( "blabla" in user );
+</code></pre>
+
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let user = { age: 30 };
+
+let key = "age";
+alert( key in user );
+</code></pre>
+
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let obj = {
+  test: undefined
+};
+
+alert( obj.test );
+alert( "test" in obj );
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">The for..in Loop</h2>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let user = {
+  name: "John",
+  age: 30,
+  isAdmin: true
+};
+
+for (let key in user) {
+  alert( key );
+  alert( user[key] );
+}
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Object Ordering</h2>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let codes = {
+  "49": "Germany",
+  "41": "Switzerland",
+  "44": "Great Britain",
+  "1": "USA"
+};
+
+for (let code in codes) {
+  alert(code); // 1, 41, 44, 49
+}
+</code></pre>
+
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let user = {
+  name: "John",
+  surname: "Smith"
+};
+user.age = 25;
+
+for (let prop in user) {
+  alert( prop );
+}
+</code></pre>
+
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let codes = {
+  "+49": "Germany",
+  "+41": "Switzerland",
+  "+44": "Great Britain",
+  "+1": "USA"
+};
+
+for (let code in codes) {
+  alert( +code );
+}
+</code></pre>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section" id="summary">
+
+<h2 class="section-title">Summary</h2>
+
+<ul class="summary-list">
+
+<li>Objects are associative arrays with several special features.</li>
+
+<li>They store properties as key-value pairs.</li>
+
+<li>Property keys must be strings or symbols.</li>
+
+<li>Values can be of any type.</li>
+
+<li>Properties can be accessed using dot notation or square brackets.</li>
+
+<li>Use delete to remove properties.</li>
+
+<li>Use "key" in object to check if a property exists.</li>
+
+<li>Use for..in loop to iterate over properties.</li>
+
+<li>Arrays, Date, Error and many other structures are also objects in JavaScript.</li>
+
+<li>Objects are extremely powerful and this chapter only introduces the basics.</li>
+
+</ul>
+
+</section>
+
+</main>
+`;
+
+javascriptCourse.sections[3].lessons[1].Text = `
+<main class="doc">
+
+<header class="doc-header">
+<h1 class="doc-title">Object References and Copying</h1>
+
+<p class="doc-description">
+One of the fundamental differences of objects versus primitives is that objects are stored and copied “by reference”, whereas primitive values: strings, numbers, booleans, etc – are always copied “as a whole value”.
+</p>
+
+<p class="doc-description">
+That’s easy to understand if we look a bit under the hood of what happens when we copy a value.
+</p>
+
+</header>
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Copying Primitive Values</h2>
+
+<article class="concept-block">
+<p class="concept-text">
+Let’s start with a primitive, such as a string.
+</p>
+
+<p class="concept-text">
+Here we put a copy of message into phrase:
+</p>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let message = "Hello!";
+let phrase = message;
+</code></pre>
+</article>
+
+<article class="concept-block">
+<p class="concept-text">
+As a result we have two independent variables, each one storing the string "Hello!".
+</p>
+
+<p class="concept-text">
+Quite an obvious result, right?
+</p>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Objects Store References</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Objects are not like that.
+</p>
+
+<p class="concept-text">
+A variable assigned to an object stores not the object itself, but its “address in memory” – in other words “a reference” to it.
+</p>
+
+<p class="concept-text">
+Let’s look at an example of such a variable:
+</p>
+
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let user = {
+  name: "John"
+};
+</code></pre>
+
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+The object is stored somewhere in memory, while the user variable has a “reference” to it.
+</p>
+
+<p class="concept-text">
+We may think of an object variable, such as user, like a sheet of paper with the address of the object on it.
+</p>
+
+<p class="concept-text">
+When we perform actions with the object, e.g. take a property <code>user.name</code>, the JavaScript engine looks at what’s at that address and performs the operation on the actual object.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Copying Object References</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Now here’s why it’s important.
+</p>
+
+<p class="concept-text">
+When an object variable is copied, the reference is copied, but the object itself is not duplicated.
+</p>
+
+<p class="concept-text">
+For instance:
+</p>
+
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let user = { name: "John" };
+
+let admin = user; // copy the reference
+</code></pre>
+
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Now we have two variables, each storing a reference to the same object.
+</p>
+
+<p class="concept-text">
+As you can see, there’s still one object, but now with two variables that reference it.
+</p>
+
+<p class="concept-text">
+We can use either variable to access the object and modify its contents:
+</p>
+
+</article>
+
+<article class="example-block">
+
+<pre class="code-block"><code>
+let user = { name: 'John' };
+
+let admin = user;
+
+admin.name = 'Pete'; // changed by the "admin" reference
+
+alert(user.name); // 'Pete', changes are seen from the "user" reference
+</code></pre>
+
+</article>
+
+<div class="note-block">
+It’s as if we had a cabinet with two keys and used one of them (admin) to get into it and make changes. Then, if we later use another key (user), we are still opening the same cabinet and can access the changed contents.
+</div>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Comparison by Reference</h2>
+
+<article class="concept-block">
+<p class="concept-text">
+Two objects are equal only if they are the same object.
+</p>
+
+<p class="concept-text">
+For instance, here <code>a</code> and <code>b</code> reference the same object, thus they are equal:
+</p>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let a = {};
+let b = a; // copy the reference
+
+alert( a == b ); // true, both variables reference the same object
+alert( a === b ); // true
+</code></pre>
+</article>
+
+<article class="concept-block">
+<p class="concept-text">
+And here two independent objects are not equal, even though they look alike (both are empty):
+</p>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let a = {};
+let b = {}; // two independent objects
+
+alert( a == b ); // false
+</code></pre>
+</article>
+
+<article class="concept-block">
+<p class="concept-text">
+For comparisons like <code>obj1 > obj2</code> or for a comparison against a primitive <code>obj == 5</code>, objects are converted to primitives.
+We’ll study how object conversions work very soon, but to tell the truth, such comparisons are needed very rarely – usually they appear as a result of a programming mistake.
+</p>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Const Objects Can Be Modified</h2>
+
+<article class="concept-block">
+<p class="concept-text">
+An important side effect of storing objects as references is that an object declared as <code>const</code> can be modified.
+</p>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+const user = {
+  name: "John"
+};
+
+user.name = "Pete"; // (*)
+
+alert(user.name); // Pete
+</code></pre>
+</article>
+
+<article class="concept-block">
+<p class="concept-text">
+It might seem that the line (*) would cause an error, but it does not. The value of <code>user</code> is constant, it must always reference the same object, but properties of that object are free to change.
+</p>
+
+<p class="concept-text">
+In other words, the <code>const user</code> gives an error only if we try to set <code>user = ...</code> as a whole.
+</p>
+
+<p class="concept-text">
+That said, if we really need to make constant object properties, it’s also possible, but using totally different methods. We’ll mention that in the chapter Property flags and descriptors.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Cloning and Merging — Object.assign</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+So, copying an object variable creates one more reference to the same object.
+</p>
+
+<p class="concept-text">
+But what if we need to duplicate an object?
+</p>
+
+<p class="concept-text">
+We can create a new object and replicate the structure of the existing one, by iterating over its properties and copying them on the primitive level.
+</p>
+
+<p class="concept-text">
+Like this:
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = {
+  name: "John",
+  age: 30
+};
+
+let clone = {}; // the new empty object
+
+for (let key in user) {
+  clone[key] = user[key];
+}
+
+clone.name = "Pete";
+
+alert( user.name ); // still John in the original object
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Object.assign()</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+We can also use the method <code>Object.assign</code>.
+</p>
+
+<p class="concept-text">
+The syntax is:
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+Object.assign(dest, ...sources)
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+The first argument <code>dest</code> is a target object.
+Further arguments is a list of source objects.
+It copies the properties of all source objects into the target <code>dest</code>, and then returns it as the result.
+</p>
+
+<p class="concept-text">
+For example, we have user object, let’s add a couple of permissions to it:
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = { name: "John" };
+
+let permissions1 = { canView: true };
+let permissions2 = { canEdit: true };
+
+Object.assign(user, permissions1, permissions2);
+
+alert(user.name); 
+alert(user.canView); 
+alert(user.canEdit);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Nested Cloning Problem</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = {
+  name: "John",
+  sizes: {
+    height: 182,
+    width: 50
+  }
+};
+
+alert( user.sizes.height );
+</code></pre>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let clone = Object.assign({}, user);
+
+alert( user.sizes === clone.sizes ); // true
+
+user.sizes.width = 60;
+alert(clone.sizes.width);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">structuredClone</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let clone = structuredClone(user);
+
+alert( user.sizes === clone.sizes ); // false
+
+user.sizes.width = 60;
+alert(clone.sizes.width);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section" id="summary">
+
+<h2 class="section-title">Summary</h2>
+
+<ul class="summary-list">
+
+<li>Objects are assigned and copied by reference.</li>
+
+<li>A variable stores a reference (memory address) to the object.</li>
+
+<li>Copying a variable copies the reference, not the object.</li>
+
+<li>All operations via copied references affect the same object.</li>
+
+<li>Object.assign can be used for shallow copying.</li>
+
+<li>structuredClone can perform deep cloning.</li>
+
+<li>Deep cloning ensures nested objects are copied independently.</li>
+
+<li>Libraries like lodash provide functions such as _.cloneDeep for complex cloning.</li>
+
+</ul>
+
+</section>
+
+</main>
+`;
+
+javascriptCourse.sections[3].lessons[2].Text = `
+<main class="doc">
+
+<header class="doc-header">
+<h1 class="doc-title">Garbage Collection</h1>
+
+<p class="doc-description">
+Memory management in JavaScript is performed automatically and invisibly to us. We create primitives, objects, functions… All that takes memory.
+</p>
+
+<p class="doc-description">
+What happens when something is not needed any more? How does the JavaScript engine discover it and clean it up?
+</p>
+
+</header>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Reachability</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+The main concept of memory management in JavaScript is reachability.
+</p>
+
+<p class="concept-text">
+Simply put, “reachable” values are those that are accessible or usable somehow. They are guaranteed to be stored in memory.
+</p>
+
+<p class="concept-text">
+There’s a base set of inherently reachable values, that cannot be deleted for obvious reasons.
+</p>
+
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+For instance:
+</p>
+
+<ul class="summary-list">
+<li>The currently executing function, its local variables and parameters.</li>
+<li>Other functions on the current chain of nested calls, their local variables and parameters.</li>
+<li>Global variables.</li>
+<li>There are some other internal ones as well.</li>
+</ul>
+
+<p class="concept-text">
+These values are called roots.
+</p>
+
+<p class="concept-text">
+Any other value is considered reachable if it’s reachable from a root by a reference or by a chain of references.
+</p>
+
+<p class="concept-text">
+For instance, if there’s an object in a global variable, and that object has a property referencing another object, that object is considered reachable. And those that it references are also reachable.
+</p>
+
+<p class="concept-text">
+There’s a background process in the JavaScript engine that is called garbage collector. It monitors all objects and removes those that have become unreachable.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">A Simple Example</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+// user has a reference to the object
+let user = {
+  name: "John"
+};
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Here the arrow depicts an object reference. The global variable "user" references the object {name: "John"}.
+</p>
+
+<p class="concept-text">
+The "name" property of John stores a primitive, so it’s painted inside the object.
+</p>
+
+<p class="concept-text">
+If the value of user is overwritten, the reference is lost:
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+user = null;
+</code></pre>
+</article>
+
+<article class="concept-block">
+<p class="concept-text">
+Now John becomes unreachable. There’s no way to access it and no references to it.
+</p>
+
+<p class="concept-text">
+Garbage collector will junk the data and free the memory.
+</p>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Two References</h2>
+
+<article class="concept-block">
+<p class="concept-text">
+Now let’s imagine we copied the reference from user to admin:
+</p>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+// user has a reference to the object
+let user = {
+  name: "John"
+};
+
+let admin = user;
+</code></pre>
+</article>
+
+<article class="concept-block">
+<p class="concept-text">
+Now if we do the same:
+</p>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+user = null;
+</code></pre>
+</article>
+
+<article class="concept-block">
+<p class="concept-text">
+Then the object is still reachable via admin global variable, so it must stay in memory.
+</p>
+
+<p class="concept-text">
+If we overwrite admin too, then it can be removed.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Interlinked Objects</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function marry(man, woman) {
+  woman.husband = man;
+  man.wife = woman;
+
+  return {
+    father: man,
+    mother: woman
+  }
+}
+
+let family = marry({
+  name: "John"
+}, {
+  name: "Ann"
+});
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Function marry “marries” two objects by giving them references to each other and returns a new object that contains them both.
+</p>
+
+<p class="concept-text">
+As of now, all objects are reachable.
+</p>
+
+<p class="concept-text">
+Now let’s remove two references:
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+delete family.father;
+delete family.mother.husband;
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+It’s not enough to delete only one of these references, because all objects would still be reachable.
+</p>
+
+<p class="concept-text">
+But if we delete both, then John has no incoming reference any more.
+</p>
+
+<p class="concept-text">
+Outgoing references do not matter. Only incoming ones can make an object reachable.
+</p>
+
+<p class="concept-text">
+So John is now unreachable and will be removed from memory together with the data that became inaccessible.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Unreachable Island</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+It is possible that the whole island of interlinked objects becomes unreachable and is removed from the memory.
+</p>
+
+<p class="concept-text">
+The source object is the same as above. Then:
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+family = null;
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+This example demonstrates how important the concept of reachability is.
+</p>
+
+<p class="concept-text">
+John and Ann are still linked to each other, but that’s not enough because the root reference has been removed.
+</p>
+
+<p class="concept-text">
+The former family object has been unlinked from the root, so the whole island becomes unreachable and will be removed.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Internal Algorithms</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+The basic garbage collection algorithm is called “mark-and-sweep”.
+</p>
+
+<p class="concept-text">
+The following garbage collection steps are regularly performed:
+</p>
+
+<ul class="summary-list">
+<li>The garbage collector takes roots and marks them.</li>
+<li>Then it visits and marks all references from them.</li>
+<li>Then it visits marked objects and marks their references.</li>
+<li>The process continues until all reachable references are visited.</li>
+<li>All objects except marked ones are removed.</li>
+</ul>
+
+<p class="concept-text">
+We can imagine the process as spilling paint from the roots that flows through references and marks reachable objects.
+</p>
+
+<p class="concept-text">
+Objects that remain unmarked are removed.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Engine Optimizations</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+JavaScript engines apply many optimizations to make garbage collection faster and avoid delays in execution.
+</p>
+
+<p class="concept-text">
+Some common optimizations include:
+</p>
+
+<ul class="summary-list">
+
+<li><strong>Generational collection</strong> – objects are split into “new” and “old” groups. Short-lived objects are cleaned quickly.</li>
+
+<li><strong>Incremental collection</strong> – large garbage collection processes are divided into smaller steps to avoid long pauses.</li>
+
+<li><strong>Idle-time collection</strong> – garbage collection runs when the CPU is idle.</li>
+
+</ul>
+
+<p class="concept-text">
+Different JavaScript engines implement different algorithms and optimizations.
+</p>
+
+<p class="concept-text">
+Learning engine internals can help when doing low-level performance optimizations.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section" id="summary">
+
+<h2 class="section-title">Summary</h2>
+
+<ul class="summary-list">
+
+<li>Garbage collection in JavaScript happens automatically.</li>
+
+<li>Objects remain in memory while they are reachable.</li>
+
+<li>Reachability means the value can be accessed from a root reference.</li>
+
+<li>A group of interlinked objects can become unreachable together.</li>
+
+<li>Modern engines use advanced algorithms like mark-and-sweep.</li>
+
+<li>Optimizations such as generational, incremental and idle-time collection improve performance.</li>
+
+</ul>
+
+</section>
+
+</main>
+`;
+
+javascriptCourse.sections[3].lessons[3].Text = `
+<main class="doc">
+
+<header class="doc-header">
+<h1 class="doc-title">Object Methods, "this"</h1>
+
+<p class="doc-description">
+Objects are usually created to represent entities of the real world, like users, orders and so on.
+</p>
+
+</header>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Objects Represent Real Entities</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = {
+  name: "John",
+  age: 30
+};
+</code></pre>
+</article>
+
+<article class="concept-block">
+<p class="concept-text">
+In the real world, a user can act: select something from the shopping cart, login, logout etc.
+</p>
+
+<p class="concept-text">
+Actions are represented in JavaScript by functions in properties.
+</p>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Method Examples</h2>
+
+<article class="concept-block">
+<p class="concept-text">
+For a start, let’s teach the user to say hello:
+</p>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = {
+  name: "John",
+  age: 30
+};
+
+user.sayHi = function() {
+  alert("Hello!");
+};
+
+user.sayHi(); // Hello!
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Here we used a Function Expression to create a function and assign it to the property <code>user.sayHi</code>.
+</p>
+
+<p class="concept-text">
+Then we can call it as <code>user.sayHi()</code>. The user can now speak.
+</p>
+
+<p class="concept-text">
+A function that is a property of an object is called its <strong>method</strong>.
+</p>
+
+<p class="concept-text">
+So here we have a method <code>sayHi</code> of the object <code>user</code>.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Using a Predeclared Function</h2>
+
+<article class="concept-block">
+<p class="concept-text">
+We could also use a pre-declared function as a method.
+</p>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = {
+  // ...
+};
+
+function sayHi() {
+  alert("Hello!");
+}
+
+user.sayHi = sayHi;
+
+user.sayHi(); // Hello!
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Object-Oriented Programming</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+When we write our code using objects to represent entities, that’s called object-oriented programming, in short: OOP.
+</p>
+
+<p class="concept-text">
+OOP is a big topic and an interesting science of its own.
+</p>
+
+<p class="concept-text">
+It involves deciding how to choose the right entities and organize interaction between them.
+</p>
+
+<p class="concept-text">
+This is called software architecture and there are many famous books about it, such as:
+</p>
+
+<ul class="summary-list">
+<li>Design Patterns: Elements of Reusable Object-Oriented Software</li>
+<li>Object-Oriented Analysis and Design with Applications</li>
+</ul>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Method Shorthand</h2>
+
+<article class="concept-block">
+<p class="concept-text">
+There exists a shorter syntax for methods in an object literal.
+</p>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+user = {
+  sayHi: function() {
+    alert("Hello");
+  }
+};
+
+user = {
+  sayHi() {
+    alert("Hello");
+  }
+};
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Here we omit the word <code>function</code> and simply write the method name followed by parentheses.
+</p>
+
+<p class="concept-text">
+Although there are subtle differences related to inheritance, in almost all cases the shorter syntax is preferred.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">“this” in Methods</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+It’s common that an object method needs to access information stored inside the object.
+</p>
+
+<p class="concept-text">
+To access the object, a method can use the <code>this</code> keyword.
+</p>
+
+<p class="concept-text">
+The value of <code>this</code> is the object before the dot used to call the method.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = {
+  name: "John",
+  age: 30,
+
+  sayHi() {
+    alert(this.name);
+  }
+
+};
+
+user.sayHi(); // John
+</code></pre>
+</article>
+
+<article class="concept-block">
+<p class="concept-text">
+During the execution of <code>user.sayHi()</code>, the value of <code>this</code> will be the object <code>user</code>.
+</p>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Using Object Name Instead of this</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = {
+  name: "John",
+  age: 30,
+
+  sayHi() {
+    alert(user.name);
+  }
+
+};
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+This approach is unreliable.
+</p>
+
+<p class="concept-text">
+If we copy the object to another variable and change the original reference, the method may fail.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = {
+  name: "John",
+  age: 30,
+
+  sayHi() {
+    alert(user.name);
+  }
+
+};
+
+let admin = user;
+user = null;
+
+admin.sayHi(); // Error
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">“this” is Not Bound</h2>
+
+<article class="concept-block">
+<p class="concept-text">
+In JavaScript, the keyword <code>this</code> behaves differently compared to many other programming languages.
+</p>
+
+<p class="concept-text">
+It can be used in any function, even if it is not part of an object.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function sayHi() {
+  alert(this.name);
+}
+</code></pre>
+</article>
+
+<article class="concept-block">
+<p class="concept-text">
+The value of <code>this</code> is evaluated at runtime depending on how the function is called.
+</p>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Same Function, Different Objects</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = { name: "John" };
+let admin = { name: "Admin" };
+
+function sayHi() {
+  alert(this.name);
+}
+
+user.f = sayHi;
+admin.f = sayHi;
+
+user.f();  // John
+admin.f(); // Admin
+
+admin['f'](); // Admin
+</code></pre>
+</article>
+
+<article class="concept-block">
+<p class="concept-text">
+If <code>obj.f()</code> is called, then inside the function <code>this</code> equals <code>obj</code>.
+</p>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Calling Without an Object</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function sayHi() {
+  alert(this);
+}
+
+sayHi(); // undefined
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+In strict mode, <code>this</code> becomes <code>undefined</code>.
+</p>
+
+<p class="concept-text">
+In non-strict mode, it refers to the global object (<code>window</code> in browsers).
+</p>
+
+<p class="concept-text">
+Usually calling such a function is a programming mistake.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Arrow Functions Have No “this”</h2>
+
+<article class="concept-block">
+<p class="concept-text">
+Arrow functions are special because they do not have their own <code>this</code>.
+</p>
+
+<p class="concept-text">
+Instead, they inherit <code>this</code> from the outer function.
+</p>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = {
+  firstName: "Ilya",
+  sayHi() {
+    let arrow = () => alert(this.firstName);
+    arrow();
+  }
+};
+
+user.sayHi(); // Ilya
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section" id="summary">
+
+<h2 class="section-title">Summary</h2>
+
+<ul class="summary-list">
+
+<li>Functions stored inside object properties are called methods.</li>
+
+<li>Methods allow objects to perform actions.</li>
+
+<li>Methods can access object properties using <code>this</code>.</li>
+
+<li>The value of <code>this</code> is determined at runtime.</li>
+
+<li>When called as <code>object.method()</code>, the value of <code>this</code> becomes the object.</li>
+
+<li>Functions can be reused across multiple objects.</li>
+
+<li>Arrow functions do not have their own <code>this</code> and instead inherit it from the outer context.</li>
+
+</ul>
+
+</section>
+
+</main>
+`;
+
+javascriptCourse.sections[3].lessons[4].Text = `
+<main class="doc">
+
+<header class="doc-header">
+<h1 class="doc-title">Constructor, Operator "new"</h1>
+
+<p class="doc-description">
+The regular <code>{...}</code> syntax allows us to create one object. But often we need to create many similar objects, like multiple users or menu items and so on.
+</p>
+
+<p class="doc-description">
+That can be done using constructor functions and the <code>new</code> operator.
+</p>
+
+</header>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Constructor Function</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Constructor functions technically are regular functions. There are two conventions though:
+</p>
+
+<ul class="summary-list">
+<li>They are named with capital letter first.</li>
+<li>They should be executed only with the <code>new</code> operator.</li>
+</ul>
+
+<p class="concept-text">
+For instance:
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function User(name) {
+  this.name = name;
+  this.isAdmin = false;
+}
+
+let user = new User("Jack");
+
+alert(user.name); 
+alert(user.isAdmin);
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+When a function is executed with <code>new</code>, it performs the following steps:
+</p>
+
+<ul class="summary-list">
+<li>A new empty object is created and assigned to <code>this</code>.</li>
+<li>The function body executes and usually modifies <code>this</code>.</li>
+<li>The value of <code>this</code> is returned.</li>
+</ul>
+
+<p class="concept-text">
+In other words, <code>new User(...)</code> does something like this internally:
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function User(name) {
+
+  // this = {};
+
+  this.name = name;
+  this.isAdmin = false;
+
+  // return this;
+}
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+So <code>let user = new User("Jack")</code> gives the same result as:
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = {
+  name: "Jack",
+  isAdmin: false
+};
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Now if we want to create other users, we can call <code>new User("Ann")</code>, <code>new User("Alice")</code> and so on.
+</p>
+
+<p class="concept-text">
+That’s the main purpose of constructors – to implement reusable object creation code.
+</p>
+
+<p class="concept-text">
+Technically, any function (except arrow functions, because they don’t have <code>this</code>) can be used as a constructor.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">new function() { … }</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+If we have many lines of code related to creation of a single complex object, we can wrap them in an immediately called constructor function.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = new function() {
+  this.name = "John";
+  this.isAdmin = false;
+
+  // other code for creation
+};
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+This constructor cannot be called again because it is not saved anywhere.
+</p>
+
+<p class="concept-text">
+This trick encapsulates code that constructs a single object without future reuse.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Constructor Mode Test: new.target</h2>
+
+<div class="note-block">
+Advanced topic. This syntax is rarely used but useful for understanding how constructors work internally.
+</div>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Inside a function we can check whether it was called with <code>new</code> or without it using <code>new.target</code>.
+</p>
+
+<p class="concept-text">
+It is undefined for regular calls and equals the function if called with <code>new</code>.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function User() {
+  alert(new.target);
+}
+
+User();      // undefined
+new User();  // function User
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+We can also ensure the function works correctly whether called with or without <code>new</code>.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function User(name) {
+
+  if (!new.target) {
+    return new User(name);
+  }
+
+  this.name = name;
+}
+
+let john = User("John");
+alert(john.name);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Return from Constructors</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Usually constructors do not use a <code>return</code> statement.
+</p>
+
+<p class="concept-text">
+But if a return statement exists, the rules are:
+</p>
+
+<ul class="summary-list">
+<li>If <code>return</code> returns an object, that object becomes the result.</li>
+<li>If <code>return</code> returns a primitive, it is ignored.</li>
+</ul>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function BigUser() {
+
+  this.name = "John";
+
+  return { name: "Godzilla" };
+}
+
+alert(new BigUser().name);
+</code></pre>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function SmallUser() {
+
+  this.name = "John";
+
+  return;
+}
+
+alert(new SmallUser().name);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Omitting Parentheses</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Parentheses after <code>new</code> may be omitted.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = new User;
+
+// same as
+let user = new User();
+</code></pre>
+</article>
+
+<article class="concept-block">
+<p class="concept-text">
+Although this syntax is allowed, omitting parentheses is generally not considered good style.
+</p>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Methods in Constructor</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Constructor functions can also define methods.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+function User(name) {
+
+  this.name = name;
+
+  this.sayHi = function() {
+    alert("My name is: " + this.name);
+  };
+
+}
+
+let john = new User("John");
+
+john.sayHi();
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+The created object looks like this:
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+john = {
+  name: "John",
+  sayHi: function() { ... }
+};
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+To create complex objects there is a more advanced syntax called classes, which we will study later.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section" id="summary">
+
+<h2 class="section-title">Summary</h2>
+
+<ul class="summary-list">
+
+<li>Constructor functions are regular functions but named with a capital letter by convention.</li>
+
+<li>They should be called using the <code>new</code> operator.</li>
+
+<li>Calling with <code>new</code> creates a new object, assigns it to <code>this</code>, and returns it.</li>
+
+<li>Constructor functions allow creation of multiple similar objects.</li>
+
+<li>JavaScript also provides built-in constructors such as <code>Date</code> and <code>Set</code>.</li>
+
+</ul>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Objects, We'll Be Back</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+In this chapter we only covered the basics of objects and constructors.
+</p>
+
+<p class="concept-text">
+They are essential for learning more about data types and functions in later chapters.
+</p>
+
+<p class="concept-text">
+Later we will return to objects again and explore them more deeply in the chapters about prototypes, inheritance and classes.
+</p>
+
+</article>
+
+</section>
+
+</main>
+`;
+
+javascriptCourse.sections[3].lessons[5].Text = `
+<main class="doc">
+
+<header class="doc-header">
+<h1 class="doc-title">Optional Chaining '?.'</h1>
+
+<p class="doc-description">
+The optional chaining <code>?.</code> is a safe way to access nested object properties, even if an intermediate property doesn’t exist.
+</p>
+
+<div class="note-block">
+This is a recent addition to the language. Old browsers may need polyfills.
+</div>
+
+</header>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">The “Non-Existing Property” Problem</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+If you’ve just started to learn JavaScript, maybe this problem hasn’t appeared yet, but it’s very common.
+</p>
+
+<p class="concept-text">
+Imagine we have user objects that hold information about our users.
+</p>
+
+<p class="concept-text">
+Most users have addresses in <code>user.address</code> with the street stored in <code>user.address.street</code>, but some users did not provide an address.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = {}; // a user without "address" property
+
+alert(user.address.street); // Error!
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+JavaScript throws an error because <code>user.address</code> is undefined, and accessing <code>.street</code> on undefined fails.
+</p>
+
+<p class="concept-text">
+In many real cases we would prefer to receive <code>undefined</code> instead of an error.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Another Example from Web Development</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+In web development we often get elements from the DOM using methods like <code>document.querySelector()</code>.
+</p>
+
+<p class="concept-text">
+If the element does not exist, the method returns <code>null</code>.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let html = document.querySelector('.elem').innerHTML;
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+If the element does not exist, accessing <code>.innerHTML</code> of null throws an error.
+</p>
+
+<p class="concept-text">
+In some cases we would prefer the result to simply be <code>null</code> or <code>undefined</code>.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Traditional Solution Using Conditional Checks</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = {};
+
+alert(user.address ? user.address.street : undefined);
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+This works but it’s not elegant because <code>user.address</code> appears twice.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let html = document.querySelector('.elem')
+  ? document.querySelector('.elem').innerHTML
+  : null;
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+The element search is performed twice, which is inefficient.
+</p>
+
+<p class="concept-text">
+With deeper nesting, the code becomes even harder to read.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = {};
+
+alert(
+  user.address
+    ? user.address.street
+      ? user.address.street.name
+      : null
+    : null
+);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Using the && Operator</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = {};
+
+alert(user.address &&
+      user.address.street &&
+      user.address.street.name);
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+This avoids errors but still duplicates property names.
+</p>
+
+<p class="concept-text">
+For example, <code>user.address</code> appears multiple times.
+</p>
+
+<p class="concept-text">
+That’s why the optional chaining operator <code>?.</code> was introduced.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Optional Chaining</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+The optional chaining <code>?.</code> stops evaluation if the value before it is <code>null</code> or <code>undefined</code>.
+</p>
+
+<p class="concept-text">
+It then returns <code>undefined</code> instead of throwing an error.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = {};
+
+alert(user?.address?.street);
+</code></pre>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let html = document.querySelector('.elem')?.innerHTML;
+</code></pre>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = null;
+
+alert(user?.address);
+alert(user?.address.street);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Do Not Overuse Optional Chaining</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Use <code>?.</code> only where the absence of a value is acceptable.
+</p>
+
+<p class="concept-text">
+For example, if the user object must exist but the address may not:
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+user.address?.street
+</code></pre>
+</article>
+
+<article class="concept-block">
+<p class="concept-text">
+Overusing optional chaining may hide programming errors.
+</p>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Declared Variables Requirement</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+The variable before <code>?.</code> must exist.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+// ReferenceError
+user?.address;
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Short-Circuiting</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = null;
+let x = 0;
+
+user?.sayHi(x++);
+
+alert(x); // 0
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+If the left side is null or undefined, evaluation stops immediately.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Other Variants: ?.() and ?.[]</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let userAdmin = {
+  admin() {
+    alert("I am admin");
+  }
+};
+
+let userGuest = {};
+
+userAdmin.admin?.();
+userGuest.admin?.();
+</code></pre>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let key = "firstName";
+
+let user1 = {
+  firstName: "John"
+};
+
+let user2 = null;
+
+alert(user1?.[key]);
+alert(user2?.[key]);
+</code></pre>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+delete user?.name;
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Cannot Be Used for Assignment</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = null;
+
+user?.name = "John"; // Error
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Optional chaining works only for reading or deleting properties, not writing them.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section" id="summary">
+
+<h2 class="section-title">Summary</h2>
+
+<ul class="summary-list">
+
+<li><code>obj?.prop</code> – returns property if object exists.</li>
+
+<li><code>obj?.[prop]</code> – safe access using bracket notation.</li>
+
+<li><code>obj.method?.()</code> – safely calls a method if it exists.</li>
+
+<li>Optional chaining stops evaluation if the left side is null or undefined.</li>
+
+<li>It allows safe access to nested properties.</li>
+
+<li>Use it carefully so it does not hide programming errors.</li>
+
+</ul>
+
+</section>
+
+</main>
+`;
+
+javascriptCourse.sections[3].lessons[6].Text = `
+<main class="doc">
+
+<header class="doc-header">
+<h1 class="doc-title">Symbol Type</h1>
+
+<p class="doc-description">
+By specification, only two primitive types may serve as object property keys.
+</p>
+
+</header>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Allowed Property Key Types</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Only two primitive types may serve as object property keys:
+</p>
+
+<ul class="summary-list">
+<li>string type</li>
+<li>symbol type</li>
+</ul>
+
+<p class="concept-text">
+Otherwise, if another type such as number is used, it is automatically converted to a string.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+obj[1] === obj["1"]
+obj[true] === obj["true"]
+</code></pre>
+</article>
+
+<article class="concept-block">
+<p class="concept-text">
+Until now we have used only strings. Now we will explore symbols and what they can do.
+</p>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Symbols</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+A symbol represents a unique identifier.
+</p>
+
+<p class="concept-text">
+Symbols are created using the <code>Symbol()</code> function.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let id = Symbol();
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+When creating a symbol, we can optionally give it a description which is useful for debugging.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let id = Symbol("id");
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Symbols are always unique. Even if two symbols have the same description, they are different values.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let id1 = Symbol("id");
+let id2 = Symbol("id");
+
+alert(id1 == id2); // false
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Symbols Do Not Auto-Convert to String</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Most JavaScript values can automatically convert to a string. Symbols are special and do not auto-convert.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let id = Symbol("id");
+
+alert(id); // TypeError
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+If we want to display a symbol, we must convert it explicitly.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let id = Symbol("id");
+
+alert(id.toString());
+</code></pre>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let id = Symbol("id");
+
+alert(id.description);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Hidden Object Properties</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Symbols allow us to create hidden properties inside objects.
+</p>
+
+<p class="concept-text">
+These properties cannot be accidentally accessed or overwritten by other code.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = {
+  name: "John"
+};
+
+let id = Symbol("id");
+
+user[id] = 1;
+
+alert(user[id]);
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+The advantage is that other scripts using the same property name will not conflict.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let id = Symbol("id");
+
+user[id] = "Their id value";
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Symbols in Object Literals</h2>
+
+<article class="concept-block">
+<p class="concept-text">
+To use a symbol inside an object literal we must wrap it in square brackets.
+</p>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let id = Symbol("id");
+
+let user = {
+  name: "John",
+  [id]: 123
+};
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Symbols Are Skipped in for...in</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let id = Symbol("id");
+
+let user = {
+  name: "John",
+  age: 30,
+  [id]: 123
+};
+
+for (let key in user) {
+  alert(key);
+}
+
+alert(user[id]);
+</code></pre>
+</article>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Symbol properties are ignored by <code>for...in</code> loops and also by <code>Object.keys()</code>.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let clone = Object.assign({}, user);
+
+alert(clone[id]);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Global Symbols</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Normally symbols are always unique. But sometimes we want symbols with the same name to represent the same identifier.
+</p>
+
+<p class="concept-text">
+JavaScript provides a global symbol registry for this purpose.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let id = Symbol.for("id");
+
+let idAgain = Symbol.for("id");
+
+alert(id === idAgain);
+</code></pre>
+</article>
+
+<article class="concept-block">
+<p class="concept-text">
+Symbols created using <code>Symbol.for()</code> are called global symbols.
+</p>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Symbol.keyFor</h2>
+
+<article class="concept-block">
+<p class="concept-text">
+To get the name of a global symbol we can use <code>Symbol.keyFor()</code>.
+</p>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let sym = Symbol.for("name");
+
+alert(Symbol.keyFor(sym));
+</code></pre>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let globalSymbol = Symbol.for("name");
+let localSymbol = Symbol("name");
+
+alert(Symbol.keyFor(globalSymbol));
+alert(Symbol.keyFor(localSymbol));
+
+alert(localSymbol.description);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">System Symbols</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+JavaScript also has built-in system symbols used internally.
+</p>
+
+<ul class="summary-list">
+<li>Symbol.hasInstance</li>
+<li>Symbol.isConcatSpreadable</li>
+<li>Symbol.iterator</li>
+<li>Symbol.toPrimitive</li>
+</ul>
+
+<p class="concept-text">
+These allow developers to customize behavior of built-in operations.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section" id="summary">
+
+<h2 class="section-title">Summary</h2>
+
+<ul class="summary-list">
+
+<li>Symbol is a primitive type used for unique identifiers.</li>
+
+<li>Symbols are created using <code>Symbol()</code>.</li>
+
+<li>Symbols with the same description are still unique.</li>
+
+<li>Symbols can be used as object property keys.</li>
+
+<li>Symbol properties are ignored by <code>for...in</code> loops.</li>
+
+<li>Global symbols can be created with <code>Symbol.for()</code>.</li>
+
+<li>Symbol.keyFor retrieves the key of a global symbol.</li>
+
+<li>JavaScript provides system symbols such as <code>Symbol.iterator</code>.</li>
+
+</ul>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Important Note</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Technically symbols are not completely hidden.
+</p>
+
+<p class="concept-text">
+Methods like <code>Object.getOwnPropertySymbols(obj)</code> and <code>Reflect.ownKeys(obj)</code> can retrieve them.
+</p>
+
+<p class="concept-text">
+However most JavaScript syntax and libraries do not use these methods, which keeps symbol properties effectively hidden in normal usage.
+</p>
+
+</article>
+
+</section>
+
+</main>
+`;
+
+javascriptCourse.sections[3].lessons[7].Text = `
+<main class="doc">
+
+<header class="doc-header">
+<h1 class="doc-title">Object to Primitive Conversion</h1>
+
+<p class="doc-description">
+What happens when objects are added <code>obj1 + obj2</code>, subtracted <code>obj1 - obj2</code> or printed using <code>alert(obj)</code>?
+</p>
+
+<p class="doc-description">
+In such situations JavaScript automatically converts objects to primitive values before performing the operation.
+</p>
+
+</header>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Automatic Conversion</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+JavaScript does not allow developers to customize how operators work on objects.
+</p>
+
+<p class="concept-text">
+Unlike languages like Ruby or C++, JavaScript does not allow implementing special methods to handle operators like addition.
+</p>
+
+<p class="concept-text">
+When operations are applied to objects, JavaScript automatically converts them to primitive values first.
+</p>
+
+<p class="concept-text">
+After conversion, the operation is performed using the resulting primitive values.
+</p>
+
+</article>
+
+<div class="note-block">
+The result of operations like <code>obj1 + obj2</code> will always be a primitive value, not another object.
+</div>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Why This Matters</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Because of this limitation, mathematical operations with objects are rarely used in real projects.
+</p>
+
+<p class="concept-text">
+If they appear in code, it is usually because of a programming mistake.
+</p>
+
+<p class="concept-text">
+However, there are rare exceptions where such conversions are useful. For example subtracting two <code>Date</code> objects returns the time difference.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Conversion Rules</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Objects can only be converted to numeric or string values.
+</p>
+
+<p class="concept-text">
+There is no conversion to boolean because all objects are considered <code>true</code> in boolean contexts.
+</p>
+
+<p class="concept-text">
+Numeric conversion happens during mathematical operations such as subtraction or multiplication.
+</p>
+
+<p class="concept-text">
+String conversion happens when objects are displayed or concatenated with strings.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Hints</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+JavaScript uses conversion hints to decide which type of primitive value is expected.
+</p>
+
+<p class="concept-text">
+There are three possible hints defined in the specification.
+</p>
+
+<ul class="summary-list">
+<li><strong>"string"</strong> – used when a string is expected.</li>
+<li><strong>"number"</strong> – used when a numeric value is expected.</li>
+<li><strong>"default"</strong> – used when JavaScript is unsure which type to use.</li>
+</ul>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">String Hint</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+alert(obj);
+
+anotherObj[obj] = 123;
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Number Hint</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let num = Number(obj);
+
+let n = +obj;
+
+let delta = date1 - date2;
+
+let greater = user1 > user2;
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Default Hint</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let total = obj1 + obj2;
+
+if (user == 1) {
+  // comparison
+}
+</code></pre>
+</article>
+
+<article class="concept-block">
+<p class="concept-text">
+Most built-in objects treat the <code>"default"</code> hint the same as the <code>"number"</code> hint.
+</p>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Conversion Algorithm</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+To convert an object to a primitive value JavaScript checks for specific methods in the following order:
+</p>
+
+<ul class="summary-list">
+
+<li>Call <code>obj[Symbol.toPrimitive](hint)</code> if it exists.</li>
+
+<li>If hint is <code>"string"</code>, try <code>obj.toString()</code> then <code>obj.valueOf()</code>.</li>
+
+<li>If hint is <code>"number"</code> or <code>"default"</code>, try <code>obj.valueOf()</code> then <code>obj.toString()</code>.</li>
+
+</ul>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Symbol.toPrimitive</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+The modern way to control conversion is by implementing a method using the <code>Symbol.toPrimitive</code> symbol.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = {
+  name: "John",
+  money: 1000,
+
+  [Symbol.toPrimitive](hint) {
+    return hint == "string"
+      ? "{name: \\"John\\"}"
+      : this.money;
+  }
+};
+
+alert(user);
+alert(+user);
+alert(user + 500);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">toString and valueOf</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Before symbols existed JavaScript used two methods for conversion: <code>toString()</code> and <code>valueOf()</code>.
+</p>
+
+<p class="concept-text">
+They still work today and provide a fallback conversion mechanism.
+</p>
+
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = {
+  name: "John",
+  money: 1000,
+
+  toString() {
+    return "{name: \\"John\\"}";
+  },
+
+  valueOf() {
+    return this.money;
+  }
+};
+
+alert(user);
+alert(+user);
+alert(user + 500);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Simple Catch-All Conversion</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let user = {
+  name: "John",
+
+  toString() {
+    return this.name;
+  }
+};
+
+alert(user);
+alert(user + 500);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Conversion Can Return Any Primitive</h2>
+
+<article class="concept-block">
+
+<p class="concept-text">
+Conversion methods do not have to return the exact hinted type.
+</p>
+
+<p class="concept-text">
+The only requirement is that the returned value must be a primitive.
+</p>
+
+</article>
+
+</section>
+
+
+
+<section class="doc-section">
+
+<h2 class="section-title">Further Conversions</h2>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let obj = {
+  toString() {
+    return "2";
+  }
+};
+
+alert(obj * 2);
+</code></pre>
+</article>
+
+<article class="example-block">
+<pre class="code-block"><code>
+let obj = {
+  toString() {
+    return "2";
+  }
+};
+
+alert(obj + 2);
+</code></pre>
+</article>
+
+</section>
+
+
+
+<section class="doc-section" id="summary">
+
+<h2 class="section-title">Summary</h2>
+
+<ul class="summary-list">
+
+<li>Objects are automatically converted to primitives when needed.</li>
+
+<li>There are three conversion hints: <code>"string"</code>, <code>"number"</code>, and <code>"default"</code>.</li>
+
+<li>JavaScript first checks <code>Symbol.toPrimitive</code>.</li>
+
+<li>If not present it tries <code>valueOf()</code> and <code>toString()</code>.</li>
+
+<li>All conversion methods must return primitive values.</li>
+
+<li>Often implementing only <code>toString()</code> is enough for debugging and logging purposes.</li>
+
+</ul>
+
+</section>
+
+</main>
+`;
+
+
+
 /* ============================================================
    SECTION 3: APP INITIALIZATION
    Section switcher, hash routing, completion, search, prev/next

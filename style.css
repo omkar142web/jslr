@@ -496,8 +496,8 @@ button {
   display: flex;
   gap: var(--sp-8);
   padding: var(--sp-12) var(--sp-10) var(--sp-16);
-  /* overflow-y: auto; */
-  max-width: calc(var(--content-max) + 200px + var(--sp-8));
+  overflow-y: auto;
+  /* max-width: calc(var(--content-max) + 200px + var(--sp-8)); */
   margin: 0 auto;
 }
 

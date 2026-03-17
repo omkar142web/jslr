@@ -444,12 +444,13 @@ button {
 .sidebar-footer {
   padding: var(--sp-4) var(--sp-5);
   border-top: 1px solid var(--surface-border-dim);
+  padding-bottom: var(--sp-6);
 }
 
 .progress-wrap {
   display: flex;
   flex-direction: column;
-  gap: var(--sp-2);
+  gap: var(--sp-3);
 }
 
 .progress-label {
@@ -888,20 +889,14 @@ button {
   }
 }
 
-@media (max-width: 395px) {
-   
-  .mark-complete-wrap {
-    order: 1;
-    padding: 0 70px;
-    margin: auto;
-  }
-  .lesson-nav-prev {
-    order: 2;
-  }
-  .lesson-nav-next {
-    order: 3;
-  }
-  
+@media (max-width: 665px),
+       (min-width: 765px) and (max-width: 975px) ,
+       (min-width: 1090px) and (max-width: 1215px)  {
+   .lesson-nav-footer {
+    flex-direction: column !important;
+    justify-content: center ;
+   }
+ 
 }
 
 

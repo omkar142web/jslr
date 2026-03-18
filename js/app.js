@@ -17,8 +17,21 @@ import { courseRegistry } from '../data/registry.js';
   const CONFUSED_STORAGE_KEY = STORAGE_NS + "-confused";
 
   // Course selection
-  let currentCourseEntry = courseRegistry[0] || null;
-  let currentCourse = currentCourseEntry ? currentCourseEntry.course : javascriptCourse;
+  const urlParams = new URLSearchParams(window.location.search);
+  const domainId = urlParams.get('domain') || 'coding';
+  const subjectId = urlParams.get('subject') || 'javascript';
+
+  let currentDomain = courseRegistry[domainId] || courseRegistry['coding'];
+  let currentCourseEntry = currentDomain.subjects[subjectId] || currentDomain.subjects['javascript'];
+  let currentCourse = currentCourseEntry && currentCourseEntry.course ? currentCourseEntry.course : javascriptCourse;
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const iconEl = document.getElementById('courseIcon');
+    const titleEl = document.getElementById('courseTitle');
+    if (iconEl && currentCourseEntry) iconEl.textContent = currentCourseEntry.iconText || 'JS';
+    if (titleEl && currentCourseEntry) titleEl.textContent = currentCourseEntry.title || 'JavaScript Guide';
+    if (currentCourseEntry) document.title = currentCourseEntry.title + ' — ThinkBase';
+  });
 
   function getResumeIndex(sectionIdx, sectionLessons) {
   var sectionId = (currentCourse.sections[sectionIdx] || {}).id || String(sectionIdx);

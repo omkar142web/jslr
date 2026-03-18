@@ -281,56 +281,56 @@ export const javascriptCourse = {
       "lessons": [
         {
           "title": "Objects",
-          "contentUrl": "content/javascript/objects-basics/lesson-0.html",
+          "contentUrl": "domain/coding/javascript/objects-basics/lesson-0.html",
           "tags": [
             "objects-basics"
           ]
         },
         {
           "title": "Object references and copying",
-          "contentUrl": "content/javascript/objects-basics/lesson-1.html",
+          "contentUrl": "domain/coding/javascript/objects-basics/lesson-1.html",
           "tags": [
             "objects-basics"
           ]
         },
         {
           "title": "Garbage collection",
-          "contentUrl": "content/javascript/objects-basics/lesson-2.html",
+          "contentUrl": "domain/coding/javascript/objects-basics/lesson-2.html",
           "tags": [
             "objects-basics"
           ]
         },
         {
           "title": "Object methods, \"this\"",
-          "contentUrl": "content/javascript/objects-basics/lesson-3.html",
+          "contentUrl": "domain/coding/javascript/objects-basics/lesson-3.html",
           "tags": [
             "objects-basics"
           ]
         },
         {
           "title": "Constructor, operator \"new\"",
-          "contentUrl": "content/javascript/objects-basics/lesson-4.html",
+          "contentUrl": "domain/coding/javascript/objects-basics/lesson-4.html",
           "tags": [
             "objects-basics"
           ]
         },
         {
           "title": "Optional chaining '?.'",
-          "contentUrl": "content/javascript/objects-basics/lesson-5.html",
+          "contentUrl": "domain/coding/javascript/objects-basics/lesson-5.html",
           "tags": [
             "objects-basics"
           ]
         },
         {
           "title": "Symbol type",
-          "contentUrl": "content/javascript/objects-basics/lesson-6.html",
+          "contentUrl": "domain/coding/javascript/objects-basics/lesson-6.html",
           "tags": [
             "objects-basics"
           ]
         },
         {
           "title": "Object to primitive conversion",
-          "contentUrl": "content/javascript/objects-basics/lesson-7.html",
+          "contentUrl": "domain/coding/javascript/objects-basics/lesson-7.html",
           "tags": [
             "objects-basics"
           ]
@@ -343,35 +343,35 @@ export const javascriptCourse = {
       "lessons": [
         {
           "title": "Methods of primitives",
-          "contentUrl": "content/javascript/data-types/lesson-0.html",
+          "contentUrl": "domain/coding/javascript/data-types/lesson-0.html",
           "tags": [
             "data-types"
           ]
         },
         {
           "title": "Numbers",
-          "contentUrl": "content/javascript/data-types/lesson-1.html",
+          "contentUrl": "domain/coding/javascript/data-types/lesson-1.html",
           "tags": [
             "data-types"
           ]
         },
         {
           "title": "Strings",
-          "contentUrl": "content/javascript/data-types/lesson-2.html",
+          "contentUrl": "domain/coding/javascript/data-types/lesson-2.html",
           "tags": [
             "data-types"
           ]
         },
         {
           "title": "Arrays",
-          "contentUrl": "content/javascript/data-types/lesson-3.html",
+          "contentUrl": "domain/coding/javascript/data-types/lesson-3.html",
           "tags": [
             "data-types"
           ]
         },
         {
           "title": "Array methods",
-          "contentUrl": "content/javascript/data-types/lesson-4.html",
+          "contentUrl": "domain/coding/javascript/data-types/lesson-4.html",
           "tags": [
             "data-types",
             "Important"
@@ -379,49 +379,49 @@ export const javascriptCourse = {
         },
         {
           "title": "Iterables",
-          "contentUrl": "content/javascript/data-types/lesson-5.html",
+          "contentUrl": "domain/coding/javascript/data-types/lesson-5.html",
           "tags": [
             "data-types"
           ]
         },
         {
           "title": "Map and Set",
-          "contentUrl": "content/javascript/data-types/lesson-6.html",
+          "contentUrl": "domain/coding/javascript/data-types/lesson-6.html",
           "tags": [
             "data-types"
           ]
         },
         {
           "title": "WeakMap and WeakSet",
-          "contentUrl": "content/javascript/data-types/lesson-7.html",
+          "contentUrl": "domain/coding/javascript/data-types/lesson-7.html",
           "tags": [
             "data-types"
           ]
         },
         {
           "title": "Object.keys, values, entries",
-          "contentUrl": "content/javascript/data-types/lesson-8.html",
+          "contentUrl": "domain/coding/javascript/data-types/lesson-8.html",
           "tags": [
             "data-types"
           ]
         },
         {
           "title": "Destructuring assignment",
-          "contentUrl": "content/javascript/data-types/lesson-9.html",
+          "contentUrl": "domain/coding/javascript/data-types/lesson-9.html",
           "tags": [
             "data-types"
           ]
         },
         {
           "title": "Date and time",
-          "contentUrl": "content/javascript/data-types/lesson-10.html",
+          "contentUrl": "domain/coding/javascript/data-types/lesson-10.html",
           "tags": [
             "data-types"
           ]
         },
         {
           "title": "JSON methods, toJSON",
-          "contentUrl": "content/javascript/data-types/lesson-11.html",
+          "contentUrl": "domain/coding/javascript/data-types/lesson-11.html",
           "tags": [
             "data-types"
           ]
@@ -434,77 +434,77 @@ export const javascriptCourse = {
       "lessons": [
         {
           "title": "Recursion and stack",
-          "contentUrl": "content/javascript/advanced-functions/lesson-0.html",
+          "contentUrl": "domain/coding/javascript/advanced-functions/lesson-0.html",
           "tags": [
             "advanced-functions"
           ]
         },
         {
           "title": "Rest parameters and spread syntax",
-          "contentUrl": "content/javascript/advanced-functions/lesson-1.html",
+          "contentUrl": "domain/coding/javascript/advanced-functions/lesson-1.html",
           "tags": [
             "advanced-functions"
           ]
         },
         {
           "title": "Variable scope, closure",
-          "contentUrl": "content/javascript/advanced-functions/lesson-2.html",
+          "contentUrl": "domain/coding/javascript/advanced-functions/lesson-2.html",
           "tags": [
             "advanced-functions"
           ]
         },
         {
           "title": "The old \"var\"",
-          "contentUrl": "content/javascript/advanced-functions/lesson-3.html",
+          "contentUrl": "domain/coding/javascript/advanced-functions/lesson-3.html",
           "tags": [
             "advanced-functions"
           ]
         },
         {
           "title": "Global object",
-          "contentUrl": "content/javascript/advanced-functions/lesson-4.html",
+          "contentUrl": "domain/coding/javascript/advanced-functions/lesson-4.html",
           "tags": [
             "advanced-functions"
           ]
         },
         {
           "title": "Function object, NFE",
-          "contentUrl": "content/javascript/advanced-functions/lesson-5.html",
+          "contentUrl": "domain/coding/javascript/advanced-functions/lesson-5.html",
           "tags": [
             "advanced-functions"
           ]
         },
         {
           "title": "The \"new Function\" syntax",
-          "contentUrl": "content/javascript/advanced-functions/lesson-6.html",
+          "contentUrl": "domain/coding/javascript/advanced-functions/lesson-6.html",
           "tags": [
             "advanced-functions"
           ]
         },
         {
           "title": "Scheduling: setTimeout and setInterval",
-          "contentUrl": "content/javascript/advanced-functions/lesson-7.html",
+          "contentUrl": "domain/coding/javascript/advanced-functions/lesson-7.html",
           "tags": [
             "advanced-functions"
           ]
         },
         {
           "title": "Decorators and forwarding, call/apply",
-          "contentUrl": "content/javascript/advanced-functions/lesson-8.html",
+          "contentUrl": "domain/coding/javascript/advanced-functions/lesson-8.html",
           "tags": [
             "advanced-functions"
           ]
         },
         {
           "title": "Function binding",
-          "contentUrl": "content/javascript/advanced-functions/lesson-9.html",
+          "contentUrl": "domain/coding/javascript/advanced-functions/lesson-9.html",
           "tags": [
             "advanced-functions"
           ]
         },
         {
           "title": "Arrow functions revisited",
-          "contentUrl": "content/javascript/advanced-functions/lesson-10.html",
+          "contentUrl": "domain/coding/javascript/advanced-functions/lesson-10.html",
           "tags": [
             "advanced-functions"
           ]

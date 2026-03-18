@@ -145,7 +145,7 @@ javascriptCourse.sections.forEach((section, sIdx) => {
           snippet: plainText.substring(0, 200) + "..."
         });
         
-        lesson.contentUrl = `content/${courseId}/${sectionId}/${slug}.html`;
+        lesson.contentUrl = `domain/${courseId}/${sectionId}/${slug}.html`;
         delete lesson.Text;
       } else {
         searchIndex.push({
@@ -178,7 +178,7 @@ javascriptCourse.sections.forEach((section, sIdx) => {
               title: lesson.title,
               snippet: plainText.substring(0, 200) + "..."
             });
-            lesson.contentUrl = `content/${courseId}/${sectionId}/sub-${subIdx}/${slug}.html`;
+            lesson.contentUrl = `domain/${courseId}/${sectionId}/sub-${subIdx}/${slug}.html`;
             delete lesson.Text;
           } else {
             searchIndex.push({

@@ -359,9 +359,10 @@ import { courseRegistry } from '../data/registry.js';
     return;
   }
 
-  let currentSectionIndex = 4;
+  let currentSectionIndex = 0;
   let currentLessonIndex = 0;
-  let lessons = getLessons(currentCourse.sections[currentSectionIndex]);
+  // Fallback to first section if currentSectionIndex is out of bounds
+  let lessons = getLessons(currentCourse.sections[currentSectionIndex] || currentCourse.sections[0]);
 
   function getSection() {
     return currentCourse.sections[currentSectionIndex];
@@ -409,7 +410,7 @@ import { courseRegistry } from '../data/registry.js';
   }
 
   function getSectionProgress(sectionIndex) {
-    var section = javascriptCourse.sections[sectionIndex];
+    var section = currentCourse.sections[sectionIndex];
     if (!section) return { completed: 0, total: 0 };
     var sectionId = section.id || String(sectionIndex);
     var list = getLessons(section);
@@ -425,7 +426,7 @@ import { courseRegistry } from '../data/registry.js';
   function buildSectionSwitcher() {
     if (!sectionSwitcherEl) return;
     sectionSwitcherEl.innerHTML = "";
-    javascriptCourse.sections.forEach(function (section, idx) {
+    currentCourse.sections.forEach(function (section, idx) {
       var isActive = idx === currentSectionIndex;
       var progress = getSectionProgress(idx);
       var card = document.createElement("button");

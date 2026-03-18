@@ -69,8 +69,7 @@ function showSubjects(domain) {
     subjectGrid.innerHTML = `<p style="color: var(--text-muted); grid-column: 1/-1;">Coming soon! No subjects available yet.</p>`;
   } else {
     subjects.forEach((subject, index) => {
-      const card = document.createElement('a');
-      card.href = `course.html?domain=${domain.id}&subject=${subject.id}`;
+      const card = document.createElement('div');
       card.className = 'card';
       card.style.setProperty('--card-color', config.color);
       card.style.animation = `slideInUp 0.5s ease forwards ${index * 0.1}s`;
@@ -85,6 +84,10 @@ function showSubjects(domain) {
           <p>${subject.description}</p>
         </div>
       `;
+      
+      card.addEventListener('click', () => {
+        window.location.href = `course?domain=${domain.id}&subject=${subject.id}`;
+      });
       
       subjectGrid.appendChild(card);
     });

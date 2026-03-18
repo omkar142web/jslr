@@ -1,4 +1,5 @@
 import { javascriptCourse } from './javascript.js';
+import { pythonCourse } from './python.js';
 
 export const courseRegistry = {
   coding: {
@@ -19,7 +20,7 @@ export const courseRegistry = {
         title: "Python",
         iconText: "Py",
         description: "Master Python programming for web development and data science.",
-        course: null
+        course: pythonCourse
       },
       rust: {
         id: "rust",

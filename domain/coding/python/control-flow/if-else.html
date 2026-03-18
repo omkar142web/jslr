@@ -1,0 +1,41 @@
+<h2>If...Else Statements</h2>
+<p>Python supports the usual logical conditions from mathematics:</p>
+<ul>
+    <li>Equals: <code>a == b</code></li>
+    <li>Not Equals: <code>a != b</code></li>
+    <li>Less than: <code>a &lt; b</code></li>
+    <li>Greater than: <code>a &gt; b</code></li>
+</ul>
+
+<p>These conditions can be used in several ways, most commonly in "if statements" and loops.</p>
+
+<h3>If statement</h3>
+<p>An "if statement" is written by using the <code>if</code> keyword.</p>
+<pre class="code-block"><code class="language-python">a = 33
+b = 200
+if b > a:
+  print("b is greater than a")</code></pre>
+
+<div class="info-block">
+    <p><strong>Indentation:</strong> Python relies on indentation (whitespace at the beginning of a line) to define scope in the code. Other programming languages often use curly-brackets for this purpose.</p>
+</div>
+
+<h3>Elif</h3>
+<p>The <code>elif</code> keyword is Python's way of saying "if the previous conditions were not true, then try this condition".</p>
+<pre class="code-block"><code class="language-python">a = 33
+b = 33
+if b > a:
+  print("b is greater than a")
+elif a == b:
+  print("a and b are equal")</code></pre>
+
+<h3>Else</h3>
+<p>The <code>else</code> keyword catches anything which isn't caught by the preceding conditions.</p>
+<pre class="code-block"><code class="language-python">a = 200
+b = 33
+if b > a:
+  print("b is greater than a")
+elif a == b:
+  print("a and b are equal")
+else:
+  print("a is greater than b")</code></pre>

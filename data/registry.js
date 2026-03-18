@@ -91,20 +91,5 @@ export const courseRegistry = {
     description: 'Learn about human health, medicine, and wellness.',
     subjects: {
     }
-  },
-  domain_1773817840642: {
-    id: 'domain_1773817840642',
-    title: 'New Domain',
-    iconText: '',
-    description: '',
-    subjects: {
-      subject_1773817857372: {
-        id: 'subject_1773817857372',
-        title: 'New Subject',
-        iconText: '',
-        description: '',
-        course: null
-      }
-    }
   }
 };

@@ -417,7 +417,7 @@ import { courseRegistry } from '../data/registry.js';
     var total = list.length;
     var completed = 0;
     for (var i = 0; i < total; i++) {
-      if (completionState[getCompletionKey(sectionId, i)]) completed++;
+      if (isCompleted(sectionId, i)) completed++;
     }
     return { completed: completed, total: total };
   }

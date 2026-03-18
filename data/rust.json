@@ -1,0 +1,25 @@
+{
+  "exportVar": "rustCourse",
+  "title": "Rust Complete Guide",
+  "slug": "rust-guide",
+  "description": "",
+  "level": "beginner",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "Introduction to Rust",
+      "lessons": [
+        {
+          "title": "Hello Rust",
+          "completed": false,
+          "tags": [],
+          "contentUrl": "domain/coding/rust/intro/hello-rust.html",
+          "slug": "hello-rust",
+          "difficulty": "beginner",
+          "duration": "20 min"
+        }
+      ],
+      "description": "Rust Basics"
+    }
+  ]
+}

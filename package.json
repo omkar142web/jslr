@@ -20,6 +20,8 @@
   "homepage": "https://github.com/omkar142web/jslr#readme",
   "dependencies": {
     "acorn": "^8.16.0",
-    "astring": "^1.9.0"
+    "astring": "^1.9.0",
+    "cors": "^2.8.6",
+    "express": "^5.2.1"
   }
 }

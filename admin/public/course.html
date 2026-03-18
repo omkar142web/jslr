@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Course Builder (Admin)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#080b10;--surface:#0e1118;--panel:#131720;--border:#1e2535;--border-bright:#2a3448;
+  --text:#c8d0e0;--text-dim:#5a6480;--text-muted:#3a4260;
+  --accent:#00e5ff;--accent-soft:rgba(0,229,255,.08);--accent-glow:rgba(0,229,255,.2);
+  --green:#00ff9d;--green-soft:rgba(0,255,157,.08);
+  --amber:#ffb300;--amber-soft:rgba(255,179,0,.08);
+  --red:#ff4d6d;--red-soft:rgba(255,77,109,.08);
+  --purple:#a855f7;--purple-soft:rgba(168,85,247,.08);
+  --mono:'IBM Plex Mono',monospace;--display:'Syne',sans-serif;--r:6px;
+}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--mono);font-size:13px;line-height:1.6;overflow:hidden}
+.app{display:grid;grid-template-rows:48px 1fr;height:100vh}
+.topbar{display:flex;align-items:center;gap:16px;padding:0 20px;background:var(--surface);border-bottom:1px solid var(--border);flex-shrink:0}
+.topbar-logo{font-family:var(--display);font-size:15px;font-weight:800;color:var(--accent);letter-spacing:-.3px; text-decoration:none}
+.topbar-logo span{color:var(--text-dim);font-weight:400}
+.topbar-tag{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:2px 8px;border-radius:100px;background:var(--accent-soft);border:1px solid var(--accent-glow);color:var(--accent)}
+.topbar-actions{margin-left:auto;display:flex;gap:8px}
+.workspace{display:grid;grid-template-columns:280px 1fr 390px;height:100%;min-height:0}
+.panel{background:var(--panel);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden}
+.panel:last-child{border-right:none;border-left:1px solid var(--border)}
+.panel-head{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;flex-shrink:0}
+.panel-head-title{font-family:var(--display);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text-dim)}
+.panel-body{flex:1;overflow-y:auto;padding:12px}
+.panel-body::-webkit-scrollbar{width:3px}
+.panel-body::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+
+.tree-item{display:flex;align-items:center;gap:6px;padding:6px 8px;border-radius:var(--r);cursor:pointer;transition:background .12s,color .12s;user-select:none}
+.tree-item:hover{background:rgba(255,255,255,.04)}
+.tree-item.active{background:var(--accent-soft);color:var(--accent)}
+.tree-item.active .tree-icon{color:var(--accent)}
+.tree-indent{margin-left:18px}
+.tree-icon{font-size:11px;color:var(--text-muted);width:14px;text-align:center;flex-shrink:0}
+.tree-label{flex:1;font-size:12px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tree-badge{font-size:9px;font-weight:600;padding:1px 5px;border-radius:100px;background:var(--border);color:var(--text-dim);flex-shrink:0}
+.tree-del{opacity:0;font-size:10px;color:var(--red);padding:2px 4px;border-radius:3px;transition:opacity .12s}
+.tree-item:hover .tree-del{opacity:1}
+.tree-add-btn{display:flex;align-items:center;gap:6px;width:100%;padding:5px 8px;font:inherit;font-size:11px;color:var(--text-muted);background:none;border:1px dashed var(--border);border-radius:var(--r);cursor:pointer;transition:all .12s;text-align:left;margin-bottom:4px}
+.tree-add-btn:hover{color:var(--accent);border-color:var(--accent-glow);background:var(--accent-soft)}
+.tree-section-gap{height:6px}
+
+.form-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:12px;color:var(--text-muted)}
+.form-empty-icon{font-size:32px;opacity:.3}
+.form-empty-text{font-size:12px;text-align:center;max-width:200px;line-height:1.6}
+.form-section{margin-bottom:20px}
+.form-section-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text-muted);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+.form-row{margin-bottom:12px}
+.form-label{display:block;font-size:11px;font-weight:600;color:var(--text-dim);margin-bottom:5px}
+.form-input,.form-textarea,.form-select{width:100%;padding:8px 10px;font-family:var(--mono);font-size:12px;color:var(--text);background:var(--bg);border:1px solid var(--border);border-radius:var(--r);outline:none;transition:border-color .12s}
+.form-input:focus,.form-textarea:focus,.form-select:focus{border-color:var(--accent)}
+.form-textarea{resize:vertical;min-height:60px}
+.form-select{cursor:pointer}
+.form-select option{background:var(--panel)}
+.form-hint{font-size:10px;color:var(--text-muted);margin-top:4px}
+.form-grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tags-wrap{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;min-height:24px}
+.tag-chip{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;font-size:11px;background:var(--accent-soft);border:1px solid var(--accent-glow);color:var(--accent);border-radius:100px}
+.tag-chip-del{cursor:pointer;opacity:.6;transition:opacity .12s;font-size:10px}
+.tag-chip-del:hover{opacity:1}
+.tag-input-row{display:flex;gap:6px}
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:6px 10px;background:var(--bg);border:1px solid var(--border);border-radius:var(--r)}
+.toggle-label{font-size:11px;color:var(--text-dim)}
+.toggle{position:relative;width:32px;height:18px;flex-shrink:0}
+.toggle input{opacity:0;width:0;height:0;position:absolute}
+.toggle-slider{position:absolute;inset:0;background:var(--border);border-radius:100px;cursor:pointer;transition:background .2s}
+.toggle-slider::before{content:'';position:absolute;width:12px;height:12px;left:3px;top:3px;background:var(--text-muted);border-radius:50%;transition:transform .2s,background .2s}
+.toggle input:checked + .toggle-slider{background:var(--green-soft);border:1px solid var(--green)}
+.toggle input:checked + .toggle-slider::before{transform:translateX(14px);background:var(--green)}
+
+.btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;font:inherit;font-size:12px;font-weight:600;border-radius:var(--r);cursor:pointer;transition:all .12s;border:1px solid transparent}
+.btn-primary{background:var(--accent);color:#000;border-color:var(--accent)}
+.btn-primary:hover{background:#00ccee}
+.btn-ghost{background:transparent;color:var(--text-dim);border-color:var(--border)}
+.btn-ghost:hover{background:rgba(255,255,255,.05);color:var(--text)}
+.btn-danger{background:var(--red-soft);color:var(--red);border-color:var(--red)}
+.btn-danger:hover{background:var(--red);color:#fff}
+.btn-sm{padding:4px 10px;font-size:11px}
+.btn-green{background:var(--green-soft);color:var(--green);border-color:var(--green)}
+.btn-green:hover{background:var(--green);color:#000}
+
+.code-wrap{flex:1;overflow:auto;padding:16px}
+.code-wrap::-webkit-scrollbar{width:3px;height:3px}
+.code-wrap::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+.code-pre{font-family:var(--mono);font-size:11.5px;line-height:1.8;white-space:pre;color:#abb2bf}
+.t-kw{color:#c678dd}.t-str{color:#98c379}.t-key{color:#e06c75}
+.t-val{color:#d19a66}.t-cmt{color:#5c6370;font-style:italic}
+.t-fn{color:#61afef}.t-punc{color:#abb2bf}.t-bool{color:#d19a66}
+.t-num{color:#d19a66}
+.code-toolbar{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid var(--border);flex-shrink:0}
+.code-toolbar-title{font-family:var(--display);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text-dim)}
+
+.pill{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;font-size:10px;font-weight:600;border-radius:100px}
+.pill-course{background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-glow)}
+.pill-section{background:var(--amber-soft);color:var(--amber);border:1px solid rgba(255,179,0,.2)}
+.pill-lesson{background:var(--green-soft);color:var(--green);border:1px solid rgba(0,255,157,.2)}
+
+.notification{position:fixed;bottom:20px;right:20px;padding:10px 16px;background:var(--green);color:#000;font-weight:600;border-radius:var(--r);font-size:12px;z-index:1000;opacity:0;transform:translateY(8px);transition:all .2s;pointer-events:none}
+.notification.show{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <header class="topbar">
+    <a href="/" class="topbar-logo" style="margin-right:16px"><i class="fa fa-arrow-left" style="font-size:12px;margin-right:8px;color:var(--text-muted)"></i>Course<span>Builder</span></a>
+    <div class="topbar-tag" id="courseIdBadge">Custom Course</div>
+    <div style="font-size:11px;color:var(--text-muted);margin-left:8px">Knowledge Hub · Connected to Local Server</div>
+    <div class="topbar-actions">
+      <button class="btn btn-ghost btn-sm" onclick="editCourseInfo()"><i class="fa fa-gear"></i> Course Info</button>
+      <button class="btn btn-primary btn-sm" onclick="saveToServer()" id="saveBtn"><i class="fa fa-cloud-arrow-up"></i> Save to Server</button>
+    </div>
+  </header>
+
+  <div class="workspace">
+    <div class="panel">
+      <div class="panel-head">
+        <i class="fa fa-list-ul" style="color:var(--accent);font-size:11px"></i>
+        <span class="panel-head-title">Course Tree</span>
+        <button class="btn btn-ghost btn-sm" style="margin-left:auto;padding:2px 8px;font-size:10px" onclick="addSection()">+ Section</button>
+      </div>
+      <div class="panel-body" id="treeBody">Loading...</div>
+    </div>
+
+    <div class="panel" style="border-right:1px solid var(--border)">
+      <div class="panel-head">
+        <i class="fa fa-pen-to-square" style="color:var(--amber);font-size:11px"></i>
+        <span class="panel-head-title" id="formTitle">Editor</span>
+        <span id="formTypePill" style="margin-left:8px"></span>
+      </div>
+      <div class="panel-body" id="formBody">
+        <div class="form-empty">
+          <div class="form-empty-icon"><i class="fa fa-mouse-pointer"></i></div>
+          <div class="form-empty-text">Select an item in the tree to edit.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="code-toolbar">
+        <span class="code-toolbar-title">Generated Output</span>
+      </div>
+      <div class="code-wrap">
+        <pre class="code-pre" id="codeOutput"></pre>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="notification" id="notif">Action successful!</div>
+
+<script>
+let courseId = new URLSearchParams(window.location.search).get('id');
+if (!courseId) {
+  courseId = prompt("Enter Course ID (e.g. javascript):", "javascript");
+  if (!courseId) window.location.href = "/";
+  window.history.replaceState({}, '', '?id=' + encodeURIComponent(courseId));
+}
+
+document.getElementById('courseIdBadge').textContent = courseId;
+
+let course = {};
+let sections = [];
+let selected = null;
+let sectionTags = {};
+
+async function init() {
+  try {
+    const res = await fetch('/api/course/' + courseId);
+    course = await res.json();
+    sections = course.sections || [];
+    renderTree();
+  } catch(e) {
+    console.error(e);
+    notify('Failed to load. Is server running?');
+  }
+}
+
+async function saveToServer() {
+  const btn = document.getElementById('saveBtn');
+  btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Saving...';
+  
+  // Make sure sections are updated
+  course.sections = sections;
+  
+  let rawJs = getPlainOutput();
+
+  try {
+    const res = await fetch('/api/course/' + courseId, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ json: course, jsContent: rawJs })
+    });
+    
+    if (res.ok) {
+      notify('Saved to Server!');
+    } else {
+      notify('Error saving course');
+    }
+  } catch (e) {
+    notify('Network error');
+  } finally {
+    btn.innerHTML = '<i class="fa fa-cloud-arrow-up"></i> Save to Server';
+  }
+}
+
+function getPlainOutput() {
+  const temp = document.createElement('div');
+  temp.innerHTML = document.getElementById('codeOutput').innerHTML;
+  return temp.textContent || temp.innerText || "";
+}
+
+function renderTree() {
+  const body = document.getElementById('treeBody');
+  body.innerHTML = '';
+
+  if (sections.length === 0) {
+    body.innerHTML = '<div style="padding:20px;text-align:center;color:var(--text-muted);font-size:11px;line-height:1.7">No sections yet.</div>';
+    renderOutput(); return;
+  }
+
+  sections.forEach((sec, si) => {
+    const isSelSec = selected && selected.type === 'section' && selected.sIdx === si;
+    const secRow = el('div', 'tree-item' + (isSelSec ? ' active' : ''));
+    secRow.innerHTML = `
+      <span class="tree-icon"><i class="fa fa-layer-group"></i></span>
+      <span class="tree-label">${esc(sec.title || 'Untitled Section')}</span>
+      <span class="tree-badge">${(sec.lessons||[]).length}</span>
+      <button class="tree-del btn btn-sm" onclick="deleteSection(event,${si})"><i class="fa fa-trash"></i></button>
+    `;
+    secRow.addEventListener('click', e => { if (!e.target.closest('.tree-del')) selectSection(si); });
+    body.appendChild(secRow);
+
+    (sec.lessons || []).forEach((les, li) => {
+      const isSelLes = selected && selected.type === 'lesson' && selected.sIdx === si && selected.lIdx === li;
+      const lesRow = el('div', 'tree-item tree-indent' + (isSelLes ? ' active' : ''));
+      lesRow.innerHTML = `
+        <span class="tree-icon"><i class="fa fa-file-code"></i></span>
+        <span class="tree-label">${esc(les.title || 'Untitled Lesson')}</span>
+        ${les.completed ? '<span class="tree-badge" style="background:var(--green-soft);color:var(--green)">done</span>' : ''}
+        <button class="tree-del btn btn-sm" onclick="deleteLesson(event,${si},${li})"><i class="fa fa-trash"></i></button>
+      `;
+      lesRow.addEventListener('click', e => { if (!e.target.closest('.tree-del')) selectLesson(si, li); });
+      body.appendChild(lesRow);
+    });
+
+    const addBtn = el('div', 'tree-indent');
+    addBtn.innerHTML = `<button class="tree-add-btn" onclick="addLesson(${si})"><i class="fa fa-plus" style="font-size:9px"></i> Add Lesson</button>`;
+    body.appendChild(addBtn);
+    const gap = el('div', 'tree-section-gap');
+    body.appendChild(gap);
+  });
+
+  renderOutput();
+}
+
+function selectSection(si) { selected = { type: 'section', sIdx: si }; renderTree(); renderSectionForm(si); }
+function selectLesson(si, li) { selected = { type: 'lesson', sIdx: si, lIdx: li }; sectionTags = { current: [...(sections[si].lessons[li].tags || [])] }; renderTree(); renderLessonForm(si, li); }
+
+function editCourseInfo() {
+  selected = { type: 'course' };
+  renderTree();
+  document.getElementById('formTitle').textContent = 'Course Info';
+  document.getElementById('formTypePill').innerHTML = '<span class="pill pill-course"><i class="fa fa-graduation-cap"></i> Course</span>';
+  document.getElementById('formBody').innerHTML = `
+    <div class="form-section">
+      <div class="form-section-title">Export</div>
+      <div class="form-row"><label class="form-label">Export Variable Name</label><input class="form-input" id="f-exportVar" value="${esc(course.exportVar||`${courseId}Course`)}"/></div>
+    </div>
+    <div class="form-section">
+      <div class="form-section-title">Identity</div>
+      <div class="form-grid2">
+        <div class="form-row"><label class="form-label">Title</label><input class="form-input" id="f-title" value="${esc(course.title||'')}"/></div>
+        <div class="form-row"><label class="form-label">Slug</label><input class="form-input" id="f-slug" value="${esc(course.slug||courseId)}"/></div>
+      </div>
+      <div class="form-row"><label class="form-label">Description</label><textarea class="form-textarea" id="f-desc">${esc(course.description||'')}</textarea></div>
+      <div class="form-row"><label class="form-label">Level</label><select class="form-select" id="f-level">${['beginner','intermediate','advanced','beginner-to-advanced'].map(l=>`<option value="${l}" ${course.level===l?'selected':''}>${l}</option>`).join('')}</select></div>
+    </div>
+    <div style="display:flex;gap:8px;"><button class="btn btn-primary" onclick="saveCourseInfo()">Save Info</button></div>
+  `;
+}
+function saveCourseInfo() {
+  course.exportVar = document.getElementById('f-exportVar').value.trim();
+  course.title = document.getElementById('f-title').value;
+  course.slug = document.getElementById('f-slug').value;
+  course.description = document.getElementById('f-desc').value;
+  course.level = document.getElementById('f-level').value;
+  renderOutput(); notify('Course info saved');
+}
+
+function renderSectionForm(si) {
+  const sec = sections[si];
+  document.getElementById('formTitle').textContent = 'Section · ' + (sec.title || 'Untitled');
+  document.getElementById('formTypePill').innerHTML = '<span class="pill pill-section"><i class="fa fa-layer-group"></i> Section</span>';
+  document.getElementById('formBody').innerHTML = `
+    <div class="form-section">
+      <div class="form-section-title">Section Details</div>
+      <div class="form-grid2">
+        <div class="form-row"><label class="form-label">ID</label><input class="form-input" id="f-sec-id" value="${esc(sec.id||'')}"/></div>
+        <div class="form-row"><label class="form-label">Title</label><input class="form-input" id="f-sec-title" value="${esc(sec.title||'')}"/></div>
+      </div>
+      <div class="form-row"><label class="form-label">Description</label><textarea class="form-textarea" id="f-sec-desc">${esc(sec.description||'')}</textarea></div>
+    </div>
+    <div style="display:flex;gap:8px;"><button class="btn btn-primary" onclick="saveSection(${si})">Save Section</button></div>
+  `;
+}
+function saveSection(si) {
+  sections[si].id = document.getElementById('f-sec-id').value.trim();
+  sections[si].title = document.getElementById('f-sec-title').value;
+  sections[si].description = document.getElementById('f-sec-desc').value;
+  renderTree(); renderSectionForm(si); notify('Section saved');
+}
+
+function renderLessonForm(si, li) {
+  const les = sections[si].lessons[li];
+  const tags = sectionTags.current || [];
+  document.getElementById('formTitle').textContent = 'Lesson · ' + (les.title || 'Untitled');
+  document.getElementById('formTypePill').innerHTML = '<span class="pill pill-lesson"><i class="fa fa-file-code"></i> Lesson</span>';
+  document.getElementById('formBody').innerHTML = `
+    <div class="form-section">
+      <div class="form-section-title">Lesson Details</div>
+      <div class="form-row"><label class="form-label">Title</label><input class="form-input" id="f-les-title" value="${esc(les.title||'')}"/></div>
+      <div class="form-grid2">
+        <div class="form-row"><label class="form-label">Slug</label><input class="form-input" id="f-les-slug" value="${esc(les.slug||'')}"/></div>
+        <div class="form-row"><label class="form-label">Duration</label><input class="form-input" id="f-les-duration" value="${esc(les.duration||'')}"/></div>
+      </div>
+      <div class="form-grid2">
+        <div class="form-row"><label class="form-label">Difficulty</label><select class="form-select" id="f-les-difficulty"><option value="">— none —</option>${['beginner','intermediate','advanced'].map(d=>`<option value="${d}" ${les.difficulty===d?'selected':''}>${d}</option>`).join('')}</select></div>
+        <div class="form-row"><label class="form-label">Content URL</label><input class="form-input" id="f-les-contentUrl" value="${esc(les.contentUrl||'')}"/></div>
+      </div>
+      <div class="form-row">
+        <div class="toggle-row">
+          <span class="toggle-label">Completed</span>
+          <label class="toggle"><input type="checkbox" id="f-les-completed" ${les.completed?'checked':''}/><span class="toggle-slider"></span></label>
+        </div>
+      </div>
+    </div>
+    <div class="form-section">
+      <div class="form-section-title">Tags</div>
+      <div class="tags-wrap" id="tags-display">${tags.map((t,i)=>`<span class="tag-chip">${esc(t)}<span class="tag-chip-del" onclick="removeTag(${i})"><i class="fa fa-xmark"></i></span></span>`).join('')}</div>
+      <div class="tag-input-row">
+        <input class="form-input" id="f-tag-input" placeholder="Type tag & Enter…" onkeydown="if(event.key==='Enter'){event.preventDefault();addTagFromInput();}"/>
+        <button class="btn btn-ghost btn-sm" onclick="addTagFromInput()">+</button>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;"><button class="btn btn-primary" onclick="saveLesson(${si},${li})">Save Lesson</button></div>
+  `;
+}
+function addTagFromInput() {
+  const inp = document.getElementById('f-tag-input');
+  const val = inp.value.trim().toLowerCase().replace(/\s+/g,'-');
+  if (!val || sectionTags.current.includes(val)) { inp.value=''; return; }
+  sectionTags.current.push(val); inp.value = ''; refreshTagsDisplay();
+}
+function removeTag(i) { sectionTags.current.splice(i, 1); refreshTagsDisplay(); }
+function refreshTagsDisplay() {
+  const wrap = document.getElementById('tags-display');
+  if (wrap) wrap.innerHTML = sectionTags.current.map((t,i)=>`<span class="tag-chip">${esc(t)}<span class="tag-chip-del" onclick="removeTag(${i})"><i class="fa fa-xmark"></i></span></span>`).join('');
+}
+function saveLesson(si, li) {
+  const les = sections[si].lessons[li];
+  les.title = document.getElementById('f-les-title').value;
+  les.slug = document.getElementById('f-les-slug').value.trim();
+  les.duration = document.getElementById('f-les-duration').value.trim();
+  les.difficulty = document.getElementById('f-les-difficulty').value || undefined;
+  les.contentUrl = document.getElementById('f-les-contentUrl').value.trim();
+  les.completed = document.getElementById('f-les-completed').checked;
+  les.tags = [...(sectionTags.current||[])];
+  if (!les.difficulty) delete les.difficulty; if (!les.duration) delete les.duration; if (!les.slug) delete les.slug; if (!les.contentUrl) delete les.contentUrl;
+  renderTree(); renderLessonForm(si, li); notify('Lesson saved');
+}
+
+function addSection() { const si = sections.length; sections.push({ id: 'sec_'+Date.now(), title: 'New Section', lessons: [] }); selected = { type: 'section', sIdx: si }; renderTree(); renderSectionForm(si); }
+function deleteSection(e, si) { if (e) e.stopPropagation(); if (confirm('Delete?')) { sections.splice(si, 1); selected = null; renderTree(); document.getElementById('formBody').innerHTML=''; } }
+function addLesson(si) { const li = sections[si].lessons.length; sections[si].lessons.push({ title: 'New Lesson', completed: false, tags: [] }); selected = { type: 'lesson', sIdx: si, lIdx: li }; sectionTags = { current: [] }; renderTree(); renderLessonForm(si, li); }
+function deleteLesson(e, si, li) { if (e) e.stopPropagation(); if (confirm('Delete?')) { sections[si].lessons.splice(li, 1); selected = { type: 'section', sIdx: si }; renderTree(); renderSectionForm(si); } }
+
+function renderOutput() { document.getElementById('codeOutput').innerHTML = genCourse(); }
+function genCourse() {
+  let out = '';
+  out += tok('kw','export') + ' ' + tok('kw','const') + ' ' + tok('fn', course.exportVar||`${courseId}Course`) + ' ' + tok('punc','= {') + '\n';
+  if(course.title) out += f(1, 'title', str(course.title), true);
+  if(course.slug) out += f(1, 'slug', str(course.slug), true);
+  if(course.description) out += f(1, 'description', str(course.description), true);
+  out += f(1, 'level', str(course.level||'beginner'), true);
+  out += f(1, 'progress', tok('num','0'), true);
+  out += ind(1) + tok('key','sections') + tok('punc',': [') + '\n';
+  if (sections.length === 0) { out += ind(2) + tok('cmt','// No sections yet') + '\n'; } else {
+    sections.forEach((sec, si) => {
+      const isLastSec = si === sections.length - 1;
+      out += ind(2) + tok('punc','{') + '\n';
+      out += f(3, 'id', str(sec.id||''), true);
+      out += f(3, 'title', str(sec.title||''), true);
+      if (sec.description) out += f(3, 'description', str(sec.description), true);
+      out += ind(3) + tok('key','lessons') + tok('punc',': [') + '\n';
+      if (!sec.lessons || sec.lessons.length === 0) { out += ind(4) + tok('cmt','// No lessons yet') + '\n'; } else {
+        sec.lessons.forEach((les, li) => {
+          const isLastLes = li === sec.lessons.length - 1;
+          out += ind(4) + tok('punc','{') + '\n';
+          out += f(5, 'title', str(les.title||''), true);
+          if (les.slug) out += f(5, 'slug', str(les.slug), true);
+          if (les.difficulty) out += f(5, 'difficulty', str(les.difficulty), true);
+          if (les.duration) out += f(5, 'duration', str(les.duration), true);
+          out += f(5, 'completed', tok('bool', les.completed ? 'true' : 'false'), true);
+          if (les.contentUrl) out += f(5, 'contentUrl', str(les.contentUrl), true);
+          const tags = les.tags || [];
+          if (tags.length > 0) {
+            out += ind(5) + tok('key','tags') + tok('punc',': [') + tags.map(t => tok('str',"'"+esc2(t)+"'")).join(tok('punc',', ')) + tok('punc',']') + '\n';
+          }
+          out += ind(4) + tok('punc', isLastLes ? '}' : '},') + '\n';
+        });
+      }
+      out += ind(3) + tok('punc',']') + '\n';
+      out += ind(2) + tok('punc', isLastSec ? '}' : '},') + '\n';
+    });
+  }
+  out += ind(1) + tok('punc',']') + '\n';
+  out += tok('punc','};');
+  return out;
+}
+function f(indent, key, valHtml, comma) { return ind(indent) + tok('key', key) + tok('punc', ': ') + valHtml + (comma ? tok('punc',',') : '') + '\n'; }
+function str(s) { return tok('str', "'" + esc2(s) + "'"); }
+function tok(type, val) { return `<span class="t-${type}">${htmlEsc(val)}</span>`; }
+function ind(n) { return '  '.repeat(n); }
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function esc2(s) { return String(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/\n/g,'\\n').replace(/\r/g,''); }
+function htmlEsc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function el(tag, cls) { const e = document.createElement(tag); e.className = cls; return e; }
+function notify(msg) { const n=document.getElementById('notif');n.textContent=msg;n.classList.add('show');setTimeout(()=>n.classList.remove('show'),2200); }
+
+init();
+</script>
+</body>
+</html>

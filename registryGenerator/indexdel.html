@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Registry Builder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#080b10;
+  --surface:#0e1118;
+  --panel:#131720;
+  --border:#1e2535;
+  --border-bright:#2a3448;
+  --text:#c8d0e0;
+  --text-dim:#5a6480;
+  --text-muted:#3a4260;
+  --accent:#00e5ff;
+  --accent-soft:rgba(0,229,255,.08);
+  --accent-glow:rgba(0,229,255,.2);
+  --green:#00ff9d;
+  --green-soft:rgba(0,255,157,.08);
+  --amber:#ffb300;
+  --amber-soft:rgba(255,179,0,.08);
+  --red:#ff4d6d;
+  --red-soft:rgba(255,77,109,.08);
+  --purple:#a855f7;
+  --purple-soft:rgba(168,85,247,.08);
+  --mono:'IBM Plex Mono',monospace;
+  --display:'Syne',sans-serif;
+  --r:6px;
+}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--mono);font-size:13px;line-height:1.6;overflow:hidden}
+
+/* ── LAYOUT ── */
+.app{display:grid;grid-template-rows:48px 1fr;height:100vh}
+.topbar{display:flex;align-items:center;gap:16px;padding:0 20px;background:var(--surface);border-bottom:1px solid var(--border);flex-shrink:0}
+.topbar-logo{font-family:var(--display);font-size:15px;font-weight:800;color:var(--accent);letter-spacing:-.3px}
+.topbar-logo span{color:var(--text-dim);font-weight:400}
+.topbar-tag{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:2px 8px;border-radius:100px;background:var(--accent-soft);border:1px solid var(--accent-glow);color:var(--accent)}
+.topbar-actions{margin-left:auto;display:flex;gap:8px}
+
+.workspace{display:grid;grid-template-columns:280px 1fr 380px;height:100%;min-height:0}
+
+/* ── PANELS ── */
+.panel{background:var(--panel);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden}
+.panel:last-child{border-right:none;border-left:1px solid var(--border)}
+.panel-head{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;flex-shrink:0}
+.panel-head-title{font-family:var(--display);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text-dim)}
+.panel-body{flex:1;overflow-y:auto;padding:12px}
+.panel-body::-webkit-scrollbar{width:3px}
+.panel-body::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+
+/* ── TREE ── */
+.tree-section{margin-bottom:4px}
+.tree-item{display:flex;align-items:center;gap:6px;padding:6px 8px;border-radius:var(--r);cursor:pointer;transition:background .12s,color .12s;user-select:none;position:relative}
+.tree-item:hover{background:rgba(255,255,255,.04)}
+.tree-item.active{background:var(--accent-soft);color:var(--accent)}
+.tree-item.active .tree-icon{color:var(--accent)}
+.tree-indent{margin-left:16px}
+.tree-indent2{margin-left:32px}
+.tree-icon{font-size:11px;color:var(--text-muted);width:14px;text-align:center;flex-shrink:0}
+.tree-label{flex:1;font-size:12px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tree-badge{font-size:9px;font-weight:600;padding:1px 5px;border-radius:100px;background:var(--border);color:var(--text-dim);flex-shrink:0}
+.tree-del{opacity:0;font-size:10px;color:var(--red);padding:2px 4px;border-radius:3px;transition:opacity .12s}
+.tree-item:hover .tree-del{opacity:1}
+.tree-add-btn{display:flex;align-items:center;gap:6px;width:100%;padding:5px 8px;font:inherit;font-size:11px;color:var(--text-muted);background:none;border:1px dashed var(--border);border-radius:var(--r);cursor:pointer;transition:all .12s;text-align:left}
+.tree-add-btn:hover{color:var(--accent);border-color:var(--accent-glow);background:var(--accent-soft)}
+
+/* ── FORM ── */
+.form-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:12px;color:var(--text-muted)}
+.form-empty-icon{font-size:32px;opacity:.3}
+.form-empty-text{font-size:12px;text-align:center;max-width:200px;line-height:1.6}
+.form-section{margin-bottom:20px}
+.form-section-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text-muted);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+.form-row{margin-bottom:12px}
+.form-label{display:block;font-size:11px;font-weight:600;color:var(--text-dim);margin-bottom:5px}
+.form-input,.form-textarea,.form-select{width:100%;padding:8px 10px;font-family:var(--mono);font-size:12px;color:var(--text);background:var(--bg);border:1px solid var(--border);border-radius:var(--r);outline:none;transition:border-color .12s}
+.form-input:focus,.form-textarea:focus,.form-select:focus{border-color:var(--accent)}
+.form-textarea{resize:vertical;min-height:64px}
+.form-select{cursor:pointer}
+.form-select option{background:var(--panel)}
+.form-hint{font-size:10px;color:var(--text-muted);margin-top:4px}
+.tags-wrap{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.tag-chip{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;font-size:11px;background:var(--accent-soft);border:1px solid var(--accent-glow);color:var(--accent);border-radius:100px}
+.tag-chip-del{cursor:pointer;opacity:.6;transition:opacity .12s}
+.tag-chip-del:hover{opacity:1}
+.form-grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.color-preview{display:flex;align-items:center;gap:8px}
+.color-swatch{width:20px;height:20px;border-radius:4px;border:1px solid var(--border);flex-shrink:0}
+
+/* ── CODE OUTPUT ── */
+.code-wrap{flex:1;overflow:auto;padding:16px}
+.code-wrap::-webkit-scrollbar{width:3px;height:3px}
+.code-wrap::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+.code-pre{font-family:var(--mono);font-size:11.5px;line-height:1.8;white-space:pre;color:#abb2bf}
+/* syntax colors */
+.t-kw{color:#c678dd}
+.t-str{color:#98c379}
+.t-key{color:#e06c75}
+.t-val{color:#d19a66}
+.t-cmt{color:#5c6370;font-style:italic}
+.t-fn{color:#61afef}
+.t-punc{color:#abb2bf}
+
+/* ── BUTTONS ── */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;font:inherit;font-size:12px;font-weight:600;border-radius:var(--r);cursor:pointer;transition:all .12s;border:1px solid transparent}
+.btn-primary{background:var(--accent);color:#000;border-color:var(--accent)}
+.btn-primary:hover{background:#00ccee}
+.btn-ghost{background:transparent;color:var(--text-dim);border-color:var(--border)}
+.btn-ghost:hover{background:rgba(255,255,255,.05);color:var(--text)}
+.btn-danger{background:var(--red-soft);color:var(--red);border-color:var(--red)}
+.btn-danger:hover{background:var(--red);color:#fff}
+.btn-sm{padding:4px 10px;font-size:11px}
+.btn-green{background:var(--green-soft);color:var(--green);border-color:var(--green)}
+.btn-green:hover{background:var(--green);color:#000}
+
+/* ── MISC ── */
+.divider{height:1px;background:var(--border);margin:16px 0}
+.pill{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;font-size:10px;font-weight:600;border-radius:100px}
+.pill-domain{background:var(--purple-soft);color:var(--purple);border:1px solid rgba(168,85,247,.2)}
+.pill-subject{background:var(--amber-soft);color:var(--amber);border:1px solid rgba(255,179,0,.2)}
+.pill-lesson{background:var(--green-soft);color:var(--green);border:1px solid rgba(0,255,157,.2)}
+.notification{position:fixed;bottom:20px;right:20px;padding:10px 16px;background:var(--green);color:#000;font-weight:600;border-radius:var(--r);font-size:12px;z-index:1000;opacity:0;transform:translateY(8px);transition:all .2s;pointer-events:none}
+.notification.show{opacity:1;transform:translateY(0)}
+.code-toolbar{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid var(--border);flex-shrink:0}
+.code-toolbar-tabs{display:flex;gap:4px}
+.tab-btn{padding:4px 10px;font:inherit;font-size:11px;font-weight:600;background:none;border:1px solid var(--border);border-radius:var(--r);color:var(--text-dim);cursor:pointer;transition:all .12s}
+.tab-btn.active{background:var(--accent-soft);border-color:var(--accent-glow);color:var(--accent)}
+.subject-course-row{display:flex;align-items:center;gap:8px;padding:6px 8px;background:var(--bg);border:1px solid var(--border);border-radius:var(--r);margin-bottom:6px}
+.subject-course-label{flex:1;font-size:11px;color:var(--text-dim)}
+.subject-course-val{font-size:11px;color:var(--green)}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="topbar-logo">Registry<span>Builder</span></div>
+    <div class="topbar-tag">v1.0</div>
+    <div style="font-size:11px;color:var(--text-muted)">Knowledge Hub · Domain Registry Generator</div>
+    <div class="topbar-actions">
+      <button class="btn btn-ghost btn-sm" onclick="importJSON()"><i class="fa fa-upload"></i> Import</button>
+      <button class="btn btn-green btn-sm" onclick="copyOutput()"><i class="fa fa-copy"></i> Copy Output</button>
+    </div>
+  </header>
+
+  <!-- WORKSPACE -->
+  <div class="workspace">
+
+    <!-- LEFT: TREE -->
+    <div class="panel" id="treePanel">
+      <div class="panel-head">
+        <i class="fa fa-sitemap" style="color:var(--accent);font-size:11px"></i>
+        <span class="panel-head-title">Registry Tree</span>
+        <button class="btn btn-ghost btn-sm" style="margin-left:auto;padding:2px 8px;font-size:10px" onclick="addDomain()">+ Domain</button>
+      </div>
+      <div class="panel-body" id="treeBody"></div>
+    </div>
+
+    <!-- CENTER: FORM -->
+    <div class="panel" id="formPanel" style="border-right:1px solid var(--border)">
+      <div class="panel-head">
+        <i class="fa fa-pen-to-square" style="color:var(--amber);font-size:11px"></i>
+        <span class="panel-head-title" id="formTitle">Editor</span>
+        <span id="formTypePill" style="margin-left:8px"></span>
+      </div>
+      <div class="panel-body" id="formBody">
+        <div class="form-empty">
+          <div class="form-empty-icon"><i class="fa fa-mouse-pointer"></i></div>
+          <div class="form-empty-text">Select any item in the tree to edit it, or click <strong style="color:var(--accent)">+ Domain</strong> to get started.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: OUTPUT -->
+    <div class="panel" style="border-right:none;border-left:1px solid var(--border)">
+      <div class="code-toolbar">
+        <div class="code-toolbar-tabs">
+          <button class="tab-btn active" onclick="switchTab('registry',this)">domainRegistry</button>
+          <button class="tab-btn" onclick="switchTab('meta',this)">domainMeta</button>
+          <button class="tab-btn" onclick="switchTab('imports',this)">imports</button>
+        </div>
+        <button class="btn btn-ghost btn-sm" onclick="copyOutput()"><i class="fa fa-copy"></i></button>
+      </div>
+      <div class="code-wrap">
+        <pre class="code-pre" id="codeOutput"></pre>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="notification" id="notif">Copied to clipboard!</div>
+
+<script>
+// ─────────────────────────────────────────────
+//  STATE
+// ─────────────────────────────────────────────
+let registry = {};
+let selected = null; // { type:'domain'|'subject', domainId, subjectId }
+let activeTab = 'registry';
+
+const ICON_OPTIONS = [
+  'fa-code','fa-flask','fa-book','fa-brain','fa-globe','fa-calculator',
+  'fa-palette','fa-music','fa-gavel','fa-heartbeat','fa-landmark','fa-chart-line',
+  'fa-atom','fa-leaf','fa-camera','fa-pen-nib','fa-theater-masks','fa-coins'
+];
+const COLOR_VARS = [
+  'var(--domain-coding)','var(--domain-science)','var(--domain-humanities)',
+  'var(--domain-math)','var(--domain-arts)','var(--domain-health)',
+  'var(--domain-finance)','var(--domain-law)','var(--domain-tech)',
+  '#00e5ff','#00ff9d','#ffb300','#a855f7','#ff4d6d','#3b82f6','#f97316'
+];
+
+// ─────────────────────────────────────────────
+//  TREE RENDER
+// ─────────────────────────────────────────────
+function renderTree() {
+  const body = document.getElementById('treeBody');
+  body.innerHTML = '';
+
+  const domainIds = Object.keys(registry);
+  if (domainIds.length === 0) {
+    body.innerHTML = '<div style="padding:20px;text-align:center;color:var(--text-muted);font-size:11px;line-height:1.7">No domains yet.<br>Click <strong style="color:var(--accent)">+ Domain</strong> above to begin building your registry.</div>';
+    return;
+  }
+
+  domainIds.forEach(dId => {
+    const domain = registry[dId];
+    const isSelDomain = selected && selected.type === 'domain' && selected.domainId === dId;
+    const subjectIds = Object.keys(domain.subjects || {});
+
+    // Domain row
+    const dRow = el('div','tree-item tree-section' + (isSelDomain?' active':''));
+    dRow.innerHTML = `
+      <span class="tree-icon"><i class="fa ${domain.meta?.icon||'fa-folder'}"></i></span>
+      <span class="tree-label">${esc(domain.title||dId)}</span>
+      <span class="tree-badge">${subjectIds.length}</span>
+      <button class="tree-del btn btn-sm" onclick="deleteDomain(event,'${dId}')"><i class="fa fa-trash"></i></button>
+    `;
+    dRow.addEventListener('click', e => { if(!e.target.closest('.tree-del')) selectDomain(dId); });
+    body.appendChild(dRow);
+
+    // Subjects
+    subjectIds.forEach(sId => {
+      const subj = domain.subjects[sId];
+      const isSelSubj = selected && selected.type === 'subject' && selected.domainId === dId && selected.subjectId === sId;
+      const sRow = el('div','tree-item tree-indent' + (isSelSubj?' active':''));
+      sRow.innerHTML = `
+        <span class="tree-icon"><i class="fa fa-book-open"></i></span>
+        <span class="tree-label">${esc(subj.title||sId)}</span>
+        <span class="tree-badge" style="background:var(--green-soft);color:var(--green)">${subj.courseFile?'linked':'—'}</span>
+        <button class="tree-del btn btn-sm" onclick="deleteSubject(event,'${dId}','${sId}')"><i class="fa fa-trash"></i></button>
+      `;
+      sRow.addEventListener('click', e => { if(!e.target.closest('.tree-del')) selectSubject(dId,sId); });
+      body.appendChild(sRow);
+    });
+
+    // Add subject button
+    const addBtn = el('div','tree-indent');
+    addBtn.innerHTML = `<button class="tree-add-btn" onclick="addSubject('${dId}')"><i class="fa fa-plus" style="font-size:9px"></i> Add Subject</button>`;
+    body.appendChild(addBtn);
+  });
+
+  renderOutput();
+}
+
+// ─────────────────────────────────────────────
+//  SELECTION + FORM
+// ─────────────────────────────────────────────
+function selectDomain(dId) {
+  selected = { type:'domain', domainId:dId };
+  renderTree();
+  renderDomainForm(dId);
+}
+function selectSubject(dId, sId) {
+  selected = { type:'subject', domainId:dId, subjectId:sId };
+  renderTree();
+  renderSubjectForm(dId, sId);
+}
+
+function renderDomainForm(dId) {
+  const domain = registry[dId];
+  document.getElementById('formTitle').textContent = 'Domain · ' + (domain.title||dId);
+  document.getElementById('formTypePill').innerHTML = '<span class="pill pill-domain"><i class="fa fa-layer-group"></i> Domain</span>';
+  
+  const body = document.getElementById('formBody');
+  body.innerHTML = `
+    <div class="form-section">
+      <div class="form-section-title">Identity</div>
+      <div class="form-grid2">
+        <div class="form-row">
+          <label class="form-label">ID <span style="color:var(--text-muted)">(no spaces)</span></label>
+          <input class="form-input" id="f-domain-id" value="${esc(dId)}" placeholder="e.g. coding"/>
+          <div class="form-hint">Used as the object key</div>
+        </div>
+        <div class="form-row">
+          <label class="form-label">Icon Text</label>
+          <input class="form-input" id="f-domain-iconText" value="${esc(domain.iconText||'')}" placeholder="e.g. Code"/>
+        </div>
+      </div>
+      <div class="form-row">
+        <label class="form-label">Title</label>
+        <input class="form-input" id="f-domain-title" value="${esc(domain.title||'')}" placeholder="e.g. Coding"/>
+      </div>
+      <div class="form-row">
+        <label class="form-label">Description</label>
+        <textarea class="form-textarea" id="f-domain-desc" placeholder="Short description...">${esc(domain.description||'')}</textarea>
+      </div>
+    </div>
+    <div class="form-section">
+      <div class="form-section-title">Meta (domainMeta)</div>
+      <div class="form-row">
+        <label class="form-label">Font Awesome Icon</label>
+        <select class="form-select" id="f-domain-icon">
+          ${ICON_OPTIONS.map(i=>`<option value="${i}" ${domain.meta?.icon===i?'selected':''}>${i}</option>`).join('')}
+        </select>
+      </div>
+      <div class="form-row">
+        <label class="form-label">Color</label>
+        <input class="form-input" id="f-domain-color" value="${esc(domain.meta?.color||'')}" placeholder="e.g. var(--domain-coding) or #00e5ff"/>
+        <div class="form-hint">CSS variable or hex color</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:8px">
+      <button class="btn btn-primary" onclick="saveDomain('${dId}')"><i class="fa fa-save"></i> Save</button>
+      <button class="btn btn-danger" onclick="deleteDomain(null,'${dId}')"><i class="fa fa-trash"></i> Delete Domain</button>
+    </div>
+  `;
+}
+
+function renderSubjectForm(dId, sId) {
+  const subj = registry[dId].subjects[sId];
+  document.getElementById('formTitle').textContent = 'Subject · ' + (subj.title||sId);
+  document.getElementById('formTypePill').innerHTML = '<span class="pill pill-subject"><i class="fa fa-book-open"></i> Subject</span>';
+
+  const body = document.getElementById('formBody');
+  body.innerHTML = `
+    <div class="form-section">
+      <div class="form-section-title">Identity</div>
+      <div class="form-grid2">
+        <div class="form-row">
+          <label class="form-label">ID <span style="color:var(--text-muted)">(no spaces)</span></label>
+          <input class="form-input" id="f-subj-id" value="${esc(sId)}" placeholder="e.g. javascript"/>
+        </div>
+        <div class="form-row">
+          <label class="form-label">Icon Text</label>
+          <input class="form-input" id="f-subj-iconText" value="${esc(subj.iconText||'')}" placeholder="e.g. JS"/>
+        </div>
+      </div>
+      <div class="form-row">
+        <label class="form-label">Title</label>
+        <input class="form-input" id="f-subj-title" value="${esc(subj.title||'')}" placeholder="e.g. JavaScript"/>
+      </div>
+      <div class="form-row">
+        <label class="form-label">Description</label>
+        <textarea class="form-textarea" id="f-subj-desc" placeholder="Short description...">${esc(subj.description||'')}</textarea>
+      </div>
+    </div>
+    <div class="form-section">
+      <div class="form-section-title">Course Link</div>
+      <div class="form-row">
+        <label class="form-label">Course File <span style="color:var(--text-muted)">(import)</span></label>
+        <input class="form-input" id="f-subj-courseFile" value="${esc(subj.courseFile||'')}" placeholder="e.g. ./courses/javascript.js"/>
+        <div class="form-hint">Relative path to the course JS file. Leave empty if course not ready yet (will be set to null).</div>
+      </div>
+      <div class="form-row">
+        <label class="form-label">Course Variable Name</label>
+        <input class="form-input" id="f-subj-courseVar" value="${esc(subj.courseVar||'')}" placeholder="e.g. javascriptCourse"/>
+        <div class="form-hint">The named export from that file.</div>
+      </div>
+      ${subj.courseFile ? `<div class="subject-course-row"><span class="tree-icon"><i class="fa fa-link" style="color:var(--green)"></i></span><span class="subject-course-label">Linked to</span><span class="subject-course-val">${esc(subj.courseVar||'course')} from '${esc(subj.courseFile)}'</span></div>` : `<div class="subject-course-row"><span class="tree-icon"><i class="fa fa-unlink" style="color:var(--text-muted)"></i></span><span class="subject-course-label" style="color:var(--text-muted)">No course linked — will output null</span></div>`}
+    </div>
+    <div style="display:flex;gap:8px;margin-top:8px">
+      <button class="btn btn-primary" onclick="saveSubject('${dId}','${sId}')"><i class="fa fa-save"></i> Save</button>
+      <button class="btn btn-danger" onclick="deleteSubject(null,'${dId}','${sId}')"><i class="fa fa-trash"></i> Delete</button>
+    </div>
+  `;
+}
+
+// ─────────────────────────────────────────────
+//  CRUD
+// ─────────────────────────────────────────────
+function addDomain() {
+  const id = 'domain_' + Date.now();
+  registry[id] = {
+    id, title:'New Domain', iconText:'', description:'',
+    subjects:{}, meta:{ icon:'fa-folder', color:'' }
+  };
+  renderTree();
+  selectDomain(id);
+}
+
+function saveDomain(oldId) {
+  const newId = slugify(document.getElementById('f-domain-id').value) || oldId;
+  const d = registry[oldId];
+  d.id = newId;
+  d.title = document.getElementById('f-domain-title').value;
+  d.iconText = document.getElementById('f-domain-iconText').value;
+  d.description = document.getElementById('f-domain-desc').value;
+  d.meta = {
+    icon: document.getElementById('f-domain-icon').value,
+    color: document.getElementById('f-domain-color').value
+  };
+  if (newId !== oldId) {
+    registry[newId] = d;
+    delete registry[oldId];
+  }
+  selected = { type:'domain', domainId:newId };
+  renderTree();
+  renderDomainForm(newId);
+  notify('Domain saved');
+}
+
+function deleteDomain(e, dId) {
+  if(e) e.stopPropagation();
+  if(!confirm('Delete domain "' + (registry[dId]?.title||dId) + '" and all its subjects?')) return;
+  delete registry[dId];
+  selected = null;
+  document.getElementById('formBody').innerHTML = '<div class="form-empty"><div class="form-empty-icon"><i class="fa fa-trash"></i></div><div class="form-empty-text">Domain deleted.</div></div>';
+  document.getElementById('formTitle').textContent = 'Editor';
+  document.getElementById('formTypePill').innerHTML = '';
+  renderTree();
+}
+
+function addSubject(dId) {
+  const id = 'subject_' + Date.now();
+  registry[dId].subjects[id] = {
+    id, title:'New Subject', iconText:'', description:'', courseFile:'', courseVar:''
+  };
+  renderTree();
+  selectSubject(dId, id);
+}
+
+function saveSubject(dId, oldSId) {
+  const newSId = slugify(document.getElementById('f-subj-id').value) || oldSId;
+  const s = registry[dId].subjects[oldSId];
+  s.id = newSId;
+  s.title = document.getElementById('f-subj-title').value;
+  s.iconText = document.getElementById('f-subj-iconText').value;
+  s.description = document.getElementById('f-subj-desc').value;
+  s.courseFile = document.getElementById('f-subj-courseFile').value.trim();
+  s.courseVar = document.getElementById('f-subj-courseVar').value.trim();
+  if (newSId !== oldSId) {
+    registry[dId].subjects[newSId] = s;
+    delete registry[dId].subjects[oldSId];
+  }
+  selected = { type:'subject', domainId:dId, subjectId:newSId };
+  renderTree();
+  renderSubjectForm(dId, newSId);
+  notify('Subject saved');
+}
+
+function deleteSubject(e, dId, sId) {
+  if(e) e.stopPropagation();
+  if(!confirm('Delete subject "' + (registry[dId]?.subjects[sId]?.title||sId) + '"?')) return;
+  delete registry[dId].subjects[sId];
+  selected = { type:'domain', domainId:dId };
+  renderTree();
+  renderDomainForm(dId);
+}
+
+// ─────────────────────────────────────────────
+//  CODE GENERATION
+// ─────────────────────────────────────────────
+function switchTab(tab, btn) {
+  activeTab = tab;
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderOutput();
+}
+
+function renderOutput() {
+  const out = document.getElementById('codeOutput');
+  if (activeTab === 'registry') out.innerHTML = genRegistry();
+  else if (activeTab === 'meta') out.innerHTML = genMeta();
+  else out.innerHTML = genImports();
+}
+
+function genImports() {
+  const lines = [];
+  const seen = new Set();
+  Object.values(registry).forEach(domain => {
+    Object.values(domain.subjects||{}).forEach(subj => {
+      if (subj.courseFile && subj.courseVar && !seen.has(subj.courseFile)) {
+        seen.add(subj.courseFile);
+        lines.push(
+          tok('kw','import') + tok('punc',' { ') +
+          tok('fn', subj.courseVar) +
+          tok('punc',' } ') + tok('kw','from') +
+          tok('punc',' ') + tok('str', "'" + subj.courseFile + "'") +
+          tok('punc',';')
+        );
+      }
+    });
+  });
+  if (lines.length === 0) {
+    return tok('cmt','// No course files linked yet.\n// Add a courseFile path to a subject to generate imports.');
+  }
+  return lines.join('\n');
+}
+
+function genRegistry() {
+  if (Object.keys(registry).length === 0) {
+    return tok('cmt','// Registry is empty.\n// Add domains and subjects to generate output.');
+  }
+  let out = '';
+  // imports block
+  const importLines = [];
+  const seen = new Set();
+  Object.values(registry).forEach(domain => {
+    Object.values(domain.subjects||{}).forEach(subj => {
+      if (subj.courseFile && subj.courseVar && !seen.has(subj.courseFile)) {
+        seen.add(subj.courseFile);
+        importLines.push(
+          tok('kw','import') + tok('punc',' { ') + tok('fn',subj.courseVar) +
+          tok('punc',' } ') + tok('kw','from') + tok('punc',' ') +
+          tok('str',"'"+subj.courseFile+"'") + tok('punc',';')
+        );
+      }
+    });
+  });
+  if (importLines.length) out += importLines.join('\n') + '\n\n';
+
+  out += tok('kw','export') + tok('punc',' ') + tok('kw','const') + ' domainRegistry ' + tok('punc','= {') + '\n';
+  
+  const domainIds = Object.keys(registry);
+  domainIds.forEach((dId, di) => {
+    const domain = registry[dId];
+    const subjIds = Object.keys(domain.subjects||{});
+    const comma = di < domainIds.length-1 ? ',' : '';
+    out += ind(1) + tok('key', safeKey(dId)) + tok('punc',': {') + '\n';
+    out += ind(2) + tok('key','id') + tok('punc',': ') + tok('str',"'" + (domain.id||dId) + "'") + tok('punc',',') + '\n';
+    out += ind(2) + tok('key','title') + tok('punc',': ') + tok('str',"'" + esc2(domain.title||'') + "'") + tok('punc',',') + '\n';
+    out += ind(2) + tok('key','iconText') + tok('punc',': ') + tok('str',"'" + esc2(domain.iconText||'') + "'") + tok('punc',',') + '\n';
+    out += ind(2) + tok('key','description') + tok('punc',': ') + tok('str',"'" + esc2(domain.description||'') + "'") + tok('punc',',') + '\n';
+    out += ind(2) + tok('key','subjects') + tok('punc',': {') + '\n';
+    subjIds.forEach((sId, si) => {
+      const subj = domain.subjects[sId];
+      const scomma = si < subjIds.length-1 ? ',' : '';
+      const courseVal = subj.courseFile && subj.courseVar
+        ? tok('fn', subj.courseVar)
+        : tok('kw','null');
+      out += ind(3) + tok('key', safeKey(sId)) + tok('punc',': {') + '\n';
+      out += ind(4) + tok('key','id') + tok('punc',': ') + tok('str',"'" + esc2(subj.id||sId) + "'") + tok('punc',',') + '\n';
+      out += ind(4) + tok('key','title') + tok('punc',': ') + tok('str',"'" + esc2(subj.title||'') + "'") + tok('punc',',') + '\n';
+      out += ind(4) + tok('key','iconText') + tok('punc',': ') + tok('str',"'" + esc2(subj.iconText||'') + "'") + tok('punc',',') + '\n';
+      out += ind(4) + tok('key','description') + tok('punc',': ') + tok('str',"'" + esc2(subj.description||'') + "'") + tok('punc',',') + '\n';
+      out += ind(4) + tok('key','course') + tok('punc',': ') + courseVal + '\n';
+      out += ind(3) + tok('punc','}'+scomma) + '\n';
+    });
+    if (subjIds.length === 0) {
+      out += ind(3) + tok('cmt','// No subjects yet') + '\n';
+    }
+    out += ind(2) + tok('punc','}') + '\n';
+    out += ind(1) + tok('punc','}'+comma) + '\n';
+  });
+  out += tok('punc','};');
+  return out;
+}
+
+function genMeta() {
+  if (Object.keys(registry).length === 0) {
+    return tok('cmt','// Registry is empty.');
+  }
+  let out = tok('kw','export') + tok('punc',' ') + tok('kw','const') + ' domainMeta ' + tok('punc','= {') + '\n';
+  const domainIds = Object.keys(registry);
+  domainIds.forEach((dId, di) => {
+    const domain = registry[dId];
+    const comma = di < domainIds.length-1 ? ',' : '';
+    const icon = domain.meta?.icon || 'fa-folder';
+    const color = domain.meta?.color || '';
+    out += ind(1) + tok('key', safeKey(dId)) + tok('punc',': {') + '\n';
+    out += ind(2) + tok('key','icon') + tok('punc',': ') + tok('str',"'" + icon + "'") + tok('punc',',') + '\n';
+    out += ind(2) + tok('key','color') + tok('punc',': ') + tok('str',"'" + (color||'#888') + "'") + '\n';
+    out += ind(1) + tok('punc','}'+comma) + '\n';
+  });
+  out += tok('punc','};');
+  return out;
+}
+
+// ─────────────────────────────────────────────
+//  HELPERS
+// ─────────────────────────────────────────────
+function tok(type, val) {
+  return `<span class="t-${type}">${htmlEsc(val)}</span>`;
+}
+function ind(n) { return '  '.repeat(n); }
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function esc2(s) { return String(s||'').replace(/'/g,"\\'"); }
+function htmlEsc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function el(tag, cls) { const e = document.createElement(tag); e.className = cls; return e; }
+function slugify(s) { return s.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-_]/g,''); }
+function safeKey(k) { return /^[a-zA-Z_$][a-zA-Z0-9_$]*$/.test(k) ? k : `'${k}'`; }
+
+function notify(msg) {
+  const n = document.getElementById('notif');
+  n.textContent = msg;
+  n.classList.add('show');
+  setTimeout(()=>n.classList.remove('show'), 2200);
+}
+
+function getPlainOutput() {
+  const pre = document.getElementById('codeOutput');
+  return pre.textContent;
+}
+
+function copyOutput() {
+  const text = getPlainOutput();
+  navigator.clipboard?.writeText(text).then(()=>notify('Copied!')).catch(()=>{
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.style.position='fixed'; ta.style.left='-9999px';
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+    document.body.removeChild(ta); notify('Copied!');
+  });
+}
+
+function importJSON() {
+  const input = document.createElement('input');
+  input.type = 'file'; input.accept = '.json';
+  input.onchange = e => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => {
+      try {
+        const data = JSON.parse(ev.target.result);
+        registry = data;
+        selected = null;
+        document.getElementById('formBody').innerHTML = '<div class="form-empty"><div class="form-empty-icon"><i class="fa fa-check"></i></div><div class="form-empty-text">JSON imported successfully.</div></div>';
+        renderTree();
+        notify('Imported!');
+      } catch(err) { alert('Invalid JSON: ' + err.message); }
+    };
+    reader.readAsText(file);
+  };
+  input.click();
+}
+
+// ─────────────────────────────────────────────
+//  SEED DATA (the example you provided)
+// ─────────────────────────────────────────────
+registry = {
+  coding: {
+    id: 'coding', title: 'Coding', iconText: 'Code',
+    description: 'Learn programming languages and software development.',
+    subjects: {
+      javascript: {
+        id: 'javascript', title: 'JavaScript', iconText: 'JS',
+        description: 'Learn JavaScript from fundamentals to advanced topics.',
+        courseFile: './courses/javascript.js', courseVar: 'javascriptCourse'
+      },
+      python: {
+        id: 'python', title: 'Python', iconText: 'Py',
+        description: 'Master Python programming for web development and data science.',
+        courseFile: '', courseVar: ''
+      },
+      rust: {
+        id: 'rust', title: 'Rust', iconText: 'Rs',
+        description: 'Build reliable and efficient software with Rust.',
+        courseFile: '', courseVar: ''
+      }
+    },
+    meta: { icon: 'fa-code', color: 'var(--domain-coding)' }
+  }
+};
+
+// ─────────────────────────────────────────────
+//  INIT
+// ─────────────────────────────────────────────
+renderTree();
+renderOutput();
+</script>
+</body>
+</html>

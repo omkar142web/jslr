@@ -3,49 +3,30 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Registry Builder</title>
+<title>Course Builder</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#080b10;
-  --surface:#0e1118;
-  --panel:#131720;
-  --border:#1e2535;
-  --border-bright:#2a3448;
-  --text:#c8d0e0;
-  --text-dim:#5a6480;
-  --text-muted:#3a4260;
-  --accent:#00e5ff;
-  --accent-soft:rgba(0,229,255,.08);
-  --accent-glow:rgba(0,229,255,.2);
-  --green:#00ff9d;
-  --green-soft:rgba(0,255,157,.08);
-  --amber:#ffb300;
-  --amber-soft:rgba(255,179,0,.08);
-  --red:#ff4d6d;
-  --red-soft:rgba(255,77,109,.08);
-  --purple:#a855f7;
-  --purple-soft:rgba(168,85,247,.08);
-  --mono:'IBM Plex Mono',monospace;
-  --display:'Syne',sans-serif;
-  --r:6px;
+  --bg:#080b10;--surface:#0e1118;--panel:#131720;--border:#1e2535;--border-bright:#2a3448;
+  --text:#c8d0e0;--text-dim:#5a6480;--text-muted:#3a4260;
+  --accent:#00e5ff;--accent-soft:rgba(0,229,255,.08);--accent-glow:rgba(0,229,255,.2);
+  --green:#00ff9d;--green-soft:rgba(0,255,157,.08);
+  --amber:#ffb300;--amber-soft:rgba(255,179,0,.08);
+  --red:#ff4d6d;--red-soft:rgba(255,77,109,.08);
+  --purple:#a855f7;--purple-soft:rgba(168,85,247,.08);
+  --mono:'IBM Plex Mono',monospace;--display:'Syne',sans-serif;--r:6px;
 }
 html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--mono);font-size:13px;line-height:1.6;overflow:hidden}
-
-/* ── LAYOUT ── */
 .app{display:grid;grid-template-rows:48px 1fr;height:100vh}
 .topbar{display:flex;align-items:center;gap:16px;padding:0 20px;background:var(--surface);border-bottom:1px solid var(--border);flex-shrink:0}
 .topbar-logo{font-family:var(--display);font-size:15px;font-weight:800;color:var(--accent);letter-spacing:-.3px}
 .topbar-logo span{color:var(--text-dim);font-weight:400}
 .topbar-tag{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:2px 8px;border-radius:100px;background:var(--accent-soft);border:1px solid var(--accent-glow);color:var(--accent)}
 .topbar-actions{margin-left:auto;display:flex;gap:8px}
-
-.workspace{display:grid;grid-template-columns:280px 1fr 380px;height:100%;min-height:0}
-
-/* ── PANELS ── */
+.workspace{display:grid;grid-template-columns:280px 1fr 390px;height:100%;min-height:0}
 .panel{background:var(--panel);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden}
 .panel:last-child{border-right:none;border-left:1px solid var(--border)}
 .panel-head{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;flex-shrink:0}
@@ -54,23 +35,22 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--m
 .panel-body::-webkit-scrollbar{width:3px}
 .panel-body::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
 
-/* ── TREE ── */
-.tree-section{margin-bottom:4px}
-.tree-item{display:flex;align-items:center;gap:6px;padding:6px 8px;border-radius:var(--r);cursor:pointer;transition:background .12s,color .12s;user-select:none;position:relative}
+/* TREE */
+.tree-item{display:flex;align-items:center;gap:6px;padding:6px 8px;border-radius:var(--r);cursor:pointer;transition:background .12s,color .12s;user-select:none}
 .tree-item:hover{background:rgba(255,255,255,.04)}
 .tree-item.active{background:var(--accent-soft);color:var(--accent)}
 .tree-item.active .tree-icon{color:var(--accent)}
-.tree-indent{margin-left:16px}
-.tree-indent2{margin-left:32px}
+.tree-indent{margin-left:18px}
 .tree-icon{font-size:11px;color:var(--text-muted);width:14px;text-align:center;flex-shrink:0}
 .tree-label{flex:1;font-size:12px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tree-badge{font-size:9px;font-weight:600;padding:1px 5px;border-radius:100px;background:var(--border);color:var(--text-dim);flex-shrink:0}
 .tree-del{opacity:0;font-size:10px;color:var(--red);padding:2px 4px;border-radius:3px;transition:opacity .12s}
 .tree-item:hover .tree-del{opacity:1}
-.tree-add-btn{display:flex;align-items:center;gap:6px;width:100%;padding:5px 8px;font:inherit;font-size:11px;color:var(--text-muted);background:none;border:1px dashed var(--border);border-radius:var(--r);cursor:pointer;transition:all .12s;text-align:left}
+.tree-add-btn{display:flex;align-items:center;gap:6px;width:100%;padding:5px 8px;font:inherit;font-size:11px;color:var(--text-muted);background:none;border:1px dashed var(--border);border-radius:var(--r);cursor:pointer;transition:all .12s;text-align:left;margin-bottom:4px}
 .tree-add-btn:hover{color:var(--accent);border-color:var(--accent-glow);background:var(--accent-soft)}
+.tree-section-gap{height:6px}
 
-/* ── FORM ── */
+/* FORM */
 .form-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:12px;color:var(--text-muted)}
 .form-empty-icon{font-size:32px;opacity:.3}
 .form-empty-text{font-size:12px;text-align:center;max-width:200px;line-height:1.6}
@@ -80,33 +60,27 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--m
 .form-label{display:block;font-size:11px;font-weight:600;color:var(--text-dim);margin-bottom:5px}
 .form-input,.form-textarea,.form-select{width:100%;padding:8px 10px;font-family:var(--mono);font-size:12px;color:var(--text);background:var(--bg);border:1px solid var(--border);border-radius:var(--r);outline:none;transition:border-color .12s}
 .form-input:focus,.form-textarea:focus,.form-select:focus{border-color:var(--accent)}
-.form-textarea{resize:vertical;min-height:64px}
+.form-textarea{resize:vertical;min-height:60px}
 .form-select{cursor:pointer}
 .form-select option{background:var(--panel)}
 .form-hint{font-size:10px;color:var(--text-muted);margin-top:4px}
-.tags-wrap{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
-.tag-chip{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;font-size:11px;background:var(--accent-soft);border:1px solid var(--accent-glow);color:var(--accent);border-radius:100px}
-.tag-chip-del{cursor:pointer;opacity:.6;transition:opacity .12s}
-.tag-chip-del:hover{opacity:1}
 .form-grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.color-preview{display:flex;align-items:center;gap:8px}
-.color-swatch{width:20px;height:20px;border-radius:4px;border:1px solid var(--border);flex-shrink:0}
+.form-grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.tags-wrap{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;min-height:24px}
+.tag-chip{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;font-size:11px;background:var(--accent-soft);border:1px solid var(--accent-glow);color:var(--accent);border-radius:100px}
+.tag-chip-del{cursor:pointer;opacity:.6;transition:opacity .12s;font-size:10px}
+.tag-chip-del:hover{opacity:1}
+.tag-input-row{display:flex;gap:6px}
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:6px 10px;background:var(--bg);border:1px solid var(--border);border-radius:var(--r)}
+.toggle-label{font-size:11px;color:var(--text-dim)}
+.toggle{position:relative;width:32px;height:18px;flex-shrink:0}
+.toggle input{opacity:0;width:0;height:0;position:absolute}
+.toggle-slider{position:absolute;inset:0;background:var(--border);border-radius:100px;cursor:pointer;transition:background .2s}
+.toggle-slider::before{content:'';position:absolute;width:12px;height:12px;left:3px;top:3px;background:var(--text-muted);border-radius:50%;transition:transform .2s,background .2s}
+.toggle input:checked + .toggle-slider{background:var(--green-soft);border:1px solid var(--green)}
+.toggle input:checked + .toggle-slider::before{transform:translateX(14px);background:var(--green)}
 
-/* ── CODE OUTPUT ── */
-.code-wrap{flex:1;overflow:auto;padding:16px}
-.code-wrap::-webkit-scrollbar{width:3px;height:3px}
-.code-wrap::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
-.code-pre{font-family:var(--mono);font-size:11.5px;line-height:1.8;white-space:pre;color:#abb2bf}
-/* syntax colors */
-.t-kw{color:#c678dd}
-.t-str{color:#98c379}
-.t-key{color:#e06c75}
-.t-val{color:#d19a66}
-.t-cmt{color:#5c6370;font-style:italic}
-.t-fn{color:#61afef}
-.t-punc{color:#abb2bf}
-
-/* ── BUTTONS ── */
+/* BUTTONS */
 .btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;font:inherit;font-size:12px;font-weight:600;border-radius:var(--r);cursor:pointer;transition:all .12s;border:1px solid transparent}
 .btn-primary{background:var(--accent);color:#000;border-color:var(--accent)}
 .btn-primary:hover{background:#00ccee}
@@ -117,22 +91,35 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--m
 .btn-sm{padding:4px 10px;font-size:11px}
 .btn-green{background:var(--green-soft);color:var(--green);border-color:var(--green)}
 .btn-green:hover{background:var(--green);color:#000}
+.btn-amber{background:var(--amber-soft);color:var(--amber);border-color:var(--amber)}
 
-/* ── MISC ── */
-.divider{height:1px;background:var(--border);margin:16px 0}
+/* CODE OUTPUT */
+.code-wrap{flex:1;overflow:auto;padding:16px}
+.code-wrap::-webkit-scrollbar{width:3px;height:3px}
+.code-wrap::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+.code-pre{font-family:var(--mono);font-size:11.5px;line-height:1.8;white-space:pre;color:#abb2bf}
+.t-kw{color:#c678dd}.t-str{color:#98c379}.t-key{color:#e06c75}
+.t-val{color:#d19a66}.t-cmt{color:#5c6370;font-style:italic}
+.t-fn{color:#61afef}.t-punc{color:#abb2bf}.t-bool{color:#d19a66}
+.t-num{color:#d19a66}
+.code-toolbar{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid var(--border);flex-shrink:0}
+.code-toolbar-title{font-family:var(--display);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text-dim)}
+
+/* PILL */
 .pill{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;font-size:10px;font-weight:600;border-radius:100px}
-.pill-domain{background:var(--purple-soft);color:var(--purple);border:1px solid rgba(168,85,247,.2)}
-.pill-subject{background:var(--amber-soft);color:var(--amber);border:1px solid rgba(255,179,0,.2)}
+.pill-course{background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-glow)}
+.pill-section{background:var(--amber-soft);color:var(--amber);border:1px solid rgba(255,179,0,.2)}
 .pill-lesson{background:var(--green-soft);color:var(--green);border:1px solid rgba(0,255,157,.2)}
+
+/* NOTIFICATION */
 .notification{position:fixed;bottom:20px;right:20px;padding:10px 16px;background:var(--green);color:#000;font-weight:600;border-radius:var(--r);font-size:12px;z-index:1000;opacity:0;transform:translateY(8px);transition:all .2s;pointer-events:none}
 .notification.show{opacity:1;transform:translateY(0)}
-.code-toolbar{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid var(--border);flex-shrink:0}
-.code-toolbar-tabs{display:flex;gap:4px}
-.tab-btn{padding:4px 10px;font:inherit;font-size:11px;font-weight:600;background:none;border:1px solid var(--border);border-radius:var(--r);color:var(--text-dim);cursor:pointer;transition:all .12s}
-.tab-btn.active{background:var(--accent-soft);border-color:var(--accent-glow);color:var(--accent)}
-.subject-course-row{display:flex;align-items:center;gap:8px;padding:6px 8px;background:var(--bg);border:1px solid var(--border);border-radius:var(--r);margin-bottom:6px}
-.subject-course-label{flex:1;font-size:11px;color:var(--text-dim)}
-.subject-course-val{font-size:11px;color:var(--green)}
+
+/* META BAR */
+.meta-bar{display:flex;gap:6px;flex-wrap:wrap;padding:10px 16px;border-bottom:1px solid var(--border);background:var(--bg);flex-shrink:0}
+.meta-chip{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;font-size:10px;font-weight:600;border-radius:100px;background:var(--surface);border:1px solid var(--border);color:var(--text-dim);cursor:pointer;transition:all .12s}
+.meta-chip:hover,.meta-chip.active{background:var(--accent-soft);border-color:var(--accent-glow);color:var(--accent)}
+.meta-chip i{font-size:9px}
 </style>
 </head>
 <body>
@@ -140,11 +127,11 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--m
 
   <!-- TOPBAR -->
   <header class="topbar">
-    <div class="topbar-logo">Registry<span>Builder</span></div>
+    <div class="topbar-logo">Course<span>Builder</span></div>
     <div class="topbar-tag">v1.0</div>
-    <div style="font-size:11px;color:var(--text-muted)">Knowledge Hub · Domain Registry Generator</div>
+    <div style="font-size:11px;color:var(--text-muted)">Knowledge Hub · Course Object Generator</div>
     <div class="topbar-actions">
-      <button class="btn btn-ghost btn-sm" onclick="importJSON()"><i class="fa fa-upload"></i> Import</button>
+      <button class="btn btn-ghost btn-sm" onclick="editCourseInfo()"><i class="fa fa-gear"></i> Course Info</button>
       <button class="btn btn-green btn-sm" onclick="copyOutput()"><i class="fa fa-copy"></i> Copy Output</button>
     </div>
   </header>
@@ -153,17 +140,17 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--m
   <div class="workspace">
 
     <!-- LEFT: TREE -->
-    <div class="panel" id="treePanel">
+    <div class="panel">
       <div class="panel-head">
-        <i class="fa fa-sitemap" style="color:var(--accent);font-size:11px"></i>
-        <span class="panel-head-title">Registry Tree</span>
-        <button class="btn btn-ghost btn-sm" style="margin-left:auto;padding:2px 8px;font-size:10px" onclick="addDomain()">+ Domain</button>
+        <i class="fa fa-list-ul" style="color:var(--accent);font-size:11px"></i>
+        <span class="panel-head-title">Course Tree</span>
+        <button class="btn btn-ghost btn-sm" style="margin-left:auto;padding:2px 8px;font-size:10px" onclick="addSection()">+ Section</button>
       </div>
       <div class="panel-body" id="treeBody"></div>
     </div>
 
     <!-- CENTER: FORM -->
-    <div class="panel" id="formPanel" style="border-right:1px solid var(--border)">
+    <div class="panel" style="border-right:1px solid var(--border)">
       <div class="panel-head">
         <i class="fa fa-pen-to-square" style="color:var(--amber);font-size:11px"></i>
         <span class="panel-head-title" id="formTitle">Editor</span>
@@ -172,19 +159,15 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--m
       <div class="panel-body" id="formBody">
         <div class="form-empty">
           <div class="form-empty-icon"><i class="fa fa-mouse-pointer"></i></div>
-          <div class="form-empty-text">Select any item in the tree to edit it, or click <strong style="color:var(--accent)">+ Domain</strong> to get started.</div>
+          <div class="form-empty-text">Select an item in the tree to edit, or click <strong style="color:var(--accent)">+ Section</strong> to add a section.</div>
         </div>
       </div>
     </div>
 
     <!-- RIGHT: OUTPUT -->
-    <div class="panel" style="border-right:none;border-left:1px solid var(--border)">
+    <div class="panel">
       <div class="code-toolbar">
-        <div class="code-toolbar-tabs">
-          <button class="tab-btn active" onclick="switchTab('registry',this)">domainRegistry</button>
-          <button class="tab-btn" onclick="switchTab('meta',this)">domainMeta</button>
-          <button class="tab-btn" onclick="switchTab('imports',this)">imports</button>
-        </div>
+        <span class="code-toolbar-title">Generated Output</span>
         <button class="btn btn-ghost btn-sm" onclick="copyOutput()"><i class="fa fa-copy"></i></button>
       </div>
       <div class="code-wrap">
@@ -194,485 +177,560 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--m
 
   </div>
 </div>
-
-<div class="notification" id="notif">Copied to clipboard!</div>
+<div class="notification" id="notif">Copied!</div>
 
 <script>
-// ─────────────────────────────────────────────
-//  STATE
-// ─────────────────────────────────────────────
-let registry = {};
-let selected = null; // { type:'domain'|'subject', domainId, subjectId }
-let activeTab = 'registry';
+// ─── STATE ───────────────────────────────────
+let course = {
+  exportVar: 'javascriptCourse',
+  title: 'JavaScript Complete Guide',
+  slug: 'javascript-complete-guide',
+  description: 'A structured learning path covering JavaScript from fundamentals to advanced browser APIs.',
+  level: 'beginner-to-advanced',
+  sections: []
+};
+let sections = []; // array of section objects
+let selected = null; // { type:'course'|'section'|'lesson', sIdx, lIdx }
+let sectionTags = {}; // temp tag state for lesson editing
 
-const ICON_OPTIONS = [
-  'fa-code','fa-flask','fa-book','fa-brain','fa-globe','fa-calculator',
-  'fa-palette','fa-music','fa-gavel','fa-heartbeat','fa-landmark','fa-chart-line',
-  'fa-atom','fa-leaf','fa-camera','fa-pen-nib','fa-theater-masks','fa-coins'
-];
-const COLOR_VARS = [
-  'var(--domain-coding)','var(--domain-science)','var(--domain-humanities)',
-  'var(--domain-math)','var(--domain-arts)','var(--domain-health)',
-  'var(--domain-finance)','var(--domain-law)','var(--domain-tech)',
-  '#00e5ff','#00ff9d','#ffb300','#a855f7','#ff4d6d','#3b82f6','#f97316'
-];
-
-// ─────────────────────────────────────────────
-//  TREE RENDER
-// ─────────────────────────────────────────────
+// ─── TREE ─────────────────────────────────────
 function renderTree() {
   const body = document.getElementById('treeBody');
   body.innerHTML = '';
 
-  const domainIds = Object.keys(registry);
-  if (domainIds.length === 0) {
-    body.innerHTML = '<div style="padding:20px;text-align:center;color:var(--text-muted);font-size:11px;line-height:1.7">No domains yet.<br>Click <strong style="color:var(--accent)">+ Domain</strong> above to begin building your registry.</div>';
-    return;
+  if (sections.length === 0) {
+    body.innerHTML = '<div style="padding:20px;text-align:center;color:var(--text-muted);font-size:11px;line-height:1.7">No sections yet.<br>Click <strong style="color:var(--accent)">+ Section</strong> to begin.</div>';
+    renderOutput(); return;
   }
 
-  domainIds.forEach(dId => {
-    const domain = registry[dId];
-    const isSelDomain = selected && selected.type === 'domain' && selected.domainId === dId;
-    const subjectIds = Object.keys(domain.subjects || {});
-
-    // Domain row
-    const dRow = el('div','tree-item tree-section' + (isSelDomain?' active':''));
-    dRow.innerHTML = `
-      <span class="tree-icon"><i class="fa ${domain.meta?.icon||'fa-folder'}"></i></span>
-      <span class="tree-label">${esc(domain.title||dId)}</span>
-      <span class="tree-badge">${subjectIds.length}</span>
-      <button class="tree-del btn btn-sm" onclick="deleteDomain(event,'${dId}')"><i class="fa fa-trash"></i></button>
+  sections.forEach((sec, si) => {
+    const isSelSec = selected && selected.type === 'section' && selected.sIdx === si;
+    const secRow = el('div', 'tree-item' + (isSelSec ? ' active' : ''));
+    secRow.innerHTML = `
+      <span class="tree-icon"><i class="fa fa-layer-group"></i></span>
+      <span class="tree-label">${esc(sec.title || 'Untitled Section')}</span>
+      <span class="tree-badge">${(sec.lessons||[]).length}</span>
+      <button class="tree-del btn btn-sm" onclick="deleteSection(event,${si})"><i class="fa fa-trash"></i></button>
     `;
-    dRow.addEventListener('click', e => { if(!e.target.closest('.tree-del')) selectDomain(dId); });
-    body.appendChild(dRow);
+    secRow.addEventListener('click', e => { if (!e.target.closest('.tree-del')) selectSection(si); });
+    body.appendChild(secRow);
 
-    // Subjects
-    subjectIds.forEach(sId => {
-      const subj = domain.subjects[sId];
-      const isSelSubj = selected && selected.type === 'subject' && selected.domainId === dId && selected.subjectId === sId;
-      const sRow = el('div','tree-item tree-indent' + (isSelSubj?' active':''));
-      sRow.innerHTML = `
-        <span class="tree-icon"><i class="fa fa-book-open"></i></span>
-        <span class="tree-label">${esc(subj.title||sId)}</span>
-        <span class="tree-badge" style="background:var(--green-soft);color:var(--green)">${subj.courseFile?'linked':'—'}</span>
-        <button class="tree-del btn btn-sm" onclick="deleteSubject(event,'${dId}','${sId}')"><i class="fa fa-trash"></i></button>
+    (sec.lessons || []).forEach((les, li) => {
+      const isSelLes = selected && selected.type === 'lesson' && selected.sIdx === si && selected.lIdx === li;
+      const lesRow = el('div', 'tree-item tree-indent' + (isSelLes ? ' active' : ''));
+      lesRow.innerHTML = `
+        <span class="tree-icon"><i class="fa fa-file-code"></i></span>
+        <span class="tree-label">${esc(les.title || 'Untitled Lesson')}</span>
+        ${les.completed ? '<span class="tree-badge" style="background:var(--green-soft);color:var(--green)">done</span>' : ''}
+        <button class="tree-del btn btn-sm" onclick="deleteLesson(event,${si},${li})"><i class="fa fa-trash"></i></button>
       `;
-      sRow.addEventListener('click', e => { if(!e.target.closest('.tree-del')) selectSubject(dId,sId); });
-      body.appendChild(sRow);
+      lesRow.addEventListener('click', e => { if (!e.target.closest('.tree-del')) selectLesson(si, li); });
+      body.appendChild(lesRow);
     });
 
-    // Add subject button
-    const addBtn = el('div','tree-indent');
-    addBtn.innerHTML = `<button class="tree-add-btn" onclick="addSubject('${dId}')"><i class="fa fa-plus" style="font-size:9px"></i> Add Subject</button>`;
+    const addBtn = el('div', 'tree-indent');
+    addBtn.innerHTML = `<button class="tree-add-btn" onclick="addLesson(${si})"><i class="fa fa-plus" style="font-size:9px"></i> Add Lesson</button>`;
     body.appendChild(addBtn);
+    const gap = el('div', 'tree-section-gap');
+    body.appendChild(gap);
   });
 
   renderOutput();
 }
 
-// ─────────────────────────────────────────────
-//  SELECTION + FORM
-// ─────────────────────────────────────────────
-function selectDomain(dId) {
-  selected = { type:'domain', domainId:dId };
+// ─── SELECTION ────────────────────────────────
+function selectSection(si) {
+  selected = { type: 'section', sIdx: si };
   renderTree();
-  renderDomainForm(dId);
+  renderSectionForm(si);
 }
-function selectSubject(dId, sId) {
-  selected = { type:'subject', domainId:dId, subjectId:sId };
+function selectLesson(si, li) {
+  selected = { type: 'lesson', sIdx: si, lIdx: li };
+  sectionTags = { current: [...(sections[si].lessons[li].tags || [])] };
   renderTree();
-  renderSubjectForm(dId, sId);
+  renderLessonForm(si, li);
 }
 
-function renderDomainForm(dId) {
-  const domain = registry[dId];
-  document.getElementById('formTitle').textContent = 'Domain · ' + (domain.title||dId);
-  document.getElementById('formTypePill').innerHTML = '<span class="pill pill-domain"><i class="fa fa-layer-group"></i> Domain</span>';
-  
-  const body = document.getElementById('formBody');
-  body.innerHTML = `
+// ─── COURSE INFO FORM ─────────────────────────
+function editCourseInfo() {
+  selected = { type: 'course' };
+  renderTree();
+  document.getElementById('formTitle').textContent = 'Course Info';
+  document.getElementById('formTypePill').innerHTML = '<span class="pill pill-course"><i class="fa fa-graduation-cap"></i> Course</span>';
+  document.getElementById('formBody').innerHTML = `
+    <div class="form-section">
+      <div class="form-section-title">Export</div>
+      <div class="form-row">
+        <label class="form-label">Export Variable Name</label>
+        <input class="form-input" id="f-exportVar" value="${esc(course.exportVar)}" placeholder="e.g. javascriptCourse"/>
+        <div class="form-hint">Used as: export const <strong style="color:var(--accent)">${esc(course.exportVar)}</strong> = { ... }</div>
+      </div>
+    </div>
     <div class="form-section">
       <div class="form-section-title">Identity</div>
       <div class="form-grid2">
         <div class="form-row">
-          <label class="form-label">ID <span style="color:var(--text-muted)">(no spaces)</span></label>
-          <input class="form-input" id="f-domain-id" value="${esc(dId)}" placeholder="e.g. coding"/>
-          <div class="form-hint">Used as the object key</div>
+          <label class="form-label">Title</label>
+          <input class="form-input" id="f-title" value="${esc(course.title)}" placeholder="Course title"/>
         </div>
         <div class="form-row">
-          <label class="form-label">Icon Text</label>
-          <input class="form-input" id="f-domain-iconText" value="${esc(domain.iconText||'')}" placeholder="e.g. Code"/>
+          <label class="form-label">Slug</label>
+          <input class="form-input" id="f-slug" value="${esc(course.slug)}" placeholder="url-friendly-slug"/>
         </div>
-      </div>
-      <div class="form-row">
-        <label class="form-label">Title</label>
-        <input class="form-input" id="f-domain-title" value="${esc(domain.title||'')}" placeholder="e.g. Coding"/>
       </div>
       <div class="form-row">
         <label class="form-label">Description</label>
-        <textarea class="form-textarea" id="f-domain-desc" placeholder="Short description...">${esc(domain.description||'')}</textarea>
+        <textarea class="form-textarea" id="f-desc">${esc(course.description)}</textarea>
       </div>
-    </div>
-    <div class="form-section">
-      <div class="form-section-title">Meta (domainMeta)</div>
       <div class="form-row">
-        <label class="form-label">Font Awesome Icon</label>
-        <select class="form-select" id="f-domain-icon">
-          ${ICON_OPTIONS.map(i=>`<option value="${i}" ${domain.meta?.icon===i?'selected':''}>${i}</option>`).join('')}
+        <label class="form-label">Level</label>
+        <select class="form-select" id="f-level">
+          ${['beginner','intermediate','advanced','beginner-to-advanced'].map(l=>`<option value="${l}" ${course.level===l?'selected':''}>${l}</option>`).join('')}
         </select>
       </div>
-      <div class="form-row">
-        <label class="form-label">Color</label>
-        <input class="form-input" id="f-domain-color" value="${esc(domain.meta?.color||'')}" placeholder="e.g. var(--domain-coding) or #00e5ff"/>
-        <div class="form-hint">CSS variable or hex color</div>
-      </div>
     </div>
     <div style="display:flex;gap:8px;margin-top:8px">
-      <button class="btn btn-primary" onclick="saveDomain('${dId}')"><i class="fa fa-save"></i> Save</button>
-      <button class="btn btn-danger" onclick="deleteDomain(null,'${dId}')"><i class="fa fa-trash"></i> Delete Domain</button>
+      <button class="btn btn-primary" onclick="saveCourseInfo()"><i class="fa fa-save"></i> Save</button>
     </div>
   `;
 }
 
-function renderSubjectForm(dId, sId) {
-  const subj = registry[dId].subjects[sId];
-  document.getElementById('formTitle').textContent = 'Subject · ' + (subj.title||sId);
-  document.getElementById('formTypePill').innerHTML = '<span class="pill pill-subject"><i class="fa fa-book-open"></i> Subject</span>';
+function saveCourseInfo() {
+  course.exportVar = document.getElementById('f-exportVar').value.trim() || 'myCourse';
+  course.title = document.getElementById('f-title').value;
+  course.slug = document.getElementById('f-slug').value;
+  course.description = document.getElementById('f-desc').value;
+  course.level = document.getElementById('f-level').value;
+  renderOutput();
+  notify('Course info saved');
+}
 
-  const body = document.getElementById('formBody');
-  body.innerHTML = `
+// ─── SECTION FORM ─────────────────────────────
+function renderSectionForm(si) {
+  const sec = sections[si];
+  document.getElementById('formTitle').textContent = 'Section · ' + (sec.title || 'Untitled');
+  document.getElementById('formTypePill').innerHTML = '<span class="pill pill-section"><i class="fa fa-layer-group"></i> Section</span>';
+  document.getElementById('formBody').innerHTML = `
     <div class="form-section">
-      <div class="form-section-title">Identity</div>
+      <div class="form-section-title">Section Details</div>
       <div class="form-grid2">
         <div class="form-row">
-          <label class="form-label">ID <span style="color:var(--text-muted)">(no spaces)</span></label>
-          <input class="form-input" id="f-subj-id" value="${esc(sId)}" placeholder="e.g. javascript"/>
+          <label class="form-label">ID</label>
+          <input class="form-input" id="f-sec-id" value="${esc(sec.id||'')}" placeholder="e.g. fundamentals"/>
         </div>
         <div class="form-row">
-          <label class="form-label">Icon Text</label>
-          <input class="form-input" id="f-subj-iconText" value="${esc(subj.iconText||'')}" placeholder="e.g. JS"/>
+          <label class="form-label">Title</label>
+          <input class="form-input" id="f-sec-title" value="${esc(sec.title||'')}" placeholder="e.g. JavaScript Fundamentals"/>
         </div>
-      </div>
-      <div class="form-row">
-        <label class="form-label">Title</label>
-        <input class="form-input" id="f-subj-title" value="${esc(subj.title||'')}" placeholder="e.g. JavaScript"/>
       </div>
       <div class="form-row">
         <label class="form-label">Description</label>
-        <textarea class="form-textarea" id="f-subj-desc" placeholder="Short description...">${esc(subj.description||'')}</textarea>
+        <textarea class="form-textarea" id="f-sec-desc" placeholder="Short description...">${esc(sec.description||'')}</textarea>
       </div>
-    </div>
-    <div class="form-section">
-      <div class="form-section-title">Course Link</div>
-      <div class="form-row">
-        <label class="form-label">Course File <span style="color:var(--text-muted)">(import)</span></label>
-        <input class="form-input" id="f-subj-courseFile" value="${esc(subj.courseFile||'')}" placeholder="e.g. ./courses/javascript.js"/>
-        <div class="form-hint">Relative path to the course JS file. Leave empty if course not ready yet (will be set to null).</div>
-      </div>
-      <div class="form-row">
-        <label class="form-label">Course Variable Name</label>
-        <input class="form-input" id="f-subj-courseVar" value="${esc(subj.courseVar||'')}" placeholder="e.g. javascriptCourse"/>
-        <div class="form-hint">The named export from that file.</div>
-      </div>
-      ${subj.courseFile ? `<div class="subject-course-row"><span class="tree-icon"><i class="fa fa-link" style="color:var(--green)"></i></span><span class="subject-course-label">Linked to</span><span class="subject-course-val">${esc(subj.courseVar||'course')} from '${esc(subj.courseFile)}'</span></div>` : `<div class="subject-course-row"><span class="tree-icon"><i class="fa fa-unlink" style="color:var(--text-muted)"></i></span><span class="subject-course-label" style="color:var(--text-muted)">No course linked — will output null</span></div>`}
     </div>
     <div style="display:flex;gap:8px;margin-top:8px">
-      <button class="btn btn-primary" onclick="saveSubject('${dId}','${sId}')"><i class="fa fa-save"></i> Save</button>
-      <button class="btn btn-danger" onclick="deleteSubject(null,'${dId}','${sId}')"><i class="fa fa-trash"></i> Delete</button>
+      <button class="btn btn-primary" onclick="saveSection(${si})"><i class="fa fa-save"></i> Save</button>
+      <button class="btn btn-ghost" onclick="addLesson(${si})"><i class="fa fa-plus"></i> Add Lesson</button>
+      <button class="btn btn-danger" onclick="deleteSection(null,${si})"><i class="fa fa-trash"></i> Delete</button>
+    </div>
+    <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border)">
+      <div class="form-section-title">Lessons in this section (${(sec.lessons||[]).length})</div>
+      ${(sec.lessons||[]).length === 0
+        ? '<div style="color:var(--text-muted);font-size:11px;padding:8px 0">No lessons yet. Click Add Lesson above.</div>'
+        : (sec.lessons||[]).map((l,li)=>`
+          <div class="tree-item" onclick="selectLesson(${si},${li})" style="background:var(--bg);border:1px solid var(--border);margin-bottom:6px;border-radius:var(--r)">
+            <span class="tree-icon"><i class="fa fa-file-code" style="color:var(--green)"></i></span>
+            <span class="tree-label" style="color:var(--text)">${esc(l.title||'Untitled')}</span>
+            ${l.difficulty?`<span class="tree-badge">${esc(l.difficulty)}</span>`:''}
+            ${l.duration?`<span class="tree-badge" style="color:var(--amber)">${esc(l.duration)}</span>`:''}
+          </div>`).join('')
+      }
     </div>
   `;
 }
 
-// ─────────────────────────────────────────────
-//  CRUD
-// ─────────────────────────────────────────────
-function addDomain() {
-  const id = 'domain_' + Date.now();
-  registry[id] = {
-    id, title:'New Domain', iconText:'', description:'',
-    subjects:{}, meta:{ icon:'fa-folder', color:'' }
-  };
+function saveSection(si) {
+  sections[si].id = document.getElementById('f-sec-id').value.trim();
+  sections[si].title = document.getElementById('f-sec-title').value;
+  sections[si].description = document.getElementById('f-sec-desc').value;
   renderTree();
-  selectDomain(id);
+  renderSectionForm(si);
+  notify('Section saved');
 }
 
-function saveDomain(oldId) {
-  const newId = slugify(document.getElementById('f-domain-id').value) || oldId;
-  const d = registry[oldId];
-  d.id = newId;
-  d.title = document.getElementById('f-domain-title').value;
-  d.iconText = document.getElementById('f-domain-iconText').value;
-  d.description = document.getElementById('f-domain-desc').value;
-  d.meta = {
-    icon: document.getElementById('f-domain-icon').value,
-    color: document.getElementById('f-domain-color').value
-  };
-  if (newId !== oldId) {
-    registry[newId] = d;
-    delete registry[oldId];
-  }
-  selected = { type:'domain', domainId:newId };
-  renderTree();
-  renderDomainForm(newId);
-  notify('Domain saved');
+// ─── LESSON FORM ──────────────────────────────
+function renderLessonForm(si, li) {
+  const les = sections[si].lessons[li];
+  const tags = sectionTags.current || [];
+  document.getElementById('formTitle').textContent = 'Lesson · ' + (les.title || 'Untitled');
+  document.getElementById('formTypePill').innerHTML = '<span class="pill pill-lesson"><i class="fa fa-file-code"></i> Lesson</span>';
+  document.getElementById('formBody').innerHTML = `
+    <div class="form-section">
+      <div class="form-section-title">Lesson Details</div>
+      <div class="form-row">
+        <label class="form-label">Title</label>
+        <input class="form-input" id="f-les-title" value="${esc(les.title||'')}" placeholder="e.g. Arrow Functions"/>
+      </div>
+      <div class="form-grid2">
+        <div class="form-row">
+          <label class="form-label">Slug</label>
+          <input class="form-input" id="f-les-slug" value="${esc(les.slug||'')}" placeholder="e.g. arrow-functions"/>
+        </div>
+        <div class="form-row">
+          <label class="form-label">Duration</label>
+          <input class="form-input" id="f-les-duration" value="${esc(les.duration||'')}" placeholder="e.g. 10 min"/>
+        </div>
+      </div>
+      <div class="form-grid2">
+        <div class="form-row">
+          <label class="form-label">Difficulty</label>
+          <select class="form-select" id="f-les-difficulty">
+            <option value="">— none —</option>
+            ${['beginner','intermediate','advanced'].map(d=>`<option value="${d}" ${les.difficulty===d?'selected':''}>${d}</option>`).join('')}
+          </select>
+        </div>
+        <div class="form-row">
+          <label class="form-label">Content URL</label>
+          <input class="form-input" id="f-les-contentUrl" value="${esc(les.contentUrl||'')}" placeholder="e.g. domain/coding/…/lesson-0.html"/>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="toggle-row">
+          <span class="toggle-label"><i class="fa fa-check-circle" style="color:var(--green);margin-right:6px"></i>Completed</span>
+          <label class="toggle">
+            <input type="checkbox" id="f-les-completed" ${les.completed?'checked':''}/>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="form-section">
+      <div class="form-section-title">Tags</div>
+      <div class="tags-wrap" id="tags-display">
+        ${tags.map((t,i)=>`<span class="tag-chip">${esc(t)}<span class="tag-chip-del" onclick="removeTag(${i})"><i class="fa fa-xmark"></i></span></span>`).join('')}
+      </div>
+      <div class="tag-input-row">
+        <input class="form-input" id="f-tag-input" placeholder="Type a tag and press Enter…" onkeydown="handleTagKey(event)"/>
+        <button class="btn btn-ghost btn-sm" onclick="addTagFromInput()"><i class="fa fa-plus"></i></button>
+      </div>
+      <div class="form-hint">Press Enter or click + to add a tag</div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:8px">
+      <button class="btn btn-primary" onclick="saveLesson(${si},${li})"><i class="fa fa-save"></i> Save</button>
+      <button class="btn btn-danger" onclick="deleteLesson(null,${si},${li})"><i class="fa fa-trash"></i> Delete</button>
+    </div>
+  `;
 }
 
-function deleteDomain(e, dId) {
-  if(e) e.stopPropagation();
-  if(!confirm('Delete domain "' + (registry[dId]?.title||dId) + '" and all its subjects?')) return;
-  delete registry[dId];
+function handleTagKey(e) {
+  if (e.key === 'Enter') { e.preventDefault(); addTagFromInput(); }
+}
+function addTagFromInput() {
+  const inp = document.getElementById('f-tag-input');
+  const val = inp.value.trim().toLowerCase().replace(/\s+/g,'-');
+  if (!val || sectionTags.current.includes(val)) { inp.value=''; return; }
+  sectionTags.current.push(val);
+  inp.value = '';
+  refreshTagsDisplay();
+}
+function removeTag(i) {
+  sectionTags.current.splice(i, 1);
+  refreshTagsDisplay();
+}
+function refreshTagsDisplay() {
+  const wrap = document.getElementById('tags-display');
+  if (!wrap) return;
+  wrap.innerHTML = sectionTags.current.map((t,i)=>`<span class="tag-chip">${esc(t)}<span class="tag-chip-del" onclick="removeTag(${i})"><i class="fa fa-xmark"></i></span></span>`).join('');
+}
+
+function saveLesson(si, li) {
+  const les = sections[si].lessons[li];
+  les.title = document.getElementById('f-les-title').value;
+  les.slug = document.getElementById('f-les-slug').value.trim();
+  les.duration = document.getElementById('f-les-duration').value.trim();
+  les.difficulty = document.getElementById('f-les-difficulty').value || undefined;
+  les.contentUrl = document.getElementById('f-les-contentUrl').value.trim();
+  les.completed = document.getElementById('f-les-completed').checked;
+  les.tags = [...(sectionTags.current||[])];
+  // clean up undefined
+  if (!les.difficulty) delete les.difficulty;
+  if (!les.duration) delete les.duration;
+  if (!les.slug) delete les.slug;
+  if (!les.contentUrl) delete les.contentUrl;
+  renderTree();
+  renderLessonForm(si, li);
+  notify('Lesson saved');
+}
+
+// ─── CRUD ─────────────────────────────────────
+function addSection() {
+  const si = sections.length;
+  sections.push({ id: 'section_' + Date.now(), title: 'New Section', description: '', lessons: [] });
+  selected = { type: 'section', sIdx: si };
+  renderTree();
+  renderSectionForm(si);
+}
+function deleteSection(e, si) {
+  if (e) e.stopPropagation();
+  if (!confirm('Delete section "' + (sections[si]?.title||'') + '" and all its lessons?')) return;
+  sections.splice(si, 1);
   selected = null;
-  document.getElementById('formBody').innerHTML = '<div class="form-empty"><div class="form-empty-icon"><i class="fa fa-trash"></i></div><div class="form-empty-text">Domain deleted.</div></div>';
-  document.getElementById('formTitle').textContent = 'Editor';
-  document.getElementById('formTypePill').innerHTML = '';
+  clearForm('Section deleted.');
   renderTree();
 }
-
-function addSubject(dId) {
-  const id = 'subject_' + Date.now();
-  registry[dId].subjects[id] = {
-    id, title:'New Subject', iconText:'', description:'', courseFile:'', courseVar:''
-  };
+function addLesson(si) {
+  const li = sections[si].lessons.length;
+  sections[si].lessons.push({ title: 'New Lesson', completed: false, tags: [] });
+  selected = { type: 'lesson', sIdx: si, lIdx: li };
+  sectionTags = { current: [] };
   renderTree();
-  selectSubject(dId, id);
+  renderLessonForm(si, li);
 }
-
-function saveSubject(dId, oldSId) {
-  const newSId = slugify(document.getElementById('f-subj-id').value) || oldSId;
-  const s = registry[dId].subjects[oldSId];
-  s.id = newSId;
-  s.title = document.getElementById('f-subj-title').value;
-  s.iconText = document.getElementById('f-subj-iconText').value;
-  s.description = document.getElementById('f-subj-desc').value;
-  s.courseFile = document.getElementById('f-subj-courseFile').value.trim();
-  s.courseVar = document.getElementById('f-subj-courseVar').value.trim();
-  if (newSId !== oldSId) {
-    registry[dId].subjects[newSId] = s;
-    delete registry[dId].subjects[oldSId];
-  }
-  selected = { type:'subject', domainId:dId, subjectId:newSId };
+function deleteLesson(e, si, li) {
+  if (e) e.stopPropagation();
+  if (!confirm('Delete lesson "' + (sections[si]?.lessons[li]?.title||'') + '"?')) return;
+  sections[si].lessons.splice(li, 1);
+  selected = { type: 'section', sIdx: si };
   renderTree();
-  renderSubjectForm(dId, newSId);
-  notify('Subject saved');
+  renderSectionForm(si);
 }
 
-function deleteSubject(e, dId, sId) {
-  if(e) e.stopPropagation();
-  if(!confirm('Delete subject "' + (registry[dId]?.subjects[sId]?.title||sId) + '"?')) return;
-  delete registry[dId].subjects[sId];
-  selected = { type:'domain', domainId:dId };
-  renderTree();
-  renderDomainForm(dId);
-}
-
-// ─────────────────────────────────────────────
-//  CODE GENERATION
-// ─────────────────────────────────────────────
-function switchTab(tab, btn) {
-  activeTab = tab;
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  renderOutput();
-}
-
+// ─── CODE GENERATION ─────────────────────────
 function renderOutput() {
-  const out = document.getElementById('codeOutput');
-  if (activeTab === 'registry') out.innerHTML = genRegistry();
-  else if (activeTab === 'meta') out.innerHTML = genMeta();
-  else out.innerHTML = genImports();
+  document.getElementById('codeOutput').innerHTML = genCourse();
 }
 
-function genImports() {
-  const lines = [];
-  const seen = new Set();
-  Object.values(registry).forEach(domain => {
-    Object.values(domain.subjects||{}).forEach(subj => {
-      if (subj.courseFile && subj.courseVar && !seen.has(subj.courseFile)) {
-        seen.add(subj.courseFile);
-        lines.push(
-          tok('kw','import') + tok('punc',' { ') +
-          tok('fn', subj.courseVar) +
-          tok('punc',' } ') + tok('kw','from') +
-          tok('punc',' ') + tok('str', "'" + subj.courseFile + "'") +
-          tok('punc',';')
-        );
-      }
-    });
-  });
-  if (lines.length === 0) {
-    return tok('cmt','// No course files linked yet.\n// Add a courseFile path to a subject to generate imports.');
-  }
-  return lines.join('\n');
-}
-
-function genRegistry() {
-  if (Object.keys(registry).length === 0) {
-    return tok('cmt','// Registry is empty.\n// Add domains and subjects to generate output.');
-  }
+function genCourse() {
   let out = '';
-  // imports block
-  const importLines = [];
-  const seen = new Set();
-  Object.values(registry).forEach(domain => {
-    Object.values(domain.subjects||{}).forEach(subj => {
-      if (subj.courseFile && subj.courseVar && !seen.has(subj.courseFile)) {
-        seen.add(subj.courseFile);
-        importLines.push(
-          tok('kw','import') + tok('punc',' { ') + tok('fn',subj.courseVar) +
-          tok('punc',' } ') + tok('kw','from') + tok('punc',' ') +
-          tok('str',"'"+subj.courseFile+"'") + tok('punc',';')
-        );
+
+  // header comment
+  out += tok('cmt', '// Auto-generated by CourseBuilder\n');
+  out += '\n';
+
+  // export const
+  out += tok('kw','export') + ' ' + tok('kw','const') + ' ' + tok('fn', course.exportVar||'myCourse') + ' ' + tok('punc','= {') + '\n';
+
+  // top-level fields
+  out += f(1, 'title',       str(course.title||''), true);
+  out += f(1, 'slug',        str(course.slug||''), true);
+  out += f(1, 'description', str(course.description||''), true);
+  out += f(1, 'level',       str(course.level||'beginner'), true);
+  out += f(1, 'progress',    tok('num','0'), true);
+
+  // sections
+  out += ind(1) + tok('key','sections') + tok('punc',': [') + '\n';
+
+  if (sections.length === 0) {
+    out += ind(2) + tok('cmt','// No sections yet') + '\n';
+  } else {
+    sections.forEach((sec, si) => {
+      const isLastSec = si === sections.length - 1;
+      out += ind(2) + tok('punc','{') + '\n';
+      out += f(3, 'id',    str(sec.id||''), true);
+      out += f(3, 'title', str(sec.title||''), true);
+      if (sec.description) out += f(3, 'description', str(sec.description), true);
+
+      // lessons
+      out += ind(3) + tok('key','lessons') + tok('punc',': [') + '\n';
+      if (!sec.lessons || sec.lessons.length === 0) {
+        out += ind(4) + tok('cmt','// No lessons yet') + '\n';
+      } else {
+        sec.lessons.forEach((les, li) => {
+          const isLastLes = li === sec.lessons.length - 1;
+          out += ind(4) + tok('punc','{') + '\n';
+          out += f(5, 'title', str(les.title||''), true);
+          if (les.slug)       out += f(5, 'slug',       str(les.slug), true);
+          if (les.difficulty) out += f(5, 'difficulty', str(les.difficulty), true);
+          if (les.duration)   out += f(5, 'duration',   str(les.duration), true);
+          out += f(5, 'completed', tok('bool', les.completed ? 'true' : 'false'), true);
+          if (les.contentUrl) out += f(5, 'contentUrl', str(les.contentUrl), true);
+          // tags
+          const tags = les.tags || [];
+          if (tags.length > 0) {
+            out += ind(5) + tok('key','tags') + tok('punc',': [') +
+              tags.map(t => tok('str',"'"+esc2(t)+"'")).join(tok('punc',', ')) +
+              tok('punc',']') + '\n';
+          } else {
+            out += ind(5) + tok('key','tags') + tok('punc',': []') + '\n';
+          }
+          out += ind(4) + tok('punc', isLastLes ? '}' : '},') + '\n';
+        });
       }
+      out += ind(3) + tok('punc',']') + '\n';
+      out += ind(2) + tok('punc', isLastSec ? '}' : '},') + '\n';
     });
-  });
-  if (importLines.length) out += importLines.join('\n') + '\n\n';
-
-  out += tok('kw','export') + tok('punc',' ') + tok('kw','const') + ' domainRegistry ' + tok('punc','= {') + '\n';
-  
-  const domainIds = Object.keys(registry);
-  domainIds.forEach((dId, di) => {
-    const domain = registry[dId];
-    const subjIds = Object.keys(domain.subjects||{});
-    const comma = di < domainIds.length-1 ? ',' : '';
-    out += ind(1) + tok('key', safeKey(dId)) + tok('punc',': {') + '\n';
-    out += ind(2) + tok('key','id') + tok('punc',': ') + tok('str',"'" + (domain.id||dId) + "'") + tok('punc',',') + '\n';
-    out += ind(2) + tok('key','title') + tok('punc',': ') + tok('str',"'" + esc2(domain.title||'') + "'") + tok('punc',',') + '\n';
-    out += ind(2) + tok('key','iconText') + tok('punc',': ') + tok('str',"'" + esc2(domain.iconText||'') + "'") + tok('punc',',') + '\n';
-    out += ind(2) + tok('key','description') + tok('punc',': ') + tok('str',"'" + esc2(domain.description||'') + "'") + tok('punc',',') + '\n';
-    out += ind(2) + tok('key','subjects') + tok('punc',': {') + '\n';
-    subjIds.forEach((sId, si) => {
-      const subj = domain.subjects[sId];
-      const scomma = si < subjIds.length-1 ? ',' : '';
-      const courseVal = subj.courseFile && subj.courseVar
-        ? tok('fn', subj.courseVar)
-        : tok('kw','null');
-      out += ind(3) + tok('key', safeKey(sId)) + tok('punc',': {') + '\n';
-      out += ind(4) + tok('key','id') + tok('punc',': ') + tok('str',"'" + esc2(subj.id||sId) + "'") + tok('punc',',') + '\n';
-      out += ind(4) + tok('key','title') + tok('punc',': ') + tok('str',"'" + esc2(subj.title||'') + "'") + tok('punc',',') + '\n';
-      out += ind(4) + tok('key','iconText') + tok('punc',': ') + tok('str',"'" + esc2(subj.iconText||'') + "'") + tok('punc',',') + '\n';
-      out += ind(4) + tok('key','description') + tok('punc',': ') + tok('str',"'" + esc2(subj.description||'') + "'") + tok('punc',',') + '\n';
-      out += ind(4) + tok('key','course') + tok('punc',': ') + courseVal + '\n';
-      out += ind(3) + tok('punc','}'+scomma) + '\n';
-    });
-    if (subjIds.length === 0) {
-      out += ind(3) + tok('cmt','// No subjects yet') + '\n';
-    }
-    out += ind(2) + tok('punc','}') + '\n';
-    out += ind(1) + tok('punc','}'+comma) + '\n';
-  });
-  out += tok('punc','};');
-  return out;
-}
-
-function genMeta() {
-  if (Object.keys(registry).length === 0) {
-    return tok('cmt','// Registry is empty.');
   }
-  let out = tok('kw','export') + tok('punc',' ') + tok('kw','const') + ' domainMeta ' + tok('punc','= {') + '\n';
-  const domainIds = Object.keys(registry);
-  domainIds.forEach((dId, di) => {
-    const domain = registry[dId];
-    const comma = di < domainIds.length-1 ? ',' : '';
-    const icon = domain.meta?.icon || 'fa-folder';
-    const color = domain.meta?.color || '';
-    out += ind(1) + tok('key', safeKey(dId)) + tok('punc',': {') + '\n';
-    out += ind(2) + tok('key','icon') + tok('punc',': ') + tok('str',"'" + icon + "'") + tok('punc',',') + '\n';
-    out += ind(2) + tok('key','color') + tok('punc',': ') + tok('str',"'" + (color||'#888') + "'") + '\n';
-    out += ind(1) + tok('punc','}'+comma) + '\n';
-  });
+
+  out += ind(1) + tok('punc',']') + '\n';
   out += tok('punc','};');
   return out;
 }
 
-// ─────────────────────────────────────────────
-//  HELPERS
-// ─────────────────────────────────────────────
-function tok(type, val) {
-  return `<span class="t-${type}">${htmlEsc(val)}</span>`;
+// ─── HELPERS ─────────────────────────────────
+function f(indent, key, valHtml, comma) {
+  return ind(indent) + tok('key', key) + tok('punc', ': ') + valHtml + (comma ? tok('punc',',') : '') + '\n';
 }
+function str(s) { return tok('str', "'" + esc2(s) + "'"); }
+function tok(type, val) { return `<span class="t-${type}">${htmlEsc(val)}</span>`; }
 function ind(n) { return '  '.repeat(n); }
 function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-function esc2(s) { return String(s||'').replace(/'/g,"\\'"); }
+function esc2(s) { return String(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'"); }
 function htmlEsc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 function el(tag, cls) { const e = document.createElement(tag); e.className = cls; return e; }
-function slugify(s) { return s.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-_]/g,''); }
-function safeKey(k) { return /^[a-zA-Z_$][a-zA-Z0-9_$]*$/.test(k) ? k : `'${k}'`; }
 
-function notify(msg) {
-  const n = document.getElementById('notif');
-  n.textContent = msg;
-  n.classList.add('show');
-  setTimeout(()=>n.classList.remove('show'), 2200);
-}
-
-function getPlainOutput() {
-  const pre = document.getElementById('codeOutput');
-  return pre.textContent;
+function clearForm(msg) {
+  document.getElementById('formBody').innerHTML = `<div class="form-empty"><div class="form-empty-icon"><i class="fa fa-trash"></i></div><div class="form-empty-text">${msg}</div></div>`;
+  document.getElementById('formTitle').textContent = 'Editor';
+  document.getElementById('formTypePill').innerHTML = '';
 }
 
 function copyOutput() {
-  const text = getPlainOutput();
-  navigator.clipboard?.writeText(text).then(()=>notify('Copied!')).catch(()=>{
+  const text = document.getElementById('codeOutput').textContent;
+  navigator.clipboard?.writeText(text).then(() => notify('Copied!')).catch(() => {
     const ta = document.createElement('textarea');
-    ta.value = text; ta.style.position='fixed'; ta.style.left='-9999px';
+    ta.value = text; ta.style.position = 'fixed'; ta.style.left = '-9999px';
     document.body.appendChild(ta); ta.select(); document.execCommand('copy');
     document.body.removeChild(ta); notify('Copied!');
   });
 }
-
-function importJSON() {
-  const input = document.createElement('input');
-  input.type = 'file'; input.accept = '.json';
-  input.onchange = e => {
-    const file = e.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = ev => {
-      try {
-        const data = JSON.parse(ev.target.result);
-        registry = data;
-        selected = null;
-        document.getElementById('formBody').innerHTML = '<div class="form-empty"><div class="form-empty-icon"><i class="fa fa-check"></i></div><div class="form-empty-text">JSON imported successfully.</div></div>';
-        renderTree();
-        notify('Imported!');
-      } catch(err) { alert('Invalid JSON: ' + err.message); }
-    };
-    reader.readAsText(file);
-  };
-  input.click();
+function notify(msg) {
+  const n = document.getElementById('notif');
+  n.textContent = msg; n.classList.add('show');
+  setTimeout(() => n.classList.remove('show'), 2200);
 }
 
-// ─────────────────────────────────────────────
-//  SEED DATA (the example you provided)
-// ─────────────────────────────────────────────
-registry = {
-  coding: {
-    id: 'coding', title: 'Coding', iconText: 'Code',
-    description: 'Learn programming languages and software development.',
-    subjects: {
-      javascript: {
-        id: 'javascript', title: 'JavaScript', iconText: 'JS',
-        description: 'Learn JavaScript from fundamentals to advanced topics.',
-        courseFile: './courses/javascript.js', courseVar: 'javascriptCourse'
-      },
-      python: {
-        id: 'python', title: 'Python', iconText: 'Py',
-        description: 'Master Python programming for web development and data science.',
-        courseFile: '', courseVar: ''
-      },
-      rust: {
-        id: 'rust', title: 'Rust', iconText: 'Rs',
-        description: 'Build reliable and efficient software with Rust.',
-        courseFile: '', courseVar: ''
-      }
-    },
-    meta: { icon: 'fa-code', color: 'var(--domain-coding)' }
+// ─── SEED: load the provided javascriptCourse ─
+sections = [
+  {
+    id: 'intro', title: 'An Introduction',
+    description: 'Basic introduction to JavaScript and development tools.',
+    lessons: [
+      { title: 'An Introduction to JavaScript', slug: 'introduction-to-javascript', difficulty: 'beginner', duration: '10 min', completed: false, tags: ['javascript','introduction','intro'] },
+      { title: 'Manuals and specifications', slug: 'manuals-and-specifications', difficulty: 'beginner', completed: false, tags: ['manuals','intro','specifications'] },
+      { title: 'Code editors', slug: 'code-editors', difficulty: 'beginner', completed: false, tags: ['editors','intro','code'] },
+      { title: 'Developer console', slug: 'developer-console', difficulty: 'beginner', completed: false, tags: ['developer','intro','console'] }
+    ]
+  },
+  {
+    id: 'fundamentals', title: 'JavaScript Fundamentals',
+    description: 'Core language concepts required for every JavaScript developer.',
+    lessons: [
+      { title: 'Hello, world!', slug: 'hello-world', completed: false, tags: ['fundamentals','hello','world'] },
+      { title: 'Code structure', slug: 'code-structure', completed: false, tags: ['fundamentals','structure','code'] },
+      { title: 'The modern mode, "use strict"', slug: 'use-strict', completed: false, tags: ['fundamentals','strict'] },
+      { title: 'Variables', slug: 'variables', completed: false, tags: ['fundamentals','variables'] },
+      { title: 'Data types', slug: 'data-types', completed: false, tags: ['fundamentals','types','data'] },
+      { title: 'Interaction: alert, prompt, confirm', slug: 'interaction', completed: false, tags: ['fundamentals','interaction'] },
+      { title: 'Type Conversions', slug: 'type-conversion', completed: false, tags: ['fundamentals','type','conversion'] },
+      { title: 'Basic operators, maths', slug: 'operators', completed: false, tags: ['fundamentals','operators'] },
+      { title: 'Comparisons', slug: 'comparisons', completed: false, tags: ['fundamentals','comparisons'] },
+      { title: "Conditional branching: if, '?'", slug: 'if-else', completed: false, tags: ['fundamentals','else'] },
+      { title: 'Logical operators', slug: 'logical-operators', completed: false, tags: ['fundamentals','logical','operators'] },
+      { title: "Nullish coalescing operator '??'", slug: 'nullish-coalescing', completed: false, tags: ['fundamentals','nullish','coalescing'] },
+      { title: 'Loops: while and for', slug: 'loops', completed: false, tags: ['fundamentals','loops'] },
+      { title: 'The switch statement', slug: 'switch', completed: false, tags: ['fundamentals','switch'] },
+      { title: 'Functions', slug: 'functions', completed: false, tags: ['fundamentals','functions'] },
+      { title: 'Function expressions', slug: 'function-expressions', completed: false, tags: ['fundamentals','function','expressions','functions'] },
+      { title: 'Arrow functions', slug: 'arrow-functions', completed: false, tags: ['fundamentals','arrow','functions'] }
+    ]
+  },
+  {
+    id: 'code-quality', title: 'JavaScript Specials',
+    description: 'Best practices and debugging techniques.',
+    lessons: [
+      { title: 'Code quality', completed: false, tags: ['code-quality'] },
+      { title: 'Debugging in the browser', completed: false, tags: ['code-quality'] },
+      { title: 'Coding Style', completed: false, tags: ['code-quality'] },
+      { title: 'Comments', completed: false, tags: ['code-quality'] },
+      { title: 'Ninja code', completed: false, tags: ['code-quality'] },
+      { title: 'Automated testing with Mocha', completed: false, tags: ['code-quality'] },
+      { title: 'Polyfills and transpilers', completed: false, tags: ['code-quality'] }
+    ]
+  },
+  {
+    id: 'objects-basics', title: 'Objects: The Basics', description: '', lessons: [
+      { title: 'Objects', contentUrl: 'domain/coding/javascript/objects-basics/lesson-0.html', completed: false, tags: ['objects-basics'] },
+      { title: 'Object references and copying', contentUrl: 'domain/coding/javascript/objects-basics/lesson-1.html', completed: false, tags: ['objects-basics'] },
+      { title: 'Garbage collection', contentUrl: 'domain/coding/javascript/objects-basics/lesson-2.html', completed: false, tags: ['objects-basics'] },
+      { title: 'Object methods, "this"', contentUrl: 'domain/coding/javascript/objects-basics/lesson-3.html', completed: false, tags: ['objects-basics'] },
+      { title: 'Constructor, operator "new"', contentUrl: 'domain/coding/javascript/objects-basics/lesson-4.html', completed: false, tags: ['objects-basics'] },
+      { title: "Optional chaining '?.'", contentUrl: 'domain/coding/javascript/objects-basics/lesson-5.html', completed: false, tags: ['objects-basics'] },
+      { title: 'Symbol type', contentUrl: 'domain/coding/javascript/objects-basics/lesson-6.html', completed: false, tags: ['objects-basics'] },
+      { title: 'Object to primitive conversion', contentUrl: 'domain/coding/javascript/objects-basics/lesson-7.html', completed: false, tags: ['objects-basics'] }
+    ]
+  },
+  {
+    id: 'data-types', title: 'Data Types', description: '', lessons: [
+      { title: 'Methods of primitives', contentUrl: 'domain/coding/javascript/data-types/lesson-0.html', completed: false, tags: ['data-types'] },
+      { title: 'Numbers', contentUrl: 'domain/coding/javascript/data-types/lesson-1.html', completed: false, tags: ['data-types'] },
+      { title: 'Strings', contentUrl: 'domain/coding/javascript/data-types/lesson-2.html', completed: false, tags: ['data-types'] },
+      { title: 'Arrays', contentUrl: 'domain/coding/javascript/data-types/lesson-3.html', completed: false, tags: ['data-types'] },
+      { title: 'Array methods', contentUrl: 'domain/coding/javascript/data-types/lesson-4.html', completed: false, tags: ['data-types','Important'] },
+      { title: 'Iterables', contentUrl: 'domain/coding/javascript/data-types/lesson-5.html', completed: false, tags: ['data-types'] },
+      { title: 'Map and Set', contentUrl: 'domain/coding/javascript/data-types/lesson-6.html', completed: false, tags: ['data-types'] },
+      { title: 'WeakMap and WeakSet', contentUrl: 'domain/coding/javascript/data-types/lesson-7.html', completed: false, tags: ['data-types'] },
+      { title: 'Object.keys, values, entries', contentUrl: 'domain/coding/javascript/data-types/lesson-8.html', completed: false, tags: ['data-types'] },
+      { title: 'Destructuring assignment', contentUrl: 'domain/coding/javascript/data-types/lesson-9.html', completed: false, tags: ['data-types'] },
+      { title: 'Date and time', contentUrl: 'domain/coding/javascript/data-types/lesson-10.html', completed: false, tags: ['data-types'] },
+      { title: 'JSON methods, toJSON', contentUrl: 'domain/coding/javascript/data-types/lesson-11.html', completed: false, tags: ['data-types'] }
+    ]
+  },
+  {
+    id: 'advanced-functions', title: 'Advanced Working With Functions', description: '', lessons: [
+      { title: 'Recursion and stack', contentUrl: 'domain/coding/javascript/advanced-functions/lesson-0.html', completed: false, tags: ['advanced-functions'] },
+      { title: 'Rest parameters and spread syntax', contentUrl: 'domain/coding/javascript/advanced-functions/lesson-1.html', completed: false, tags: ['advanced-functions'] },
+      { title: 'Variable scope, closure', contentUrl: 'domain/coding/javascript/advanced-functions/lesson-2.html', completed: false, tags: ['advanced-functions'] },
+      { title: 'The old "var"', contentUrl: 'domain/coding/javascript/advanced-functions/lesson-3.html', completed: false, tags: ['advanced-functions'] },
+      { title: 'Global object', contentUrl: 'domain/coding/javascript/advanced-functions/lesson-4.html', completed: false, tags: ['advanced-functions'] },
+      { title: 'Function object, NFE', contentUrl: 'domain/coding/javascript/advanced-functions/lesson-5.html', completed: false, tags: ['advanced-functions'] },
+      { title: 'The "new Function" syntax', contentUrl: 'domain/coding/javascript/advanced-functions/lesson-6.html', completed: false, tags: ['advanced-functions'] },
+      { title: 'Scheduling: setTimeout and setInterval', contentUrl: 'domain/coding/javascript/advanced-functions/lesson-7.html', completed: false, tags: ['advanced-functions'] },
+      { title: 'Decorators and forwarding, call/apply', contentUrl: 'domain/coding/javascript/advanced-functions/lesson-8.html', completed: false, tags: ['advanced-functions'] },
+      { title: 'Function binding', contentUrl: 'domain/coding/javascript/advanced-functions/lesson-9.html', completed: false, tags: ['advanced-functions'] },
+      { title: 'Arrow functions revisited', contentUrl: 'domain/coding/javascript/advanced-functions/lesson-10.html', completed: false, tags: ['advanced-functions'] }
+    ]
+  },
+  {
+    id: 'prototypes', title: 'Prototypes & Inheritance', description: '', lessons: [
+      { title: 'Prototypal inheritance', completed: false, tags: ['prototypes'] },
+      { title: 'F.prototype', completed: false, tags: ['prototypes'] },
+      { title: 'Native prototypes', completed: false, tags: ['prototypes'] },
+      { title: 'Prototype methods', completed: false, tags: ['prototypes'] }
+    ]
+  },
+  {
+    id: 'classes', title: 'Classes', description: '', lessons: [
+      { title: 'Class basic syntax', completed: false, tags: ['classes'] },
+      { title: 'Class inheritance', completed: false, tags: ['classes'] },
+      { title: 'Static properties and methods', completed: false, tags: ['classes'] },
+      { title: 'Private and protected properties', completed: false, tags: ['classes'] },
+      { title: 'Extending built-in classes', completed: false, tags: ['classes'] },
+      { title: 'Class checking: "instanceof"', completed: false, tags: ['classes'] },
+      { title: 'Mixins', completed: false, tags: ['classes'] }
+    ]
+  },
+  {
+    id: 'async', title: 'Promises, Async/Await', description: '', lessons: [
+      { title: 'Introduction: callbacks', completed: false, tags: ['async'] },
+      { title: 'Promise', completed: false, tags: ['async'] },
+      { title: 'Promises chaining', completed: false, tags: ['async'] },
+      { title: 'Error handling with promises', completed: false, tags: ['async'] },
+      { title: 'Promise API', completed: false, tags: ['async'] },
+      { title: 'Promisification', completed: false, tags: ['async'] },
+      { title: 'Microtasks', completed: false, tags: ['async'] },
+      { title: 'Async/await', completed: false, tags: ['async'] }
+    ]
+  },
+  {
+    id: 'modules', title: 'Modules', description: '', lessons: [
+      { title: 'Modules introduction', completed: false, tags: ['modules'] },
+      { title: 'Export and Import', completed: false, tags: ['modules'] },
+      { title: 'Dynamic imports', completed: false, tags: ['modules'] }
+    ]
   }
-};
+];
 
-// ─────────────────────────────────────────────
-//  INIT
-// ─────────────────────────────────────────────
+// ─── INIT ─────────────────────────────────────
 renderTree();
 renderOutput();
 </script>
